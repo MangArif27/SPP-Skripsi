@@ -1,0 +1,77 @@
+1. SPP Juli, Agustus, September, Oktober, November, Desember (Semester Genap)
+2. SPP Januari, Februari, Maret, April, Mei, Juni (Semester Ganjil)
+3. Ekstrakurikuler
+4. SarPras Kejuruan
+5. Buku LKS Semester
+6. PAS Ganjil
+7. 
+8. Kunjungan Mushaf AL-Quran (Bagi Muslim)
+9. Pentas Seni
+10. PAT/UKK
+11. MAP Raport
+12. Prakerin
+13. LDK
+14. Kartu Pelajar
+
+-- Rincian Tabel
+A. Tabel Pengguna
+    1. NIP
+    2. Nama
+    3. Jabatan
+    4. Level User
+
+B. Tabel Siswa
+    1. NIS
+    2. Nama
+    3. Tingkat
+    4. Kelas
+    5. Kejuruan
+    6. Tahun Ajaran
+    7. Jenis Kelamin
+    8. Agama
+    9. Alamat
+
+C. Tabel SPP 
+    1. NIS
+    2. Tahun Ajaran
+    3. Semester
+    4. Tingkat
+    5. SPP_1
+    6. SPP_2
+    7. SPP_3
+    8. SPP_4
+    9. SPP_5
+    10. SPP_6
+    11. Keterangan
+
+D. Tabel Pembayaran_Tambahan
+    1. NIS
+    2. Tahun Ajaran
+    3. Semester
+    4. Tingkat
+    5. Ekstrakurikuler
+    6. SarPras
+    7. Buku_LKS
+    8. PAS
+    9. Study_Tour
+    10. Pentas_Seni
+    11. MAP_Rapor
+    12. Prakerin
+    13. LDK
+    14. Kartu_Pelajar
+
+E. Tabel Jenis_Tagihan
+    1. Tahun Ajaran
+    2. Semester
+    3. Tingkat
+    4. SPP
+    5. Ekstrakurikuler
+    6. SarPras
+    7. Buku_LKS
+    8. PAS
+    9. Study_Tour
+    10. Pentas_Seni
+    11. MAP_Rapor
+    12. Prakerin
+    13. LDK
+    14. Kartu_Pelajar

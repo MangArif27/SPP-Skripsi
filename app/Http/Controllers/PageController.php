@@ -18,4 +18,8 @@ class PageController extends Controller
     {
         return view('Page._Datasiswa');
     }
+    public function Pembayaran()
+    {
+        return view('Page._DataPembayaran');
+    }
 }
