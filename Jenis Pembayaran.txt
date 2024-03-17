@@ -1,3 +1,4 @@
+Relasi Tabel SIPBS SMK Madani Depok
 1. SPP Juli, Agustus, September, Oktober, November, Desember (Semester Genap)
 2. SPP Januari, Februari, Maret, April, Mei, Juni (Semester Ganjil)
 3. Ekstrakurikuler
