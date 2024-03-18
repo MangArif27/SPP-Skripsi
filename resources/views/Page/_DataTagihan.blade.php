@@ -13,7 +13,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Pembayaran</h4>
+                                    <h4>Data Jenis Tagihan</h4>
                                     <span>Sistem Informasi Pembayaran Sekolah SMK Madani Depok</span>
                                 </div>
                             </div>
@@ -153,25 +153,25 @@
                                         <table id="simpletable" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Nama</th>
-                                                    <th>No Induk Siswa</th>
-                                                    <th>Kejuruan</th>
-                                                    <th>Tingkat/Kelas</th>
-                                                    <th>Status</th>
+                                                    <th>Nama Tagihan</th>
+                                                    <th>Tahun Ajaran</th>
+                                                    <th>Semester</th>
+                                                    <th>Tingkat</th>
+                                                    <th>Tagihan</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr id="index_">
-                                                    <td>Khoirul Fadilah</td>
-                                                    <td>987654</td>
-                                                    <td>Teknik Komputer Jaringan</td>
-                                                    <td>XI-TKJ-1</td>
-                                                    <td>Belum Lunas</td>
+                                                    <td>SPP</td>
+                                                    <td>2023/2024</td>
+                                                    <td>Semester Genap</td>
+                                                    <td>X - TKJ 1</td>
+                                                    <td>Rp. 250.000</td>
                                                     </td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId"><i class="icofont icofont-print"></i> Cetak Struk</button>
-                                                        <!--<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>-->
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
                                             </tbody>
                                         </table>

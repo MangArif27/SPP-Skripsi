@@ -22,4 +22,8 @@ class PageController extends Controller
     {
         return view('Page._DataPembayaran');
     }
+    public function Tagihan()
+    {
+        return view('Page._DataTagihan');
+    }
 }

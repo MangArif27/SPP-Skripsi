@@ -38,18 +38,18 @@
                         </a>
                     </li>
                     <li>
-                        <a href="Jenis-Tagihan">
+                        <a href="Data-Tagihan">
                             <span class="pcoded-mtext">Jenis Tagihan</span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="pcoded-hasmenu">
+            <!--<li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                     <span class="pcoded-mtext">Laporan</span>
                 </a>
-            </li>
+            </li>-->
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-settings"></i></span>

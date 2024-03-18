@@ -18,3 +18,4 @@ Route::get('/', 'PageController@Index');
 Route::get('/Data-Pengguna', 'PageController@Pengguna');
 Route::get('/Data-Siswa', 'PageController@Siswa');
 Route::get('/Data-Pembayaran', 'PageController@Pembayaran');
+Route::get('/Data-Tagihan', 'PageController@Tagihan');
