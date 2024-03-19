@@ -19,3 +19,5 @@ Route::get('/Data-Pengguna', 'PageController@Pengguna');
 Route::get('/Data-Siswa', 'PageController@Siswa');
 Route::get('/Data-Pembayaran', 'PageController@Pembayaran');
 Route::get('/Data-Tagihan', 'PageController@Tagihan');
+
+Route::post('/Import-Data-Siswa', 'InsertController@ImportSiswa')->name('Insert.Data.Siswa');
