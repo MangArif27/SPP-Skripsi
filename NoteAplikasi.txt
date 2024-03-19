@@ -76,3 +76,18 @@ E. Tabel Jenis_Tagihan
     12. Prakerin
     13. LDK
     14. Kartu_Pelajar
+
+F. Tabel Pengaturan
+    1. Nama Sekolah
+    2. Alamat Sekolah
+    3. Telp
+    4. NPSN
+    5. Jumlah_Kejuruan
+    6. Jumlah_GTK
+    7. Jumlah_Kelas
+    8. Nama_Kepsek
+    9. NIP_Kepsek
+    10. Nama_Bendahara
+    11. NIP_Bendahara
+    12. Tahun_Ajaran
+    13. Semester
