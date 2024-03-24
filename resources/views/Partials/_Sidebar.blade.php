@@ -51,7 +51,7 @@
                 </a>
             </li>-->
             <li class="pcoded-hasmenu">
-                <a href="javascript:void(0)">
+                <a href="Pengaturan">
                     <span class="pcoded-micon"><i class="feather icon-settings"></i></span>
                     <span class="pcoded-mtext">Pengaturan</span>
                 </a>
