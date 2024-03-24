@@ -81,13 +81,13 @@ F. Tabel Pengaturan
     1. Nama Sekolah
     2. Alamat Sekolah
     3. Telp
-    4. NPSN
-    5. Jumlah_Kejuruan
-    6. Jumlah_GTK
-    7. Jumlah_Kelas
-    8. Nama_Kepsek
-    9. NIP_Kepsek
-    10. Nama_Bendahara
-    11. NIP_Bendahara
+    4. Fax
+    5. Email
+    6. Website
+    7. Jumlah_Kejuruan
+    8. Jumlah_GTK
+    9. Jumlah_Kelas
+    10. Nama_Kepsek
+    11. Nama_Bendahara
     12. Tahun_Ajaran
     13. Semester
