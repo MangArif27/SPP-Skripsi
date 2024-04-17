@@ -23,3 +23,6 @@ Route::get('/Pengaturan', 'PageController@Pengaturan');
 
 Route::post('/Import-Data-Siswa', 'InsertController@ImportSiswa')->name('Insert.Data.Siswa');
 Route::post('/Insert-Data-Sekolah', 'InsertController@InsertSekolah')->name('Insert.Data.Sekolah');
+Route::post('/Insert-Data-Tagihan', 'InsertController@InsertTagihan')->name('Insert.Data.Tagihan');
+
+Route::post('/Update-Data-Pembayaran', 'UpdateController@UpdatePembayaran')->name('Update.Data.Pembayaran');

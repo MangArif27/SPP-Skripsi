@@ -60,4 +60,43 @@ class InsertController extends Controller
         ]);
         return redirect('/Pengaturan');
     }
+    public function InsertTagihan(Request $request)
+    {
+        /*Input Data Jenis Tagihan */
+        $Search = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->where('tingkat', $request->Tingkat,)->first();
+        if ($Search) {
+            return redirect('/Data-Tagihan');
+        } else {
+            DB::table('jenis_tagihan')->insert([
+                'tahun_ajaran' => $request->Tahun_Ajaran,
+                'semester' => $request->Semester,
+                'tingkat' => $request->Tingkat,
+                'spp' => $request->SPP,
+                'ekstrakurikuler' => $request->Ekstrakurikuler,
+                'sarpras' => $request->Sarpras,
+                'buku_lks' => $request->Buku_LKS,
+                'pas' => $request->PAS,
+                'study_tour' => $request->Kunjungan,
+                'pentas_seni' => $request->Pentas_Seni,
+                'map_rapor' => $request->MAP_Rapor,
+                'prakerin' => $request->Prakerin,
+                'ldk' => $request->LDK,
+                'kartu_pelajar' => $request->Kartu_Pelajar,
+            ]);
+            /*Input Data Pembayaran SPP */
+            $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+            foreach ($Siswa as $Sw) {
+                $CreateDate = date('Y-m-d H:i:s');
+                DB::table('pembayaran_spp')->insert([
+                    'nis' => $Sw->nis,
+                    'tahun_ajaran' => $request->Tahun_Ajaran,
+                    'semester' => $request->Semester,
+                    'tingkat' => $request->Tingkat,
+                    'keterangan' => "Belum Lunas",
+                    'created_at' => $CreateDate,
+                ]);
+            }
+            return redirect('/Data-Pembayaran');
+        }
+    }
 }

@@ -153,26 +153,23 @@
                                         <table id="simpletable" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Nama Tagihan</th>
                                                     <th>Tahun Ajaran</th>
                                                     <th>Semester</th>
                                                     <th>Tingkat</th>
-                                                    <th>Tagihan</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="index_">
-                                                    <td>SPP</td>
-                                                    <td>2023/2024</td>
-                                                    <td>Semester Genap</td>
-                                                    <td>X - TKJ 1</td>
-                                                    <td>Rp. 250.000</td>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                @foreach($JenisTagihan as $JenisTagihan)
+                                                <tr id="index_{{$JenisTagihan->id}}">
+                                                    <td>{{$JenisTagihan->tahun_ajaran}}</td>
+                                                    <td>{{$JenisTagihan->semester}}</td>
+                                                    <td>{{$JenisTagihan->tingkat}}</td>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId{{$JenisTagihan->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId{{$JenisTagihan->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$JenisTagihan->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>

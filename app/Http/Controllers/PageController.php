@@ -20,15 +20,22 @@ class PageController extends Controller
     }
     public function Siswa()
     {
-        return view('Page._Datasiswa');
+        $Siswa = DB::table('siswa')->get();
+        return view('Page._Datasiswa', ['Siswa' => $Siswa]);
     }
     public function Pembayaran()
     {
-        return view('Page._DataPembayaran');
+        $Search = DB::table('pengaturan')->get();
+        foreach ($Search as $SC) {
+            $PembayaranSPP = DB::table('pembayaran_spp')->where('tahun_ajaran', $SC->tahun_ajaran)->where('semester', $SC->semester)->get();
+        }
+        //dd($PembayaranSPP);
+        return view('Page._DataPembayaran', ['PembayaranSPP' => $PembayaranSPP]);
     }
     public function Tagihan()
     {
-        return view('Page._DataTagihan');
+        $JenisTagihan = DB::table('jenis_tagihan')->get();
+        return view('Page._DataTagihan', ['JenisTagihan' => $JenisTagihan]);
     }
     public function Pengaturan()
     {
