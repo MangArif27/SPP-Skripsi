@@ -39,7 +39,7 @@
                     </li>
                     <li>
                         <a href="Data-Tagihan">
-                            <span class="pcoded-mtext">Jenis Tagihan</span>
+                            <span class="pcoded-mtext">Data Tagihan</span>
                         </a>
                     </li>
                 </ul>
