@@ -97,4 +97,11 @@ class UpdateController extends Controller
         }
         return redirect('/Data-Pembayaran');
     }
+    public function UpdateTagihan(Request $request)
+    {
+        DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->where('tingkat', $request->Tingkat)->update([
+            'spp' => $request->SPP,
+        ]);
+        return redirect('/Data-Tagihan');
+    }
 }
