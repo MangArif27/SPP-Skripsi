@@ -43,4 +43,8 @@ class PageController extends Controller
         $Tahun = DB::table('tahun_ajaran')->get();
         return view('Page._Pengaturan', ['Sekolah' => $Sekolah, 'Tahun' => $Tahun]);
     }
+    public function Kwitansi()
+    {
+        return view('Page._Kwitansi');
+    }
 }
