@@ -28,3 +28,5 @@ Route::post('/Insert-Data-Tagihan', 'InsertController@InsertTagihan')->name('Ins
 
 Route::post('/Update-Data-Pembayaran', 'UpdateController@UpdatePembayaran')->name('Update.Data.Pembayaran');
 Route::post('/Update-Data-Tagihan', 'UpdateController@UpdateTagihan')->name('Update.Data.Tagihan');
+
+Route::post('/Cetak-Kwitansi', 'PageController@CetakKwitansi')->name('Cetak.Kwitansi');

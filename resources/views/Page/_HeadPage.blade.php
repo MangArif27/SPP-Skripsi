@@ -1,4 +1,4 @@
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
     <div class="card">
         <div class="card-block">
             <div class="row align-items-center">
@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
     <div class="card">
         <div class="card-block">
             <div class="row align-items-center">
@@ -48,7 +48,7 @@
         </div>
     </div>
 </div>
-<div class="col-xl-3 col-md-6">
+<div class="col-xl-4 col-md-6">
     <div class="card">
         <div class="card-block">
             <div class="row align-items-center">
@@ -62,31 +62,6 @@
             </div>
         </div>
         <div class="card-footer bg-c-pink">
-            <div class="row align-items-center">
-                <div class="col-9">
-                    <p class="text-white m-b-0">SIPBS</p>
-                </div>
-                <div class="col-3 text-right">
-                    <i class="feather icon-trending-up text-white f-16"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-xl-3 col-md-6">
-    <div class="card">
-        <div class="card-block">
-            <div class="row align-items-center">
-                <div class="col-9">
-                    <h4 class="text-c-yellow f-w-600">03 Keahlian</h4>
-                    <h6 class="text-muted m-b-0">SMK Madani</h6>
-                </div>
-                <div class="col-3 text-right">
-                    <i class="feather icon-check-square f-28"></i>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer bg-c-blue">
             <div class="row align-items-center">
                 <div class="col-9">
                     <p class="text-white m-b-0">SIPBS</p>

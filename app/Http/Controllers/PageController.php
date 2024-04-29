@@ -47,4 +47,10 @@ class PageController extends Controller
     {
         return view('Page._Kwitansi');
     }
+    public function CetakKwitansi(Request $request)
+    {
+        $Pembayaran = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
+        //dd($PembayaranSPP);
+        return view('Page._Kwitansi', ['Pembayaran' => $Pembayaran]);
+    }
 }
