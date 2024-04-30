@@ -1,3 +1,7 @@
+<?php
+$url = "/Data-Pembayaran";
+header("Refresh:5; $url");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -14,7 +18,6 @@
             font: 11px Arial, Helvetica, sans-serif;
             background: white;
         }
-
 
         table tr td {
             font-size: 10px !important;

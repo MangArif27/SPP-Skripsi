@@ -41,8 +41,9 @@ class InsertController extends Controller
                 'tahun_ajaran' => $TahunAjaran,
             ]);
         } else {
-            $TahunAjaran = $request->TahunAjaran;
+            $TahunAjaran = $request->Tahun_Ajaran;
         }
+        //dd($request->NPSN);
         DB::table('pengaturan')->where('id', $request->NPSN)->update([
             'sekolah' => $request->Nama_Sekolah,
             'alamat' => $request->Alamat,
@@ -72,7 +73,7 @@ class InsertController extends Controller
                 'semester' => $request->Semester,
                 'tingkat' => $request->Tingkat,
                 'spp' => $request->SPP,
-                'ekstrakurikuler' => $request->Ekstrakurikuler,
+                /*'ekstrakurikuler' => $request->Ekstrakurikuler,
                 'sarpras' => $request->Sarpras,
                 'buku_lks' => $request->Buku_LKS,
                 'pas' => $request->PAS,
@@ -81,7 +82,7 @@ class InsertController extends Controller
                 'map_rapor' => $request->MAP_Rapor,
                 'prakerin' => $request->Prakerin,
                 'ldk' => $request->LDK,
-                'kartu_pelajar' => $request->Kartu_Pelajar,
+                'kartu_pelajar' => $request->Kartu_Pelajar,*/
             ]);
             /*Input Data Pembayaran SPP */
             $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();

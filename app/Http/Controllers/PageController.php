@@ -53,4 +53,9 @@ class PageController extends Controller
         //dd($PembayaranSPP);
         return view('Page._Kwitansi', ['Pembayaran' => $Pembayaran]);
     }
+    public function Tunggakan()
+    {
+        $Tunggakan = DB::table('pembayaran_spp')->select('nis', DB::raw('count(*) as total'))->groupBy('nis')->get();
+        return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
+    }
 }
