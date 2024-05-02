@@ -48,18 +48,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($PembayaranSPP as $Pembayaran)
-                                                @foreach(DB::table('siswa')->where('nis',$Pembayaran->nis)->get() as $Siswa)
-                                                <tr id="index_{{$Pembayaran->id}}">
+                                                @foreach($Tunggakan as $key => $value )
+                                                @foreach(DB::table('siswa')->where('nis',$key)->select('nama')->groupBy('nama')->get() as $Siswa)
+                                                <tr id="">
                                                     <td>{{$Siswa->nama}}</td>
-                                                    <td>{{$Pembayaran->nis}}</td>
-                                                    @if($Pembayaran->keterangan=="Belum Lunas")
+                                                    <td>{{$key}}</td>
                                                     <td><label class="btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label></td>
-                                                    @else
-                                                    <td><label class="btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Sudah Lunas</label></td>
-                                                    @endif
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId{{$Pembayaran->id}}"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId{{$Pembayaran->id}}"><i class="icofont icofont-print"></i> Cetak Struk</button>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId{{$key}}"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId{{$key}}"><i class="icofont icofont-print"></i> Cetak Struk</button>
                                                         <!--<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>-->
                                                 </tr>
                                                 @endforeach

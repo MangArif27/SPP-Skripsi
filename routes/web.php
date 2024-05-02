@@ -31,3 +31,7 @@ Route::post('/Update-Data-Pembayaran', 'UpdateController@UpdatePembayaran')->nam
 Route::post('/Update-Data-Tagihan', 'UpdateController@UpdateTagihan')->name('Update.Data.Tagihan');
 
 Route::post('/Cetak-Kwitansi', 'PageController@CetakKwitansi')->name('Cetak.Kwitansi');
+
+
+
+Route::get('/Test', 'PageController@test');

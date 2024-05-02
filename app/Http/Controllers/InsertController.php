@@ -89,6 +89,7 @@ class InsertController extends Controller
             foreach ($Siswa as $Sw) {
                 $CreateDate = date('Y-m-d H:i:s');
                 DB::table('pembayaran_spp')->insert([
+                    'id' => $Sw->id,
                     'nis' => $Sw->nis,
                     'tahun_ajaran' => $request->Tahun_Ajaran,
                     'semester' => $request->Semester,

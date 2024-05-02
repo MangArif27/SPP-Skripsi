@@ -50,7 +50,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($PembayaranSPP as $Pembayaran)
-                                                @foreach(DB::table('siswa')->where('nis',$Pembayaran->nis)->get() as $Siswa)
+                                                @foreach(DB::table('siswa')->where('id',$Pembayaran->id)->get() as $Siswa)
                                                 <tr id="index_{{$Pembayaran->id}}">
                                                     <td>{{$Siswa->nama}}</td>
                                                     <td>{{$Pembayaran->nis}}</td>

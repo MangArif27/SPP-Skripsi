@@ -20,7 +20,10 @@ class PageController extends Controller
     }
     public function Siswa()
     {
-        $Siswa = DB::table('siswa')->get();
+        $Search = DB::table('pengaturan')->get();
+        foreach ($Search as $SC) {
+            $Siswa = DB::table('siswa')->where('semester', $SC->semester)->where('tahun_ajaran', $SC->tahun_ajaran)->get();
+        }
         return view('Page._Datasiswa', ['Siswa' => $Siswa]);
     }
     public function Pembayaran()
@@ -55,7 +58,15 @@ class PageController extends Controller
     }
     public function Tunggakan()
     {
-        $Tunggakan = DB::table('pembayaran_spp')->select('nis', DB::raw('count(*) as total'))->groupBy('nis')->get();
+        $Search = DB::table('pengaturan')->get();
+        foreach ($Search as $SC) {
+            $Tunggakan = DB::table('pembayaran_spp')->where('keterangan', 'Belum Lunas')->where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
+        }
         return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
+    }
+    public function test()
+    {
+        $Siswa = DB::table('siswa')->where('nis', '19100198')->select('nama')->groupBy('nama')->get();
+        dd($Siswa);
     }
 }
