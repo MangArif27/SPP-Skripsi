@@ -48,7 +48,12 @@ class PageController extends Controller
     }
     public function Kwitansi()
     {
-        return view('Page._Kwitansi');
+        $Search = DB::table('pengaturan')->get();
+        foreach ($Search as $SC) {
+            $Tunggakan = DB::table('pembayaran_spp')->where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
+        }
+        //dd($Tunggakan);
+        return view('Page._DataKwitansi', ['Tunggakan' => $Tunggakan]);
     }
     public function CetakKwitansi(Request $request)
     {
@@ -60,13 +65,9 @@ class PageController extends Controller
     {
         $Search = DB::table('pengaturan')->get();
         foreach ($Search as $SC) {
-            $Tunggakan = DB::table('pembayaran_spp')->where('keterangan', 'Belum Lunas')->where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
+            $Tunggakan = DB::table('pembayaran_spp')->where('keterangan', 'Belum Lunas')->Where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
         }
+        //dd($Tunggakan);
         return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
-    }
-    public function test()
-    {
-        $Siswa = DB::table('siswa')->where('nis', '19100198')->select('nama')->groupBy('nama')->get();
-        dd($Siswa);
     }
 }

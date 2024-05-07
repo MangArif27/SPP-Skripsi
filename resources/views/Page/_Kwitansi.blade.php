@@ -224,7 +224,7 @@ header("Refresh:5; $url");
                 <td>No</td>
                 <td>Keterangan Pembayaran</td>
                 <td>Jumlah (Rp.)</td>
-                <td>Tanggal Pembayaran </td>
+                <td>Tanggal Pembayaran</td>
                 <td>Status </td>
             </tr>
             <tr>
@@ -350,6 +350,7 @@ header("Refresh:5; $url");
                 <td>No</td>
                 <td>Keterangan Pembayaran</td>
                 <td>Jumlah (Rp.)</td>
+                <td>Tanggal Pembayaran</td>
                 <td>Status </td>
             </tr>
             <tr>
@@ -432,7 +433,7 @@ header("Refresh:5; $url");
             </tr>
             <tr>
                 <td colspan="2" style="font-weight: bold;">Total </td>
-                <td colspan="2" style="font-weight: bold;"> Rp. {{number_format($Jumlah)}}</td>
+                <td colspan="3" style="font-weight: bold;"> Rp. {{number_format($Jumlah)}}</td>
             </tr>
         </table>
         @endif

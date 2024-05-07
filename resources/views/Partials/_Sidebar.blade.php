@@ -43,6 +43,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="Kwitansi">
+                            <span class="pcoded-mtext">Cetak Kwitansi</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="Data-Tagihan">
                             <span class="pcoded-mtext">Data Tagihan</span>
                         </a>
