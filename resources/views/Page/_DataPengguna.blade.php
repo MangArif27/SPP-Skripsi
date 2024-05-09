@@ -36,7 +36,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="card-block">
-                                    <form action="#" enctype="multipart/form-data" id="TambahPengguna" method="post">
+                                    <form action="{{ route('Insert.Pengguna') }}" enctype="multipart/form-data" id="TambahPengguna" method="post">
                                         {{ csrf_field() }}
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Nama Pengguna</label>
@@ -97,6 +97,13 @@
                     </button>
                     <strong>{{$sukses}}</strong>
                 </div>
+                @elseif($gagal = Session::get('gagal'))
+                <div class="alert alert-danger background-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="icofont icofont-close-line-circled text-white"></i>
+                    </button>
+                    <strong>{{$gagal}}</strong>
+                </div>
                 @endif
                 <!-- Page-header end -->
                 <div class="page-body">
@@ -118,17 +125,24 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="index_">
-                                                    <td>Khoirul Fadilah</td>
-                                                    <td>123456789</td>
-                                                    <td>Bendahara</td>
-                                                    <td><label class="label label-primary">Operator</label>
+                                                @foreach($Pengguna as $Pengguna)
+                                                <tr id="index_{{$Pengguna->id}}">
+                                                    <td>{{$Pengguna->name}}</td>
+                                                    <td>{{$Pengguna->nip}}</td>
+                                                    <td>{{$Pengguna->jabatan}}</td>
+                                                    <td>
+                                                        @if($Pengguna->level_user=="Admin")
+                                                        <label class="label label-success">Admin</label>
+                                                        @else
+                                                        <label class="label label-primary">Operator</label>
+                                                        @endif
                                                     </td>
-                                                    <td>2024-03-16 22:31:12</td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatPenggunaId"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                    <td>{{$Pengguna->updated_at}}</td>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Pengguna->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -162,6 +176,7 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
 <!-- Alert Konfirmasi Hapus -->
+
 <script type="text/javascript">
     'use strict';
     $(document).ready(function() {
@@ -196,8 +211,9 @@
         };
     });
 </script>
+@foreach($GetPengguna as $Pengguna)
 <!-- Modal LihatPengguna -->
-<div id="LihatPenggunaId" class="modal fade" role="dialog">
+<div id="LihatPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -212,25 +228,25 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pengguna</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Nama" value="" readonly>
+                                <input type="text" class="form-control" name="Nama" value="{{$Pengguna->name}}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">No Induk Pegawai</label>
                             <div class="col-sm-8">
-                                <input type="number" class="form-control" name="NIP" value="" readonly>
+                                <input type="number" class="form-control" name="NIP" value="{{$Pengguna->nip}}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Jabatan</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Jabatan" value="" readonly>
+                                <input type="text" class="form-control" name="Jabatan" value="{{$Pengguna->jabatan}}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Pangkat</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Pangkat" value="" readonly>
+                                <input type="text" class="form-control" name="Pangkat" value="{{$Pengguna->pangkat}}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -238,8 +254,13 @@
                             <div class="col-sm-8">
                                 <select name="LevelUser" class="form-control" readonly>
                                     <option disabled>Pilih Level User</option>
-                                    <option value="Admin">Admin</option>
+                                    @if($Pengguna->level_user)
+                                    <option value="Admin" selected>Admin</option>
                                     <option value="Operator">Operator</option>
+                                    @else
+                                    <option value="Admin">Admin</option>
+                                    <option value="Operator" selected>Operator</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -252,6 +273,7 @@
         </div>
     </div>
 </div>
+@endforeach
 <!-- Modal EditPengguna -->
 <div class="modal fade" id="EditPenggunaId" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

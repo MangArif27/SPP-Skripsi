@@ -13,6 +13,32 @@ use Illuminate\Support\Facades\Session;
 
 class InsertController extends Controller
 {
+    /* -------- Proses Insert User -------*/
+    public function InsertPengguna(Request $request)
+    {
+        $Search = DB::table('users')->where('nip', $request->NIP)->first();
+        if ($Search) {
+            Session::flash('gagal', 'No Induk Pegawai Sudah Ada!');
+            return redirect('/Data-Pengguna');
+        } else {
+            $Created_At = date('Y-m-d H:m:s');
+            $Updated_At = date('Y-m-d H:m:s');
+            $Password = Hash::make($request->Password);
+            DB::table('users')->insert([
+                'name' => $request->Nama,
+                'nip' => $request->NIP,
+                'jabatan' => $request->Jabatan,
+                'pangkat' => $request->Pangkat,
+                'level_user' => $request->LevelUser,
+                'password' => $Password,
+                'created_at' => $Created_At,
+                'updated_at' => $Updated_At
+            ]);
+            Session::flash('sukses', 'Anda Berhasil Input Data!');
+            return redirect('/Data-Pengguna');
+        }
+    }
+    /* -------- Proses Import Siswa -------*/
     public function ImportSiswa(Request $request)
     {
         // validasi
@@ -33,6 +59,7 @@ class InsertController extends Controller
         // alihkan halaman kembali
         return redirect('/Data-Siswa');
     }
+    /* -------- Proses Insert Data Sekolah -------*/
     public function InsertSekolah(Request $request)
     {
         if ($request->Tahun_Ajaran == "InputBaru") {
@@ -61,6 +88,7 @@ class InsertController extends Controller
         ]);
         return redirect('/Pengaturan');
     }
+    /* -------- Proses Insert Data Tagihan -------*/
     public function InsertTagihan(Request $request)
     {
         /*Input Data Jenis Tagihan */

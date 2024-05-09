@@ -60,7 +60,8 @@ class PageController extends Controller
     }
     public function Pengguna()
     {
-        return view('Page._DataPengguna');
+        $Pengguna = DB::table('users')->get();
+        return view('Page._DataPengguna', ['Pengguna' => $Pengguna, 'GetPengguna' => $Pengguna]);
     }
     public function Siswa()
     {
@@ -113,5 +114,39 @@ class PageController extends Controller
         }
         //dd($Tunggakan);
         return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
+    }
+    /* ------------ Controller Login dan Logout -------------------- */
+    public function Login()
+    {
+        return view('Partials._Login');
+    }
+    public function LoginPost(Request $request)
+    {
+        $nip = $request->nip;
+        $password = $request->password;
+        $Updated_At = date('Y-m-d H:m:s');
+        $data = DB::table('users')->where('nip', $nip)->first();
+        if ($data) {
+            if (Hash::check($password, $data->password)) {
+                Session::put('nama', $data->name);
+                Session::put('nip', $data->nip);
+                Session::put('jabatan', $data->jabatan);
+                Session::put('pangkat', $data->pangkat);
+                Session::put('level_user', $data->level_user);
+                Session::put('login', TRUE);
+                DB::table('users')->where('nip', $request->nip)->update([
+                    'updated_at' => $Updated_At
+                ]);
+                return redirect('/');
+            }
+            return redirect('/Login')->with('alert', 'Password atau No Identitas, Salah !');
+        } else {
+            return redirect('/Login')->with('alert', 'Password atau No Identitas, Salah !');
+        }
+    }
+    public function Logout()
+    {
+        Session::flush();
+        return redirect('Login')->with('alert', 'Kamu sudah logout');
     }
 }
