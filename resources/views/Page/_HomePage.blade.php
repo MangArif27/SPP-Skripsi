@@ -1,4 +1,5 @@
 @extends('Index')
+@foreach(DB::table('pengaturan')->get() as $Pengaturan)
 @section('konten')
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -31,17 +32,24 @@
                                 </div>
                                 <div class="card-block">
                                     <div class="row per-task-block text-center">
+                                        <?php
+                                        $JumlahAll = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->count();
+                                        $SudahLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Sudah Lunas')->count();
+                                        $BelumLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Belum Lunas')->count();
+                                        $PersentaseLunas = $JumlahAll * $SudahLunas / 100;
+                                        $PersentaseBelum = $JumlahAll * $BelumLunas / 100;
+                                        ?>
                                         <div class="col-6">
-                                            <div data-label="80%" class="radial-bar radial-bar-80 radial-bar-lg radial-bar-success"></div>
+                                            <div data-label="{{$PersentaseLunas}}%" class="radial-bar radial-bar-{{$PersentaseLunas}} radial-bar-lg radial-bar-success"></div>
                                             <h6 class="text-muted">Selesai</h6>
-                                            <p class="text-muted">80 Berkas</p>
-                                            <button class="btn btn-success btn-round btn-sm">Litmas Selesai</button>
+                                            <p class="text-muted">{{$SudahLunas}} Berkas</p>
+                                            <button class="btn btn-success btn-round btn-sm">Sudah Lunas</button>
                                         </div>
                                         <div class="col-6">
-                                            <div data-label="80%" class="radial-bar radial-bar-80 radial-bar-lg radial-bar-danger"></div>
+                                            <div data-label="{{$PersentaseBelum}}%"" class=" radial-bar radial-bar-{{100}} radial-bar-lg radial-bar-danger"></div>
                                             <h6 class="text-muted">Proses</h6>
-                                            <p class="text-muted">80 Berkas</p>
-                                            <button class="btn btn-danger btn-round btn-sm">Proses</button>
+                                            <p class="text-muted">{{$BelumLunas}} Berkas</p>
+                                            <button class="btn btn-danger btn-round btn-sm">Belum Lunas</button>
                                         </div>
                                     </div>
                                 </div>
@@ -56,6 +64,7 @@
 
 @endsection
 @section('footer')
+@if($Pengaturan->semester=="Semester Ganjil")
 <script>
     Highcharts.chart('Grafik', {
 
@@ -75,14 +84,14 @@
             }
         },
         xAxis: {
-            categories: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
+            categories: <?php echo json_encode($BulanSemesterGanjil) ?>
         },
         series: [{
-            name: 'Permintaan Litmas',
-            data: [100, 200, 100, 28, 50, 500]
+            name: 'Sudah Bayar',
+            data: <?php echo json_encode($DataSemesterGanjil) ?>
         }, {
-            name: 'Litmas Selesai',
-            data: [60, 100, 90, 78, 90, 300]
+            name: 'Sudah Lunas',
+            data: <?php echo json_encode($DataLunasSemesterGanjil) ?>
         }],
 
         responsive: {
@@ -102,6 +111,54 @@
 
     });
 </script>
+@else
+<script>
+    Highcharts.chart('Grafik', {
+
+        title: {
+            text: 'Grafik Pembayaran',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'Sistem Informasi Pembayaran Sekolah SMK Madani Depok',
+            align: 'left'
+        },
+
+        yAxis: {
+            title: {
+                text: 'Persentase'
+            }
+        },
+        xAxis: {
+            categories: <?php echo json_encode($BulanSemesterGenap) ?>
+        },
+        series: [{
+            name: 'Sudah Bayar',
+            data: <?php echo json_encode($DataSemesterGenap) ?>
+        }, {
+            name: 'Sudah Lunas',
+            data: <?php echo json_encode($DataLunasSemesterGenap) ?>
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+
+    });
+</script>
+@endif
 <script type="text/javascript" src="{{asset('/files/assets/pages/dashboard/crm-dashboard.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/bower_components/chart.js/js/Chart.js')}}"></script>
 <!-- gauge js -->
@@ -109,3 +166,4 @@
 <script src="{{asset('/files/assets/pages/widget/amchart/serial.js')}}"></script>
 <script src="{{asset('/files/assets/pages/widget/amchart/light.js')}}"></script>
 @endsection
+@endforeach

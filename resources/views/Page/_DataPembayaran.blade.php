@@ -149,7 +149,7 @@
             @if($PembayaranSPP->semester="Semester Ganjil")
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Data.Tunggakan') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$PembayaranSPP->id}}" method="post">
+                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$PembayaranSPP->id}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
@@ -301,7 +301,7 @@
             @else
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Data.Tunggakan') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$PembayaranSPP->id}}" method="post">
+                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$PembayaranSPP->id}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>

@@ -89,8 +89,10 @@ class UpdateController extends Controller
                 if ($Ket->spp_a == NULL || $Ket->spp_b == NULL || $Ket->spp_c == NULL || $Ket->spp_d == NULL || $Ket->spp_e == NULL || $Ket->spp_f == NULL) {
                     return redirect('/Data-Pembayaran');
                 } else {
+                    $UpdatedDate = date('Y-m-d H:i:s');
                     DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->update([
                         'keterangan' => "Sudah Lunas",
+                        'updated_at' => $UpdatedDate,
                     ]);
                 }
             }
@@ -170,8 +172,10 @@ class UpdateController extends Controller
                 if ($Ket->spp_a == NULL || $Ket->spp_b == NULL || $Ket->spp_c == NULL || $Ket->spp_d == NULL || $Ket->spp_e == NULL || $Ket->spp_f == NULL) {
                     return redirect('/Data-Pembayaran');
                 } else {
+                    $UpdatedDate = date('Y-m-d H:i:s');
                     DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->update([
                         'keterangan' => "Sudah Lunas",
+                        'updated_at' => $UpdatedDate,
                     ]);
                 }
             }

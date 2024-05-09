@@ -3,7 +3,7 @@
         <div class="card-block">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="text-c-yellow f-w-600">80 Orang</h4>
+                    <h4 class="text-c-yellow f-w-600">{{$Pengaturan->jumlah_gtk}} Orang</h4>
                     <h6 class="text-muted m-b-0">GTK SMK Madani</h6>
                 </div>
                 <div class="col-3 text-right">
@@ -23,12 +23,13 @@
         </div>
     </div>
 </div>
+<?php $CountSiswa = DB::table('siswa')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->count() ?>
 <div class="col-xl-4 col-md-6">
     <div class="card">
         <div class="card-block">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="text-c-yellow f-w-600">300 Siswa</h4>
+                    <h4 class="text-c-yellow f-w-600">{{$CountSiswa}} Siswa</h4>
                     <h6 class="text-muted m-b-0">SMK Madani</h6>
                 </div>
                 <div class="col-3 text-right">
@@ -53,7 +54,7 @@
         <div class="card-block">
             <div class="row align-items-center">
                 <div class="col-9">
-                    <h4 class="text-c-yellow f-w-600">06 Kelas</h4>
+                    <h4 class="text-c-yellow f-w-600">{{$Pengaturan->jumlah_kelas}} Kelas</h4>
                     <h6 class="text-muted m-b-0">SMK Madani</h6>
                 </div>
                 <div class="col-3 text-right">
