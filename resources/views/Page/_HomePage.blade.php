@@ -52,17 +52,15 @@
                                         $SudahLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Sudah Lunas')->count();
                                         $BelumLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Belum Lunas')->count();
                                         if ($SudahLunas == 0) {
-                                            $CountSudahLunas = 0;
+                                            $PersentaseLunas =  $SudahLunas * 100;
                                         } else {
-                                            $CountSudahLunas = $SudahLunas;
+                                            $PersentaseLunas =  $CountSudahLunas / $JumlahAll * 100;
                                         }
                                         if ($BelumLunas == 0) {
-                                            $CountBelumLunas = 0;
+                                            $PersentaseBelum = $BelumLunas * 100;
                                         } else {
-                                            $CountBelumLunas = $BelumLunas;
+                                            $PersentaseBelum = $CountBelumLunas / $JumlahAll * 100;
                                         }
-                                        $PersentaseLunas =  $CountSudahLunas / $JumlahAll * 100;
-                                        $PersentaseBelum = $CountBelumLunas / $JumlahAll * 100;
                                         ?>
                                         <div class="col-6">
                                             <div data-label="{{$PersentaseLunas}}%" class="radial-bar radial-bar-{{$PersentaseLunas}} radial-bar-lg radial-bar-success"></div>
