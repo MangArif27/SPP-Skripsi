@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,9 +31,14 @@ Route::post('/Insert-Data-Tagihan', 'InsertController@InsertTagihan')->name('Ins
 Route::post('/Import-Data-Siswa', 'InsertController@ImportSiswa')->name('Insert.Data.Siswa');
 
 /* -------- Route Update Data -------- */
+Route::post('/Update-Data-Pengguna', 'UpdateController@UpdatePengguna')->name('Update.Pengguna');
+Route::post('/Update-Data-Siswa', 'UpdateController@UpdateSiswa')->name('Update.Siswa');
 Route::post('/Update-Data-Pembayaran', 'UpdateController@UpdatePembayaran')->name('Update.Data.Pembayaran');
 Route::post('/Update-Data-Tunggakan', 'UpdateController@UpdateTunggakan')->name('Update.Data.Tunggakan');
 Route::post('/Update-Data-Tagihan', 'UpdateController@UpdateTagihan')->name('Update.Data.Tagihan');
+
+/* -------- Route Delete Data -------- */
+Route::get('/Delete-Data-Pengguna/{Nip}', 'DeleteController@DeletePengguna');
 
 /* -------- Route Cetak Kwitansi -------- */
 Route::post('/Cetak-Kwitansi', 'PageController@CetakKwitansi')->name('Cetak.Kwitansi');

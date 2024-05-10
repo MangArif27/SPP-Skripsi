@@ -16,9 +16,43 @@ use function PHPUnit\Framework\isNull;
 
 class UpdateController extends Controller
 {
+    /* -------- Proses Update User -------*/
+    public function UpdatePengguna(Request $request)
+    {
+        $Updated_At = date('Y-m-d H:m:s');
+        $Password = Hash::make($request->Password);
+        DB::table('users')->where('nip', $request->NIP)->update([
+            'name' => $request->Nama,
+            'jabatan' => $request->Jabatan,
+            'pangkat' => $request->Pangkat,
+            'level_user' => $request->LevelUser,
+            'password' => $Password,
+            'updated_at' => $Updated_At
+        ]);
+        Session::flash('sukses', 'Anda Berhasil Input Data!');
+        return redirect('/Data-Pengguna');
+    }
+    /* -------- Proses Update Siswa -------*/
+    public function UpdateSiswa(Request $request)
+    {
+        $Updated_At = date('Y-m-d H:m:s');
+        DB::table('siswa')->where('id', $request->Id)->update([
+            'nama' => $request->Nama,
+            'jenis_kelamin' => $request->Jenis_Kelamin,
+            'agama' => $request->Agama,
+            'alamat' => $request->Alamat,
+            'tingkat' => $request->Tingkat,
+            'kelas' => $request->Kelas,
+            'tahun_ajaran' => $request->Tahun_Ajaran,
+            'semester' => $request->Semester,
+            'updated_at' => $Updated_At
+        ]);
+        Session::flash('sukses', 'Anda Berhasil Input Data!');
+        return redirect('/Data-Siswa');
+    }
+    /* -------- Proses Update Pembayaran -------*/
     public function UpdatePembayaran(Request $request)
     {
-        /*Input Pembayaran*/
         $CreateDate = date('Y-m-d');
         $Search = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
         foreach ($Search as $SC) {
@@ -99,6 +133,7 @@ class UpdateController extends Controller
         }
         return redirect('/Data-Pembayaran');
     }
+    /* -------- Proses Update Tunggakan -------*/
     public function UpdateTunggakan(Request $request)
     {
         /*Input Pembayaran*/
@@ -170,7 +205,7 @@ class UpdateController extends Controller
             $Keterangan = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
             foreach ($Keterangan as $Ket) {
                 if ($Ket->spp_a == NULL || $Ket->spp_b == NULL || $Ket->spp_c == NULL || $Ket->spp_d == NULL || $Ket->spp_e == NULL || $Ket->spp_f == NULL) {
-                    return redirect('/Data-Pembayaran');
+                    return redirect('/Data-Tunggakan');
                 } else {
                     $UpdatedDate = date('Y-m-d H:i:s');
                     DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->update([
@@ -182,6 +217,7 @@ class UpdateController extends Controller
         }
         return redirect('/Data-Tunggakan');
     }
+    /* -------- Proses Update Tagihan -------*/
     public function UpdateTagihan(Request $request)
     {
         DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->where('tingkat', $request->Tingkat)->update([

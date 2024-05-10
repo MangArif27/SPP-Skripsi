@@ -10,7 +10,22 @@
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-
+                {{-- notifikasi sukses --}}
+                @if ($sukses = Session::get('sukses'))
+                <div class="alert alert-success background-success">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="icofont icofont-close-line-circled text-white"></i>
+                    </button>
+                    <strong>{{$sukses}}</strong>
+                </div>
+                @elseif($gagal = Session::get('gagal'))
+                <div class="alert alert-danger background-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="icofont icofont-close-line-circled text-white"></i>
+                    </button>
+                    <strong>{{$gagal}}</strong>
+                </div>
+                @endif
                 <div class="page-body">
                     <div class="row">
                         <!-- task, page, download counter  start -->
@@ -28,7 +43,7 @@
                         <div class="col-xl-4 col-md-12">
                             <div class="card per-task-card">
                                 <div class="card-header">
-                                    <h5>Progres Capaian Litmas</h5>
+                                    <h5>Progres Capaian Pembayaran</h5>
                                 </div>
                                 <div class="card-block">
                                     <div class="row per-task-block text-center">
@@ -36,8 +51,18 @@
                                         $JumlahAll = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->count();
                                         $SudahLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Sudah Lunas')->count();
                                         $BelumLunas = DB::table('pembayaran_spp')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('semester', $Pengaturan->semester)->where('keterangan', 'Belum Lunas')->count();
-                                        $PersentaseLunas = $JumlahAll * $SudahLunas / 100;
-                                        $PersentaseBelum = $JumlahAll * $BelumLunas / 100;
+                                        if ($SudahLunas == 0) {
+                                            $CountSudahLunas = 0;
+                                        } else {
+                                            $CountSudahLunas = $SudahLunas;
+                                        }
+                                        if ($BelumLunas == 0) {
+                                            $CountBelumLunas = 0;
+                                        } else {
+                                            $CountBelumLunas = $BelumLunas;
+                                        }
+                                        $PersentaseLunas =  $CountSudahLunas / $JumlahAll * 100;
+                                        $PersentaseBelum = $CountBelumLunas / $JumlahAll * 100;
                                         ?>
                                         <div class="col-6">
                                             <div data-label="{{$PersentaseLunas}}%" class="radial-bar radial-bar-{{$PersentaseLunas}} radial-bar-lg radial-bar-success"></div>
@@ -46,7 +71,7 @@
                                             <button class="btn btn-success btn-round btn-sm">Sudah Lunas</button>
                                         </div>
                                         <div class="col-6">
-                                            <div data-label="{{$PersentaseBelum}}%"" class=" radial-bar radial-bar-{{100}} radial-bar-lg radial-bar-danger"></div>
+                                            <div data-label="{{$PersentaseBelum}}%"" class=" radial-bar radial-bar-{{$PersentaseBelum}} radial-bar-lg radial-bar-danger"></div>
                                             <h6 class="text-muted">Proses</h6>
                                             <p class="text-muted">{{$BelumLunas}} Berkas</p>
                                             <button class="btn btn-danger btn-round btn-sm">Belum Lunas</button>

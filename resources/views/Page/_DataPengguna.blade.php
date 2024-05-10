@@ -176,14 +176,14 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
 <!-- Alert Konfirmasi Hapus -->
-
+@foreach($GetPengguna as $Pengguna)
 <script type="text/javascript">
     'use strict';
     $(document).ready(function() {
-        document.querySelector('.alert-confirm-id').onclick = function() {
+        document.querySelector('.alert-confirm-id{{$Pengguna->id}}').onclick = function() {
             swal({
                     title: "Apakah Kamu Yakin ?",
-                    text: "Akan Menghapus Data Atas Nama : ",
+                    text: "Akan Menghapus Data Atas Nama : {{$Pengguna->name}}",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonClass: "btn-danger",
@@ -193,14 +193,13 @@
                 function(isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: '/Delete-Pengguna/',
+                            url: '/Delete-Data-Pengguna/{{$Pengguna->nip}}',
                             success: function(response) {
-
                                 //show success message
                                 swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
                                     "success");
                                 //remove post on table
-                                $(`#index_`).remove();
+                                $(`#index_{{$Pengguna->id}}`).remove();
                                 location.reload();
                             }
                         });
@@ -211,8 +210,9 @@
         };
     });
 </script>
+@endforeach
+<!-- Modal Lihat Pengguna -->
 @foreach($GetPengguna as $Pengguna)
-<!-- Modal LihatPengguna -->
 <div id="LihatPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -254,7 +254,7 @@
                             <div class="col-sm-8">
                                 <select name="LevelUser" class="form-control" readonly>
                                     <option disabled>Pilih Level User</option>
-                                    @if($Pengguna->level_user)
+                                    @if($Pengguna->level_user=="Admin")
                                     <option value="Admin" selected>Admin</option>
                                     <option value="Operator">Operator</option>
                                     @else
@@ -274,8 +274,9 @@
     </div>
 </div>
 @endforeach
-<!-- Modal EditPengguna -->
-<div class="modal fade" id="EditPenggunaId" tabindex="-1" role="dialog">
+<!-- Modal Edit Pengguna -->
+@foreach($GetPengguna as $Pengguna)
+<div id="EditPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -284,51 +285,58 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-block">
-                <form action="#" id="EditPengguna" enctype="multipart/form-data" method="post">
-                    {{ csrf_field() }}
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Nama Pengguna</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Nama" value="">
+            <div class="modal-body">
+                <div class="card-block">
+                    <form action="{{ route('Update.Pengguna') }}" enctype="multipart/form-data" id="EditPengguna{{$Pengguna->id}}" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Nama Pengguna</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Nama" value="{{$Pengguna->name}}">
+                            </div>
                         </div>
-                    </div>
-                    <div class=" form-group row">
-                        <label class="col-sm-4 col-form-label">No Induk Pegawai</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" name="NIP" value="" readonly>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">No Induk Pegawai</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="NIP" value="{{$Pengguna->nip}}" readonly>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Jabatan</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Jabatan" value="">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Jabatan</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Jabatan" value="{{$Pengguna->jabatan}}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Pangkat</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Pangkat" value="">
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Pangkat</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="Pangkat" value="{{$Pengguna->pangkat}}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Level User</label>
-                        <div class="col-sm-8">
-                            <select name="LevelUser" class="form-control">
-                                <option disabled>Pilih Level User</option>
-                                <option value="Admin">Admin</option>
-                                <option value="Operator">Operator</option>
-                            </select>
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label">Level User</label>
+                            <div class="col-sm-8">
+                                <select name="LevelUser" class="form-control">
+                                    <option disabled>Pilih Level User</option>
+                                    @if($Pengguna->level_user=="Admin")
+                                    <option value="Admin" selected>Admin</option>
+                                    <option value="Operator">Operator</option>
+                                    @else
+                                    <option value="Admin">Admin</option>
+                                    <option value="Operator" selected>Operator</option>
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                <button type="submit" form="EditPengguna" class="btn btn-primary waves-effect waves-light "><i class="icofont icofont-save"></i> Save</button>
-
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect " form="EditPengguna{{$Pengguna->id}}"><i class="icofont icofont-ui-save"></i> Save</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 @endsection
