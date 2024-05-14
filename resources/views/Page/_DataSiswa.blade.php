@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="page-header-breadcrumb">
-                                <button class="btn btn-out-dashed btn-md btn-success btn-square" data-toggle="modal" data-target="#Tambah"><i class="feather icon-plus"></i> Pengguna</button>
+                                <button class="btn btn-out-dashed btn-md btn-success btn-square" data-toggle="modal" data-target="#Tambah"><i class="feather icon-plus"></i>Tambah Siswa</button>
                             </div>
                         </div>
                     </div>

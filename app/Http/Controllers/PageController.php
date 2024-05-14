@@ -102,7 +102,7 @@ class PageController extends Controller
                     $PembayaranSPP = DB::table('pembayaran_spp')->where('tahun_ajaran', $SC->tahun_ajaran)->where('semester', $SC->semester)->get();
                 }
                 //dd($PembayaranSPP);
-                return view('Page._DataPembayaran', ['PembayaranSPP' => $PembayaranSPP]);
+                return view('Page._DataPembayaran', ['PembayaranSPP' => $PembayaranSPP, 'GetPembayaran' => $PembayaranSPP]);
             }
         }
     }
