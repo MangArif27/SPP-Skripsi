@@ -13,7 +13,7 @@ Relasi Tabel SIPBS SMK Madani Depok
 12. Prakerin
 13. LDK
 14. Kartu Pelajar
-Blalalala
+15.
 -- Rincian Tabel
 A. Tabel Pengguna
     1. NIP
