@@ -85,7 +85,7 @@ class PageController extends Controller
             foreach ($Search as $SC) {
                 $Siswa = DB::table('siswa')->where('semester', $SC->semester)->where('tahun_ajaran', $SC->tahun_ajaran)->get();
             }
-            return view('Page._Datasiswa', ['Siswa' => $Siswa, 'LihatSiswa' => $Siswa]);
+            return view('Page._DataSiswa', ['Siswa' => $Siswa, 'LihatSiswa' => $Siswa]);
         }
     }
     public function Pembayaran()
