@@ -1,7 +1,3 @@
-<?php
-$url = "/Data-Pembayaran";
-header("Refresh:5; $url");
-?>
 <!DOCTYPE html>
 <html>
 
@@ -12,8 +8,21 @@ header("Refresh:5; $url");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://penilaian-smk.madanidepok.sch.id/vendor/img/icon/logo1.png" type="image/ico" />
+    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
     <title>SIPBS-SMK Madani Depok</title>
     <style type="text/css">
+        @page {
+            size: A5 landscape;
+            margin-top: 1px;
+            margin-left: 1px;
+            margin-right: 1px;
+            margin-bottom: cm;
+
+            @bottom-left {
+                content: 'Halaman ' counter(page) ' dari ' counter(pages);
+            }
+        }
+
         body {
             font: 11px Arial, Helvetica, sans-serif;
             background: white;
@@ -31,13 +40,6 @@ header("Refresh:5; $url");
         table.header tr td b {
             font-size: 12px;
             font-weight: bold;
-        }
-
-        .kunjunganCetak {
-            width: 148;
-            height: 210;
-
-
         }
 
         #header-surat-izin {
@@ -128,11 +130,10 @@ header("Refresh:5; $url");
             display: none;
         }
     </style>
-    <script language="Javascript1.2">
-        /*
+    <script>
         function printpage() {
-
-            window.print();}*/
+            window.print();
+        }
     </script>
 </head>
 
@@ -454,7 +455,9 @@ header("Refresh:5; $url");
             </tr>
             <tr>
                 <td width="900px"></td>
-                <td width="200px" style="font-weight: bold;">Diki Setiawan, S.Kom<br></td>
+                @foreach(DB::table('pengaturan')->get() as $Pengaturan)
+                <td width="200px" style="font-weight: bold;">{{$Pengaturan->nama_bendahara}}<br></td>
+                @endforeach
             </tr>
         </table>
         @endforeach
@@ -466,13 +469,6 @@ header("Refresh:5; $url");
             <li>Uang yang sudah dibayarkan tidak dapat dikembalikan</li>
         </ul>
     </div>
-    <script>
-        window.onload = function() {
-            window.print();
-        }
-    </script>
-
 </body>
-
 
 </html>

@@ -49,9 +49,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @forelse($Tunggakan as $key => $value )
-                                                @forelse($value as $Pembayaran)
-                                                @forelse(DB::table('siswa')->where('nis',$key)->select('nama')->groupBy('nama')->get() as $Siswa)
+                                                @foreach($Tunggakan as $key => $value )
+                                                @foreach($value as $Pembayaran)
+                                                @foreach(DB::table('siswa')->where('nis',$key)->select('nama')->groupBy('nama')->get() as $Siswa)
                                                 <tr>
                                                     <td>{{$Siswa->nama}}</td>
                                                     <td>{{$key}}</td>
@@ -89,16 +89,16 @@
                                                         $Bulan6 = 0;
                                                     }
                                                     $Jumlah = $Bulan1 + $Bulan2 + $Bulan3 + $Bulan4 + $Bulan5 + $Bulan6; ?>
-                                                    @endforelse
+                                                    @endforeach
                                                     <td style="background-color:#FF0000;">
                                                         <span style="color: white;">Rp. {{number_format($Jumlah)}}</span>
                                                     </td>
                                                     <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId{{$Pembayaran->id}}"><i class="icofont icofont-print"></i> Cetak Struk</button>
                                                         <!--<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>-->
                                                 </tr>
-                                                @endforelse
-                                                @endforelse
-                                                @endforelse
+                                                @endforeach
+                                                @endforeach
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
