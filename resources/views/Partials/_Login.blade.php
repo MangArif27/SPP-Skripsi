@@ -43,7 +43,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <form action="#" class="md-float-material form-material" enctype="multipart/form-data" method="post">
+                    <form action="{{route('Login.Post')}}" class="md-float-material form-material" enctype="multipart/form-data" method="post">
                         <div class="text-center">
                             <img src="{{ asset('/files/assets/images/logo.png')}}" alt="logo.png">
                         </div>

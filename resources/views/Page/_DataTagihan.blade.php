@@ -36,93 +36,113 @@
                             </div>
                             <div class="modal-body">
                                 <div class="card-block">
-                                    <form action="#" enctype="multipart/form-data" id="TambahTagihan" method="post">
+                                    <form action="{{ route('Insert.Data.Tagihan') }}" enctype="multipart/form-data" id="TambahTagihan" method="post">
                                         {{ csrf_field() }}
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Tahun Ajaran</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="TahunAjaran" placeholder="Tahun Ajaran" required>
+                                            <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
+                                            <div class="col-sm-4">
+                                                <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control" required>
+                                                    <option readonly> Tahun Ajaran </option>
+                                                    @foreach(DB::table('tahun_ajaran')->get() as $Tahun)
+                                                    @foreach(DB::table('pengaturan')->get() as $Pengaturan)
+                                                    @if($Tahun->tahun_ajaran==$Pengaturan->tahun_ajaran)
+                                                    <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                                    @else
+                                                    <option value="{{$Tahun->tahun_ajaran}}"> {{$Tahun->tahun_ajaran}} </option>
+                                                    @endif
+                                                    @endforeach
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Semester</label>
+                                            <div class="col-sm-4">
+                                                <select name="Semester" id="Semester" class="form-control" required>
+                                                    <option readonly> Semester </option>
+                                                    @foreach(DB::table('pengaturan')->get() as $Pengaturan)
+                                                    @if($Pengaturan->semester=="Semester Ganjil")
+                                                    <option value="Semester Ganjil" selected> Semester Ganjil </option>
+                                                    <option value="Semester Genap"> Semester Genap </option>
+                                                    @else
+                                                    <option value="Semester Ganjil"> Semester Ganjil </option>
+                                                    <option value="Semester Genap" selected> Semester Genap </option>
+                                                    @endif
+                                                    @endforeach
+
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Semester</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="Semester" placeholder="Semester" required>
+                                            <label class="col-sm-2 col-form-label">Tingkat</label>
+                                            <div class="col-sm-4">
+                                                <select name="Tingkat" id="Tingkat" class="form-control" required>
+                                                    <option readonly> Tingkat </option>
+                                                    <option value="X"> X </option>
+                                                    <option value="XI"> XI </option>
+                                                    <option value="XII"> XII </option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Tingkat</label>
-                                            <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="Tingkat" placeholder="Tingkat" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
                                             </div>
                                         </div>
+                                        <!--<hr style="border: 1px dashed;">
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Kartu Pelajar</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Kartu Pelajar</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Kartu_Pelajar" placeholder="Kartu Pelajar" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">MAP Rapor</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">MAP Rapor <sup>(Bagi Tingkat X)</sup></label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="MAP_Rapor" placeholder="MAP Rapor" required>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Ekstrakurikuler</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Ekstrakurikuler</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Ekstrakurikuler" placeholder="Ekstrakurikuler" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">SarPras Kejuruan</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">SarPras Kejuruan</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Sarpras" placeholder="SarPras Kejuruan" required>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">PAS/PAT/UKK</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">PAS/PAT/UKK</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="PAS" placeholder="PAS/PAT/UKK" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Pentas Seni</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Pentas Seni</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Pentas_Seni" placeholder="Pentas Seni" required>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Buku_LKS" placeholder="Buku_LKS" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Prakerin</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Prakerin</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Prakerin" placeholder="Praktik Kerja Industri" required>
                                             </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Latihan Dasar Kepemimpinan</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Latihan Dasar Kepemimpinan</label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="LDK" placeholder="Latihan Dasar Kepemimpinan" required>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-4 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
-                                            <div class="col-sm-8">
+                                            <label class="col-sm-2 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
+                                            <div class="col-sm-4">
                                                 <input type="text" class="form-control" name="Kunjungan" placeholder="Kunjungan Mushaf Alquran" required>
                                             </div>
-                                        </div>
-
+                                        </div>-->
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
@@ -153,26 +173,23 @@
                                         <table id="simpletable" class="table table-striped table-bordered nowrap">
                                             <thead>
                                                 <tr>
-                                                    <th>Nama Tagihan</th>
                                                     <th>Tahun Ajaran</th>
                                                     <th>Semester</th>
                                                     <th>Tingkat</th>
-                                                    <th>Tagihan</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="index_">
-                                                    <td>SPP</td>
-                                                    <td>2023/2024</td>
-                                                    <td>Semester Genap</td>
-                                                    <td>X - TKJ 1</td>
-                                                    <td>Rp. 250.000</td>
-                                                    </td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                @foreach($JenisTagihan as $JenisTagihan)
+                                                <tr id="index_{{$JenisTagihan->id}}">
+                                                    <td>{{$JenisTagihan->tahun_ajaran}}</td>
+                                                    <td>{{$JenisTagihan->semester}}</td>
+                                                    <td>{{$JenisTagihan->tingkat}}</td>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatTagihanId{{$JenisTagihan->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditTagihanId{{$JenisTagihan->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$JenisTagihan->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -241,217 +258,276 @@
     });
 </script>
 <!-- Modal LihatPengguna -->
-<div id="PembayaranId" class="modal fade" role="dialog">
+@foreach(DB::table('jenis_tagihan')->get() as $JT)
+<div class="modal fade" id="LihatTagihanId{{$JT->id}}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Data Diri Siswa</h4>
+                <h4 class="modal-title">Data Tagihan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="#" enctype="multipart/form-data" id="FormPembayaran-Id" method="post">
+                    <form enctype="multipart/form-data" id="TambahTagihan" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tahun Ajaran</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="TahunAjaran" placeholder="Tahun Ajaran" required>
+                            <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
+                            <div class="col-sm-4">
+                                <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control" readonly>
+                                    <option readonly> Tahun Ajaran </option>
+                                    @foreach(DB::table('tahun_ajaran')->get() as $Tahun)
+                                    @if($Tahun->tahun_ajaran==$JT->tahun_ajaran)
+                                    <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                    @else
+                                    <option value="{{$Tahun->tahun_ajaran}}"> {{$Tahun->tahun_ajaran}} </option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <div class="col-sm-4">
+                                <select name="Semester" id="Semester" class="form-control" readonly>
+                                    <option readonly> Semester </option>
+                                    @if($JT->semester=="Semester Ganjil")
+                                    <option value="Semester Ganjil" selected> Semester Ganjil </option>
+                                    <option value="Semester Genap"> Semester Genap </option>
+                                    @else
+                                    <option value="Semester Ganjil"> Semester Ganjil </option>
+                                    <option value="Semester Genap" selected> Semester Genap </option>
+                                    @endif
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Semester</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Semester" placeholder="Semester" required>
+                            <label class="col-sm-2 col-form-label">Tingkat</label>
+                            <div class="col-sm-4">
+                                <select name="Tingkat" id="Tingkat" class="form-control" readonly>
+                                    <option readonly> Tingkat </option>
+                                    @if($JT->tingkat=="X")
+                                    <option value="X" selected> X </option>
+                                    <option value="XI"> XI </option>
+                                    <option value="XII"> XII </option>
+                                    @elseif($JT->tingkat=="XI")
+                                    <option value="X"> X </option>
+                                    <option value="XI" selected> XI </option>
+                                    <option value="XII"> XII </option>
+                                    @else
+                                    <option value="X"> X </option>
+                                    <option value="XI"> XI </option>
+                                    <option value="XII" selected> XII </option>
+                                    @endif
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="SPP" value="{{$JT->spp}}" readonly>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Tingkat</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Tingkat" placeholder="Tingkat" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Kartu Pelajar</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Kartu_Pelajar" placeholder="Kartu Pelajar" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">MAP Rapor</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="MAP_Rapor" placeholder="MAP Rapor" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Ekstrakurikuler</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Ekstrakurikuler" placeholder="Ekstrakurikuler" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">SarPras Kejuruan</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Sarpras" placeholder="SarPras Kejuruan" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">PAS/PAT/UKK</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="PAS" placeholder="PAS/PAT/UKK" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Pentas Seni</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Pentas_Seni" placeholder="Pentas Seni" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Buku_LKS" placeholder="Buku_LKS" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Prakerin</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Prakerin" placeholder="Praktik Kerja Industri" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Latihan Dasar Kepemimpinan</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="LDK" placeholder="Latihan Dasar Kepemimpinan" required>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Kunjungan" placeholder="Kunjungan Mushaf Alquran" required>
-                            </div>
-                        </div>
+                        <!--
+                            <hr style="border: 1px dashed;">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Kartu Pelajar</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Kartu_Pelajar" placeholder="Kartu Pelajar" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">MAP Rapor <sup>(Bagi Tingkat X)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="MAP_Rapor" placeholder="MAP Rapor" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Ekstrakurikuler</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Ekstrakurikuler" placeholder="Ekstrakurikuler" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">SarPras Kejuruan</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Sarpras" placeholder="SarPras Kejuruan" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">PAS/PAT/UKK</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="PAS" placeholder="PAS/PAT/UKK" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Pentas Seni</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Pentas_Seni" placeholder="Pentas Seni" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Buku_LKS" placeholder="Buku_LKS" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Prakerin</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Prakerin" placeholder="Praktik Kerja Industri" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Latihan Dasar Kepemimpinan</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="LDK" placeholder="Latihan Dasar Kepemimpinan" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Kunjungan" placeholder="Kunjungan Mushaf Alquran" required>
+                                            </div>
+                                        </div>-->
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" form="FormPembayaran-Id" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 <!-- Modal EditPengguna -->
-<div class="modal fade" id="CetakBuktiId" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+@foreach(DB::table('jenis_tagihan')->get() as $JT)
+<div class="modal fade" id="EditTagihanId{{$JT->id}}" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Data Diri Siswa</h4>
+                <h4 class="modal-title">Data Tagihan</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-block">
-                <form action="#" enctype="multipart/form-data" id="CetakPembayaran-Id" method="post">
-                    {{ csrf_field() }}
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Tahun Ajaran</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="TahunAjaran" placeholder="Tahun Ajaran" required>
+            <div class="modal-body">
+                <div class="card-block">
+                    <form action="{{ route('Update.Data.Tagihan') }}" enctype="multipart/form-data" id="UpdateTagihanId{{$JT->id}}" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
+                            <div class="col-sm-4">
+                                <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control" readonly>
+                                    <option readonly> Tahun Ajaran </option>
+                                    @foreach(DB::table('tahun_ajaran')->get() as $Tahun)
+                                    @if($Tahun->tahun_ajaran==$JT->tahun_ajaran)
+                                    <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                    @else
+                                    <option value="{{$Tahun->tahun_ajaran}}"> {{$Tahun->tahun_ajaran}} </option>
+                                    @endif
+                                    @endforeach
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <div class="col-sm-4">
+                                <select name="Semester" id="Semester" class="form-control" readonly>
+                                    <option readonly> Semester </option>
+                                    @if($JT->semester=="Semester Ganjil")
+                                    <option value="Semester Ganjil" selected> Semester Ganjil </option>
+                                    <option value="Semester Genap"> Semester Genap </option>
+                                    @else
+                                    <option value="Semester Ganjil"> Semester Ganjil </option>
+                                    <option value="Semester Genap" selected> Semester Genap </option>
+                                    @endif
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Semester</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Semester" placeholder="Semester" required>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tingkat</label>
+                            <div class="col-sm-4">
+                                <select name="Tingkat" id="Tingkat" class="form-control" readonly>
+                                    <option readonly> Tingkat </option>
+                                    @if($JT->tingkat=="X")
+                                    <option value="X" selected> X </option>
+                                    <option value="XI"> XI </option>
+                                    <option value="XII"> XII </option>
+                                    @elseif($JT->tingkat=="XI")
+                                    <option value="X"> X </option>
+                                    <option value="XI" selected> XI </option>
+                                    <option value="XII"> XII </option>
+                                    @else
+                                    <option value="X"> X </option>
+                                    <option value="XI"> XI </option>
+                                    <option value="XII" selected> XII </option>
+                                    @endif
+                                </select>
+                            </div>
+                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="SPP" value="{{$JT->spp}}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Tingkat</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Tingkat" placeholder="Tingkat" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Kartu Pelajar</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Kartu_Pelajar" placeholder="Kartu Pelajar" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">MAP Rapor</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="MAP_Rapor" placeholder="MAP Rapor" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Ekstrakurikuler</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Ekstrakurikuler" placeholder="Ekstrakurikuler" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">SarPras Kejuruan</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Sarpras" placeholder="SarPras Kejuruan" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">PAS/PAT/UKK</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="PAS" placeholder="PAS/PAT/UKK" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Pentas Seni</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Pentas_Seni" placeholder="Pentas Seni" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Buku_LKS" placeholder="Buku_LKS" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Prakerin</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Prakerin" placeholder="Praktik Kerja Industri" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Latihan Dasar Kepemimpinan</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="LDK" placeholder="Latihan Dasar Kepemimpinan" required>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Kunjungan" placeholder="Kunjungan Mushaf Alquran" required>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                <button type="submit" form="FormPembayaran-Id" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
+                        <!--
+                            <hr style="border: 1px dashed;">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Kartu Pelajar</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Kartu_Pelajar" placeholder="Kartu Pelajar" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">MAP Rapor <sup>(Bagi Tingkat X)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="MAP_Rapor" placeholder="MAP Rapor" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Ekstrakurikuler</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Ekstrakurikuler" placeholder="Ekstrakurikuler" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">SarPras Kejuruan</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Sarpras" placeholder="SarPras Kejuruan" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">PAS/PAT/UKK</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="PAS" placeholder="PAS/PAT/UKK" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Pentas Seni</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Pentas_Seni" placeholder="Pentas Seni" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Buku LKS <sup>(PerSemester)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Buku_LKS" placeholder="Buku_LKS" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Prakerin</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Prakerin" placeholder="Praktik Kerja Industri" required>
+                                            </div>
+                                            <label class="col-sm-2 col-form-label">Latihan Dasar Kepemimpinan</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="LDK" placeholder="Latihan Dasar Kepemimpinan" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Kunjungan Mushaf Alquran <sup>(Bagi Muslim)</sup></label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="Kunjungan" placeholder="Kunjungan Mushaf Alquran" required>
+                                            </div>
+                                        </div>-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" form="UpdateTagihanId{{$JT->id}}"><i class=" icofont icofont-save"></i> Save</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 @endsection

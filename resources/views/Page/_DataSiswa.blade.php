@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="page-header-breadcrumb">
-                                <button class="btn btn-out-dashed btn-md btn-success btn-square" data-toggle="modal" data-target="#Tambah"><i class="feather icon-plus"></i> Pengguna</button>
+                                <button class="btn btn-out-dashed btn-md btn-success btn-square" data-toggle="modal" data-target="#Tambah"><i class="feather icon-plus"></i>Tambah Siswa</button>
                             </div>
                         </div>
                     </div>
@@ -76,22 +76,22 @@
                                                 <tr>
                                                     <th>Nama</th>
                                                     <th>No Induk Siswa</th>
-                                                    <th>Kejuruan</th>
                                                     <th>Tingkat/Kelas</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr id="index_">
-                                                    <td>Khoirul Fadilah</td>
-                                                    <td>987654</td>
-                                                    <td>Teknik Komputer Jaringan</td>
-                                                    <td>XI-TKJ-1</label>
+                                                @foreach($Siswa as $Siswa)
+                                                <tr id="index_{{$Siswa->id}}">
+                                                    <td>{{$Siswa->nama}}</td>
+                                                    <td>{{$Siswa->nis}}</td>
+                                                    <td>{{$Siswa->tingkat}}-{{$Siswa->kelas}}</label>
                                                     </td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditSiswaId"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId{{$Siswa->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId{{$Siswa->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <!---<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Siswa->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>--->
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -124,43 +124,10 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modal.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
-<!-- Alert Konfirmasi Hapus -->
-<script type="text/javascript">
-    'use strict';
-    $(document).ready(function() {
-        document.querySelector('.alert-confirm-id').onclick = function() {
-            swal({
-                    title: "Apakah Kamu Yakin ?",
-                    text: "Akan Menghapus Data Atas Nama : ",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Ya",
-                    closeOnConfirm: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: '/Delete-Siswa/',
-                            success: function(response) {
 
-                                //show success message
-                                swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
-                                    "success");
-                                //remove post on table
-                                $(`#index_`).remove();
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        swal("Cancel", "Kamu Tidak Jadi Hapus Data :)", "error");
-                    }
-                });
-        };
-    });
-</script>
-<!-- Modal LihatPengguna -->
-<div id="LihatId" class="modal fade" role="dialog">
+<!-- Modal Lihat Data -->
+@foreach($LihatSiswa as $Siswa)
+<div id="LihatId{{$Siswa->id}}" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -174,42 +141,94 @@
                     <form>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Siswa </label>
-                            <input type="text" class="form-control col-sm-4" name="Nama" value="" readonly>
+                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}" readonly>
                             <label class="col-sm-2 col-form-label">NIS </label>
-                            <input type="number" class="form-control col-sm-4" name="NIS" value="" readonly>
+                            <input type="number" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jenis Kelamin </label>
-                            <select name="Jenis_Kelamin" id="Jenis_Kelamin" class="form-control col-sm-4" required>
+                            <select name="Jenis_Kelamin" id="Jenis_Kelamin" class="form-control col-sm-4" readonly>
                                 <option readonly> Jenis Kelamin </option>
-                                <option value="Laki-Laki"> Laki-Laki </option>
+                                @if($Siswa->jenis_kelamin=="Laki-Laki")
+                                <option value="Laki-Laki" selected> Laki-Laki </option>
                                 <option value="Perempuan"> Perempuan </option>
+                                @else
+                                <option value="Laki-Laki"> Laki-Laki </option>
+                                <option value="Perempuan" selected> Perempuan </option>
+                                @endif
                             </select>
                             <label class="col-sm-2 col-form-label">Agama </label>
-                            <select name="Agama" id="Agama" class="form-control col-sm-4" required>
+                            <select name="Agama" id="Agama" class="form-control col-sm-4" readonly>
                                 <option readonly> Jenis Kelamin </option>
-                                <option value="Islam"> Islam </option>
+                                @if($Siswa->agama=="Islam")
+                                <option value="Islam" selected> Islam </option>
                                 <option value="Katholik"> Katholik </option>
-                                <option value="Kristen"> Kristen </option>
+                                <option value="Protestan"> Protestan </option>
                                 <option value="Hindu"> Hindu </option>
                                 <option value="Budha"> Budha </option>
                                 <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Katholik")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik" selected> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Protestan")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan" selected> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Hindu")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu" selected> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Budha")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha" selected> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @else
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu" selected> Khonghucu </option>
+                                @endif
                             </select>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Alamat </label>
-                            <textarea class="form-control col-sm-10" name="Alamat"></textarea>
+                            <textarea class="form-control col-sm-10" name="Alamat" readonly>{{$Siswa->alamat}}</textarea>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tingkat</label>
-                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-4" required>
+                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-4" readonly>
                                 <option readonly> Tingkat </option>
+                                @if($Siswa->tingkat=="X")
+                                <option value="X" selected> X </option>
+                                <option value="XI"> XI </option>
+                                <option value="XII"> XII </option>
+                                @elseif($Siswa->tingkat=="XI")
+                                <option value="X"> X </option>
+                                <option value="XI" selected> XI </option>
+                                <option value="XII"> XII </option>
+                                @else
                                 <option value="X"> X </option>
                                 <option value="XI"> XI </option>
-                                <option value="XII">XII</option>
+                                <option value="XII" selected> XII </option>
+                                @endif
                             </select>
                             <label class="col-sm-2 col-form-label">Kelas</label>
-                            <select name="Kelas" id="Kelas" class="form-control col-sm-4" required>
+                            <select name="Kelas" id="Kelas" class="form-control col-sm-4" readonly>
                                 <option readonly> Kelas </option>
                                 <option value="X TRO 1"> X TRO 1 </option>
                                 <option value="XI TKJ 1"> XI TKJ 1 </option>
@@ -217,26 +236,27 @@
                             </select>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Kejuruan</label>
-                            <select name="Kejuruan" id="Kejuruan" class="form-control col-sm-10" required>
-                                <option readonly> Kejuruan </option>
-                                <option value="Teknik Kendaraan Ringan Otomotif"> Teknik Kendaraan Ringan Otomotif </option>
-                                <option value="Teknik Komputer dan Jaringan"> Teknik Komputer dan Jaringan </option>
-                                <option value="Teknik Pendingin dan Tata Udara"> Teknik Pendingin dan Tata Udara </option>
-                            </select>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
-                            <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control col-sm-4" required>
+                            <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control col-sm-4" readonly>
                                 <option readonly> Tahun Ajaran </option>
-                                <option value="2022/2023"> 2022/2023 </option>
-                                <option value="2023/2024"> 2023/2024 </option>
+                                @foreach(DB::table('tahun_ajaran')->get() as $Tahun)
+                                @if($Tahun->tahun_ajaran==$Siswa->tahun_ajaran)
+                                <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                @else
+                                <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                @endif
+                                @endforeach
                             </select>
                             <label class="col-sm-2 col-form-label">Semester</label>
-                            <select name="Semester" id="Semester" class="form-control col-sm-4" required>
+                            <select name="Semester" id="Semester" class="form-control col-sm-4" readonly>
                                 <option readonly> Semester </option>
-                                <option value="Semester Ganjil"> Semester Ganjil </option>
+                                @if($Siswa->semester=="Semester Ganjil")
+                                <option value="Semester Ganjil" selected> Semester Ganjil </option>
                                 <option value="Semester Genap"> Semester Genap </option>
+                                @else
+                                <option value="Semester Ganjil"> Semester Ganjil </option>
+                                <option value="Semester Genap" selected> Semester Genap </option>
+                                @endif
                             </select>
                         </div>
                     </form>
@@ -248,9 +268,11 @@
         </div>
     </div>
 </div>
-<!-- Modal EditPengguna -->
-<div class="modal fade" id="EditSiswaId" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+@endforeach
+<!-- Modal Edit Data -->
+@foreach($LihatSiswa as $Siswa)
+<div id="EditId{{$Siswa->id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Data Diri Siswa</h4>
@@ -258,40 +280,183 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="card-block">
-                <form action="#" id="EditSiswa" enctype="multipart/form-data" method="post">
-                    {{ csrf_field() }}
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Nama Siswa</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Nama" value="" readonly>
+            <div class="modal-body">
+                <div class="card-block">
+                    <form action="{{ route('Update.Siswa') }}" enctype="multipart/form-data" id="EditData{{$Siswa->id}}" method="post">
+                        {{ csrf_field() }}
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nama Siswa </label>
+                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}">
+                            <label class="col-sm-2 col-form-label">NIS </label>
+                            <input type="number" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
+                            <input type="number" class="form-control col-sm-4" name="Id" value="{{$Siswa->id}}" hidden>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">No Induk siswa</label>
-                        <div class="col-sm-8">
-                            <input type="number" class="form-control" name="NIS" value="" readonly>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Jenis Kelamin </label>
+                            <select name="Jenis_Kelamin" id="Jenis_Kelamin" class="form-control col-sm-4" required>
+                                <option readonly> Jenis Kelamin </option>
+                                @if($Siswa->jenis_kelamin=="Laki-Laki")
+                                <option value="Laki-Laki" selected> Laki-Laki </option>
+                                <option value="Perempuan"> Perempuan </option>
+                                @else
+                                <option value="Laki-Laki"> Laki-Laki </option>
+                                <option value="Perempuan" selected> Perempuan </option>
+                                @endif
+                            </select>
+                            <label class="col-sm-2 col-form-label">Agama </label>
+                            <select name="Agama" id="Agama" class="form-control col-sm-4" required>
+                                <option readonly> Jenis Kelamin </option>
+                                @if($Siswa->agama=="Islam")
+                                <option value="Islam" selected> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Katholik")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik" selected> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Protestan")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan" selected> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Hindu")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu" selected> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @elseif($Siswa->agama=="Budha")
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha" selected> Budha </option>
+                                <option value="Khonghucu"> Khonghucu </option>
+                                @else
+                                <option value="Islam"> Islam </option>
+                                <option value="Katholik"> Katholik </option>
+                                <option value="Protestan"> Protestan </option>
+                                <option value="Hindu"> Hindu </option>
+                                <option value="Budha"> Budha </option>
+                                <option value="Khonghucu" selected> Khonghucu </option>
+                                @endif
+                            </select>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Tingkat</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Tingkat" value="" readonly>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Alamat </label>
+                            <textarea class="form-control col-sm-10" name="Alamat">{{$Siswa->alamat}}</textarea>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-4 col-form-label">Kelas</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" name="Kelas" value="" readonly>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tingkat</label>
+                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-4" required>
+                                <option readonly> Tingkat </option>
+                                @if($Siswa->tingkat=="X")
+                                <option value="X" selected> X </option>
+                                <option value="XI"> XI </option>
+                                <option value="XII"> XII </option>
+                                @elseif($Siswa->tingkat=="XI")
+                                <option value="X"> X </option>
+                                <option value="XI" selected> XI </option>
+                                <option value="XII"> XII </option>
+                                @else
+                                <option value="X"> X </option>
+                                <option value="XI"> XI </option>
+                                <option value="XII" selected> XII </option>
+                                @endif
+                            </select>
+                            <label class="col-sm-2 col-form-label">Kelas</label>
+                            <select name="Kelas" id="Kelas" class="form-control col-sm-4" required>
+                                <option readonly> Kelas </option>
+                                @if($Siswa->kelas=="TRO 1")
+                                <option value="TRO 1" selected>TRO 1 </option>
+                                <option value="TRO 2">TRO 2 </option>
+                                <option value="TRO 3">TRO 3 </option>
+                                <option value="TKJ 1">TKJ 1 </option>
+                                <option value="TKJ 2">TKJ 2</option>
+                                <option value="TKJ 3">TKJ 3</option>
+                                @elseif($Siswa->kelas=="TRO 2")
+                                <option value="TRO 1">TRO 1 </option>
+                                <option value="TRO 2" selected>TRO 2 </option>
+                                <option value="TRO 3">TRO 3 </option>
+                                <option value="TKJ 1">TKJ 1 </option>
+                                <option value="TKJ 2">TKJ 2</option>
+                                <option value="TKJ 3">TKJ 3</option>
+                                @elseif($Siswa->kelas=="TRO 3")
+                                <option value="TRO 1">TRO 1 </option>
+                                <option value="TRO 2">TRO 2 </option>
+                                <option value="TRO 3" selected>TRO 3 </option>
+                                <option value="TKJ 1">TKJ 1 </option>
+                                <option value="TKJ 2">TKJ 2</option>
+                                <option value="TKJ 3">TKJ 3</option>
+                                @elseif($Siswa->kelas=="TKJ 1")
+                                <option value="TRO 1">TRO 1 </option>
+                                <option value="TRO 2">TRO 2 </option>
+                                <option value="TRO 3">TRO 3 </option>
+                                <option value="TKJ 1" selected>TKJ 1 </option>
+                                <option value="TKJ 2">TKJ 2</option>
+                                <option value="TKJ 3">TKJ 3</option>
+                                @elseif($Siswa->kelas=="TKJ 2")
+                                <option value="TRO 1">TRO 1 </option>
+                                <option value="TRO 2">TRO 2 </option>
+                                <option value="TRO 3">TRO 3 </option>
+                                <option value="TKJ 1">TKJ 1 </option>
+                                <option value="TKJ 2" selected>TKJ 2</option>
+                                <option value="TKJ 3">TKJ 3</option>
+                                @elseif($Siswa->kelas=="TKJ 3")
+                                <option value="TRO 1">TRO 1 </option>
+                                <option value="TRO 2">TRO 2 </option>
+                                <option value="TRO 3">TRO 3 </option>
+                                <option value="TKJ 1">TKJ 1 </option>
+                                <option value="TKJ 2">TKJ 2</option>
+                                <option value="TKJ 3" selected>TKJ 3</option>
+                                @endif
+                            </select>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                <button type="submit" form="EditPengguna" class="btn btn-primary waves-effect waves-light "><i class="icofont icofont-save"></i> Save</button>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
+                            <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control col-sm-4" required>
+                                <option readonly> Tahun Ajaran </option>
+                                @foreach(DB::table('tahun_ajaran')->get() as $Tahun)
+                                @if($Tahun->tahun_ajaran==$Siswa->tahun_ajaran)
+                                <option value="{{$Tahun->tahun_ajaran}}" selected> {{$Tahun->tahun_ajaran}} </option>
+                                @endif
+                                @if($Tahun->tahun_ajaran==$Siswa->tahun_ajaran)
+                                <option value="{{$Tahun->tahun_ajaran}}" hidden> {{$Tahun->tahun_ajaran}} </option>
+                                @else
+                                <option value="{{$Tahun->tahun_ajaran}}"> {{$Tahun->tahun_ajaran}} </option>
+                                @endif
+                                @endforeach
+                            </select>
+                            <label class="col-sm-2 col-form-label">Semester</label>
+                            <select name="Semester" id="Semester" class="form-control col-sm-4" required>
+                                <option readonly> Semester </option>
+                                @if($Siswa->semester=="Semester Ganjil")
+                                <option value="Semester Ganjil" selected> Semester Ganjil </option>
+                                <option value="Semester Genap"> Semester Genap </option>
+                                @else
+                                <option value="Semester Ganjil"> Semester Ganjil </option>
+                                <option value="Semester Genap" selected> Semester Genap </option>
+                                @endif
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
+                    <button type="submit" form="EditData{{$Siswa->id}}" class="btn btn-primary waves-effect "><i class="icofont icofont-ui-save"></i> Save</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+@endforeach
 @endsection

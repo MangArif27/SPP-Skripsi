@@ -127,7 +127,7 @@
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th scope="row">Jumlah GTK</th>
-                                                                                    <td>{{$Sekolah->jumlah_kejuruan}}</td>
+                                                                                    <td>{{$Sekolah->jumlah_gtk }}</td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <th scope="row">Jumlah Kelas</th>
