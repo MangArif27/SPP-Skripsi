@@ -1,3 +1,7 @@
+<?php
+$url = url()->previous();
+header("Refresh:5; $url");
+?>
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="https://penilaian-smk.madanidepok.sch.id/vendor/img/icon/logo1.png" type="image/ico" />
-    <script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script>
+    <!--<script src="https://unpkg.com/pagedjs/dist/paged.polyfill.js"></script> -->
     <title>SIPBS-SMK Madani Depok</title>
     <style type="text/css">
         @page {
@@ -16,7 +20,6 @@
             margin-top: 1px;
             margin-left: 1px;
             margin-right: 1px;
-            margin-bottom: cm;
 
             @bottom-left {
                 content: 'Halaman ' counter(page) ' dari ' counter(pages);
@@ -124,17 +127,11 @@
             padding: 7px 3px 3px 3px;
             float: left;
         }
-    </style>
-    <style type="text/css" media="print">
-        #cetak {
+
+        .noPrint {
             display: none;
         }
     </style>
-    <script>
-        function printpage() {
-            window.print();
-        }
-    </script>
 </head>
 
 <body onLoad="">
@@ -469,6 +466,11 @@
             <li>Uang yang sudah dibayarkan tidak dapat dikembalikan</li>
         </ul>
     </div>
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
 </body>
 
 </html>

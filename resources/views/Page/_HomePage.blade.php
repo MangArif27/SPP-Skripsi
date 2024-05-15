@@ -54,12 +54,12 @@
                                         if ($SudahLunas == 0) {
                                             $PersentaseLunas =  $SudahLunas * 100;
                                         } else {
-                                            $PersentaseLunas =  $CountSudahLunas / $JumlahAll * 100;
+                                            $PersentaseLunas =  $SudahLunas / $JumlahAll * 100;
                                         }
                                         if ($BelumLunas == 0) {
                                             $PersentaseBelum = $BelumLunas * 100;
                                         } else {
-                                            $PersentaseBelum = $CountBelumLunas / $JumlahAll * 100;
+                                            $PersentaseBelum = $BelumLunas / $JumlahAll * 100;
                                         }
                                         ?>
                                         <div class="col-6">
