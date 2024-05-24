@@ -87,12 +87,12 @@
 
 @endsection
 @section('footer')
-@if($Pengaturan->semester=="Semester Ganjil")
 <script>
     Highcharts.chart('Grafik', {
 
         title: {
-            text: 'Grafik Pembayaran',
+            text: 'Grafik Pembayaran <?php $Now = date('Y');
+                                        echo $Now; ?>',
             align: 'left'
         },
 
@@ -107,14 +107,14 @@
             }
         },
         xAxis: {
-            categories: <?php echo json_encode($BulanSemesterGanjil) ?>
+            categories: <?php echo json_encode($BulanSemester) ?>
         },
         series: [{
             name: 'Sudah Bayar',
-            data: <?php echo json_encode($DataSemesterGanjil) ?>
+            data: <?php echo json_encode($DataSemester) ?>
         }, {
             name: 'Sudah Lunas',
-            data: <?php echo json_encode($DataLunasSemesterGanjil) ?>
+            data: <?php echo json_encode($DataLunas) ?>
         }],
 
         responsive: {
@@ -134,54 +134,6 @@
 
     });
 </script>
-@else
-<script>
-    Highcharts.chart('Grafik', {
-
-        title: {
-            text: 'Grafik Pembayaran',
-            align: 'left'
-        },
-
-        subtitle: {
-            text: 'Sistem Informasi Pembayaran Sekolah SMK Madani Depok',
-            align: 'left'
-        },
-
-        yAxis: {
-            title: {
-                text: 'Persentase'
-            }
-        },
-        xAxis: {
-            categories: <?php echo json_encode($BulanSemesterGenap) ?>
-        },
-        series: [{
-            name: 'Sudah Bayar',
-            data: <?php echo json_encode($DataSemesterGenap) ?>
-        }, {
-            name: 'Sudah Lunas',
-            data: <?php echo json_encode($DataLunasSemesterGenap) ?>
-        }],
-
-        responsive: {
-            rules: [{
-                condition: {
-                    maxWidth: 500
-                },
-                chartOptions: {
-                    legend: {
-                        layout: 'horizontal',
-                        align: 'center',
-                        verticalAlign: 'bottom'
-                    }
-                }
-            }]
-        }
-
-    });
-</script>
-@endif
 <script type="text/javascript" src="{{asset('/files/assets/pages/dashboard/crm-dashboard.min.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/bower_components/chart.js/js/Chart.js')}}"></script>
 <!-- gauge js -->

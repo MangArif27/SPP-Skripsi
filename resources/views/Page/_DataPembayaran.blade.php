@@ -30,6 +30,14 @@
                     <strong>{{$sukses}}</strong>
                 </div>
                 @endif
+                @if ($salah = Session::get('salah'))
+                <div class="alert alert-danger background-danger">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <i class="icofont icofont-close-line-circled text-white"></i>
+                    </button>
+                    <strong>{{$salah}}</strong>
+                </div>
+                @endif
                 <!-- Page-header end -->
                 <div class="page-body">
                     <div class="row">

@@ -121,6 +121,7 @@ class UpdateController extends Controller
             $Keterangan = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
             foreach ($Keterangan as $Ket) {
                 if ($Ket->spp_a == NULL || $Ket->spp_b == NULL || $Ket->spp_c == NULL || $Ket->spp_d == NULL || $Ket->spp_e == NULL || $Ket->spp_f == NULL) {
+                    Session::flash('sukses', 'Selamat Anda Berhasil Melakukan Pembayaran !');
                     return redirect('/Data-Pembayaran');
                 } else {
                     $UpdatedDate = date('Y-m-d H:i:s');
@@ -128,10 +129,11 @@ class UpdateController extends Controller
                         'keterangan' => "Sudah Lunas",
                         'updated_at' => $UpdatedDate,
                     ]);
+                    Session::flash('sukses', 'Selamat Anda Berhasil Melakukan Pembayaran !');
+                    return redirect('/Data-Pembayaran');
                 }
             }
         }
-        return redirect('/Data-Pembayaran');
     }
     /* -------- Proses Update Tunggakan -------*/
     public function UpdateTunggakan(Request $request)
