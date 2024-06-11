@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\LaporanPembayaran;
+use App\Exports\Laporan;
+use Maatwebsite\Excel\Facades\Excel;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PageController extends Controller
 {
@@ -128,7 +133,7 @@ class PageController extends Controller
             } else {
                 $Search = DB::table('pengaturan')->get();
                 foreach ($Search as $SC) {
-                    $Tunggakan = DB::table('pembayaran_spp')->where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
+                    $Tunggakan = DB::table('pembayaran_spp')->get()->groupBy('nis');
                 }
                 //dd($Tunggakan);
                 return view('Page._DataKwitansi', ['Tunggakan' => $Tunggakan]);
@@ -167,6 +172,30 @@ class PageController extends Controller
                 return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
             }
         }
+    }
+
+    public function Laporan()
+    {
+        if (!Session::get('login')) {
+            return redirect('Login');
+        } else {
+            if (request()->ajax()) {
+                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.nis', '=', 'siswa.nis')->get();
+                return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function ($data) {
+                        $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
+                        return $button;
+                    })
+                    ->make();
+            }
+            return view('Page._DataLaporan');
+        }
+    }
+    public function ExportLaporanPembayaran()
+    {
+        return Excel::download(new LaporanPembayaran, 'Laporan.xlsx');
+        return redirect('/');
     }
     public function Pengaturan()
     {

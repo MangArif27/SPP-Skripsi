@@ -19,10 +19,13 @@ Route::get('/', 'PageController@Index');
 Route::get('/Data-Pengguna', 'PageController@Pengguna');
 Route::get('/Data-Siswa', 'PageController@Siswa');
 Route::get('/Data-Pembayaran', 'PageController@Pembayaran');
+Route::get('/Data-Pembayaran-Server-Side', 'PageController@DataPembayaran');
 Route::get('/Data-Tagihan', 'PageController@Tagihan');
 Route::get('/Pengaturan', 'PageController@Pengaturan');
 Route::get('/Kwitansi', 'PageController@Kwitansi');
 Route::get('/Data-Tunggakan', 'PageController@Tunggakan');
+Route::get('/Laporan', 'PageController@Laporan')->name('DataPembayaran');
+Route::get('/ExportLaporan/Pembayaran', 'PageController@ExportLaporanPembayaran');
 
 /* -------- Route Insert Data -------- */
 Route::post('/Insert-Data-Pengguna', 'InsertController@InsertPengguna')->name('Insert.Pengguna');

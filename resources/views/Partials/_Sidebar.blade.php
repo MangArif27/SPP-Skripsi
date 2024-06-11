@@ -58,12 +58,14 @@
                 </ul>
             </li>
             @endif
-            <!--<li class="pcoded-hasmenu">
-                <a href="javascript:void(0)">
+            @if(Session::get('level_user')=="Operator" || Session::get('level_user')=="Admin")
+            <li class="pcoded-hasmenu">
+                <a href="Laporan">
                     <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                     <span class="pcoded-mtext">Laporan</span>
                 </a>
-            </li>-->
+            </li>
+            @endif
             @if(Session::get('level_user')=="Admin")
             <li class="pcoded-hasmenu">
                 <a href="Pengaturan">
