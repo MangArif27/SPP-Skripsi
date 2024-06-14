@@ -25,7 +25,7 @@ Route::get('/Pengaturan', 'PageController@Pengaturan');
 Route::get('/Kwitansi', 'PageController@Kwitansi');
 Route::get('/Data-Tunggakan', 'PageController@Tunggakan');
 Route::get('/Laporan', 'PageController@Laporan')->name('DataPembayaran');
-Route::get('/ExportLaporan/Pembayaran', 'PageController@ExportLaporanPembayaran');
+Route::get('/Test', 'PageController@Test')->name('Test');
 
 /* -------- Route Insert Data -------- */
 Route::post('/Insert-Data-Pengguna', 'InsertController@InsertPengguna')->name('Insert.Pengguna');
@@ -51,3 +51,6 @@ Route::post('/Cetak-Kwitansi', 'PageController@CetakKwitansi')->name('Cetak.Kwit
 Route::get('/Login', 'PageController@Login');
 Route::get('/Logout', 'PageController@Logout');
 Route::post('/LoginPost', 'PageController@LoginPost')->name('Login.Post');
+
+/* -------- Route Export Laporan -------*/
+Route::post('/Export/Laporan/Pembayaran', 'PageController@ExportLaporanPembayaran')->name('ExportLaporanPembayaran');

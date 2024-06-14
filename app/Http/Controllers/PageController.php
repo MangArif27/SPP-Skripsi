@@ -6,6 +6,7 @@ use App\Models\LaporanPembayaran;
 use App\Exports\Laporan;
 use Maatwebsite\Excel\Facades\Excel;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
@@ -180,22 +181,29 @@ class PageController extends Controller
             return redirect('Login');
         } else {
             if (request()->ajax()) {
-                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.nis', '=', 'siswa.nis')->get();
+                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.id', '=', 'siswa.id')->get();
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
                         $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
                         return $button;
                     })
-                    ->make();
+                    ->toJson();
             }
             return view('Page._DataLaporan');
         }
     }
-    public function ExportLaporanPembayaran()
+    public function ExportLaporanPembayaran(Request $request)
     {
-        return Excel::download(new LaporanPembayaran, 'Laporan.xlsx');
-        return redirect('/');
+        $Date = date('Y-m-d H:i:s');
+        if ($request->JenisFile == "Excel") {
+            $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
+            return view('page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas]);
+        } else {
+            $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
+            $pdf = PDF::loadview('page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
+            return $pdf->download('ExportLaporanPembayaran - ' . $Date . '.pdf');
+        }
     }
     public function Pengaturan()
     {
@@ -211,6 +219,10 @@ class PageController extends Controller
                 return redirect('/');
             }
         }
+    }
+    public function Test()
+    {
+        return DataTables::of(DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.id', '=', 'siswa.id')->get()->groupBy('nis'))->toJson();
     }
     /* ------------ Controller Login dan Logout -------------------- */
     public function Login()

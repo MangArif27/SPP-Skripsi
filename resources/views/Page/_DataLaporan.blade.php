@@ -1,24 +1,10 @@
 @extends('Index')
 @section('konten')
 <!-- animation nifty modal window effects css -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
 <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('/files/assets/css/component.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('/files/assets/css/sweetalert.css')}}">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $("#Pencarian").change(function() {
-            if ($(this).val() == "Tahunan") {
-                $("#Tahunan").show();
-                $("#Nama").hide();
-            } else {
-                $("#Tahunan").hide();
-                $("#Nama").show();
-            }
-        });
-    });
-</script>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -84,7 +70,9 @@
 @endsection
 @section('footer')
 <!-- data-table js -->
-<script src="https://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 <script src="{{asset('/files/bower_components/datatables.net-buttons/js/dataTables.buttons.min.js')}}"></script>
 <script src="{{asset('/files/assets/pages/data-table/js/jszip.min.js')}}"></script>
 <script src="{{asset('/files/assets/pages/data-table/js/pdfmake.min.js')}}"></script>
@@ -105,7 +93,9 @@
             processing: true,
             serverSide: true,
             searching: true,
+            paging: true,
             ajax: `{{ url()->current() }}`,
+            pageLength: "10",
             columns: [{
                     data: 'nama',
                     name: 'nama'
@@ -145,29 +135,19 @@
             </div>
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Insert.Pengguna') }}" enctype="multipart/form-data" id="TambahPengguna" method="post">
+                    <form action="{{ route('ExportLaporanPembayaran') }}" enctype="multipart/form-data" id="ExportLaporan" method="post" target="_blank">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Jenis File</label>
                             <div class="col-sm-9">
-                                <select name="JenisFile" id="JenisFile" class="form-control" required>
+                                <select name="JenisFile" class="form-control" required>
                                     <option selected disabled>Pilih Jenis File</option>
                                     <option value="Pdf">PDF</option>
                                     <option value="Excel">Excel</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Pencarian</label>
-                            <div class="col-sm-9">
-                                <select name="Pencarian" id="Pencarian" class="form-control" required>
-                                    <option selected disabled>Pilih Jenis Pencarian</option>
-                                    <option value="Tahunan">Tahunan</option>
-                                    <option value="Nama">Nama Siswa</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div id="Tahunan" style="display: none;">
+                        <div id="Tahunan">
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label">Kategori</label>
                                 <div class="col-sm-3">
@@ -187,24 +167,11 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
-                                    <select name="Jurusan" class="form-control" required>
-                                        <option selected disabled>Jurusan</option>
+                                    <select name="Kelas" class="form-control" required>
+                                        <option selected disabled>Kelas</option>
                                         <option value="TKR">Teknik Kendaraan Ringan</option>
-                                        <option value="TKJ">Teknik Komputer & Jaringan</option>
-                                        <option value="TTU">Teknik Tata Udara</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="Nama" style="display: none;">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Nama Siswa</label>
-                                <div class="col-sm-9">
-                                    <select name="TahunAjaran" class="form-control" required>
-                                        <option selected disabled>Pilih Siswa</option>
-                                        @foreach(DB::table('siswa')->groupBy('nis','nama')->get() as $Siswa)
-                                        <option value="{{$Siswa->nis}}">{{$Siswa->nama}}</option>
-                                        @endforeach
+                                        <option value="TKJ 1">Teknik Komputer & Jaringan 1</option>
+                                        <option value="TKJ 2">Teknik Komputer & Jaringan 2</option>
                                     </select>
                                 </div>
                             </div>
@@ -213,7 +180,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
+                    <button type="submit" target="_blank" form="ExportLaporan" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-file-document"></i> Export</button>
                 </div>
             </div>
         </div>
