@@ -15,6 +15,10 @@ class DeleteController extends Controller
     }
     public function DeleteJenisTagihan($Id)
     {
+        $Seacrh = DB::table('jenis_tagihan')->where('id', $Id)->get();
+        foreach ($Seacrh as $Seacrh) {
+            DB::table('pembayaran_spp')->where('tahun_ajaran', $Seacrh->tahun_ajaran)->where('semester', $Seacrh->semester)->where('tingkat', $Seacrh->tingkat)->delete();
+        }
         DB::table('jenis_tagihan')->where('id', $Id)->delete();
         Session::flash('sukses', 'Selamat anda berhasil menghapus data');
     }

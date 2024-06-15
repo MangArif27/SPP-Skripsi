@@ -94,14 +94,17 @@ class InsertController extends Controller
         /*Input Data Jenis Tagihan */
         $Search = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->where('tingkat', $request->Tingkat,)->first();
         if ($Search) {
+            Session::flash('gagal', 'Data Tagihan Sudah Ada!');
             return redirect('/Data-Tagihan');
         } else {
-            DB::table('jenis_tagihan')->insert([
-                'tahun_ajaran' => $request->Tahun_Ajaran,
-                'semester' => $request->Semester,
-                'tingkat' => $request->Tingkat,
-                'spp' => $request->SPP,
-                /*'ekstrakurikuler' => $request->Ekstrakurikuler,
+            $CekSiswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->first();
+            if ($CekSiswa > 0) {
+                DB::table('jenis_tagihan')->insert([
+                    'tahun_ajaran' => $request->Tahun_Ajaran,
+                    'semester' => $request->Semester,
+                    'tingkat' => $request->Tingkat,
+                    'spp' => $request->SPP,
+                    /*'ekstrakurikuler' => $request->Ekstrakurikuler,
                 'sarpras' => $request->Sarpras,
                 'buku_lks' => $request->Buku_LKS,
                 'pas' => $request->PAS,
@@ -111,22 +114,27 @@ class InsertController extends Controller
                 'prakerin' => $request->Prakerin,
                 'ldk' => $request->LDK,
                 'kartu_pelajar' => $request->Kartu_Pelajar,*/
-            ]);
-            /*Input Data Pembayaran SPP */
-            $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
-            foreach ($Siswa as $Sw) {
-                $CreateDate = date('Y-m-d H:i:s');
-                DB::table('pembayaran_spp')->insert([
-                    'id' => $Sw->id,
-                    'nis' => $Sw->nis,
-                    'tahun_ajaran' => $request->Tahun_Ajaran,
-                    'semester' => $request->Semester,
-                    'tingkat' => $request->Tingkat,
-                    'keterangan' => "Belum Lunas",
-                    'created_at' => $CreateDate,
                 ]);
+                /*Input Data Pembayaran SPP */
+                $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+                foreach ($Siswa as $Sw) {
+                    $CreateDate = date('Y-m-d H:i:s');
+                    DB::table('pembayaran_spp')->insert([
+                        'id' => $Sw->id,
+                        'nis' => $Sw->nis,
+                        'tahun_ajaran' => $request->Tahun_Ajaran,
+                        'semester' => $request->Semester,
+                        'tingkat' => $request->Tingkat,
+                        'keterangan' => "Belum Lunas",
+                        'created_at' => $CreateDate,
+                    ]);
+                }
+                Session::flash('sukses', 'Anda Berhasil Input Data!');
+                return redirect('/Data-Tagihan');
+            } else {
+                Session::flash('gagal', 'Data Siswa Belum Ada !');
+                return redirect('/Data-Tagihan');
             }
-            return redirect('/Data-Pembayaran');
         }
     }
 }
