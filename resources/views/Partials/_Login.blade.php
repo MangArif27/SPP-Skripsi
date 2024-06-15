@@ -49,6 +49,22 @@
                         </div>
                         <div class="auth-box card">
                             <div class="card-block">
+                                {{-- notifikasi sukses --}}
+                                @if ($sukses = Session::get('sukses'))
+                                <div class="alert alert-success background-success">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="icofont icofont-close-line-circled text-white"></i>
+                                    </button>
+                                    <strong>{{$sukses}}</strong>
+                                </div>
+                                @elseif($gagal = Session::get('gagal'))
+                                <div class="alert alert-danger background-danger">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <i class="icofont icofont-close-line-circled text-white"></i>
+                                    </button>
+                                    <strong>{{$gagal}}</strong>
+                                </div>
+                                @endif
                                 <div class="row m-b-20">
                                     <div class="col-md-12">
                                         <h3 class="text-center">Sign In</h3>
@@ -56,7 +72,7 @@
                                 </div>
                                 {{ csrf_field() }}
                                 <div class="form-group">
-                                    <input type="text" name="nip" class="form-control" required placeholder="No Induk Pegawai">
+                                    <input type="number" name="nip" class="form-control" required placeholder="No Induk Pegawai">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group">
@@ -139,6 +155,22 @@
     <script type="text/javascript" src="{{ asset('/files/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('/files/bower_components/jquery-i18next/jquery-i18next.min.js')}}"></script>
     <script type="text/javascript" src="{{ asset('/files/assets/js/common-pages.js')}}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+        $(document).ready(function() {
+            // show the alert
+            setTimeout(function() {
+                $(".alert").alert('close');
+            }, 2000);
+        });
+    </script>
 </body>
 
 </html>

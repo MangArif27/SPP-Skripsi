@@ -42,6 +42,7 @@ Route::post('/Update-Data-Tagihan', 'UpdateController@UpdateTagihan')->name('Upd
 
 /* -------- Route Delete Data -------- */
 Route::get('/Delete-Data-Pengguna/{Nip}', 'DeleteController@DeletePengguna');
+Route::get('/Delete-Data-Tagihan/{Id}', 'DeleteController@DeleteJenisTagihan');
 
 /* -------- Route Cetak Kwitansi -------- */
 Route::get('/Cetak-Kwitansi', 'PageController@CetakKwitansi');

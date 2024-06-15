@@ -63,13 +63,13 @@
                                         }
                                         ?>
                                         <div class="col-6">
-                                            <div data-label="{{$PersentaseLunas}}%" class="radial-bar radial-bar-{{$PersentaseLunas}} radial-bar-lg radial-bar-success"></div>
+                                            <div data-label="{{round($PersentaseLunas)}}%" class="radial-bar radial-bar-{{round($PersentaseLunas)}} radial-bar-lg radial-bar-success"></div>
                                             <h6 class="text-muted">Selesai</h6>
                                             <p class="text-muted">{{$SudahLunas}} Berkas</p>
                                             <button class="btn btn-success btn-round btn-sm">Sudah Lunas</button>
                                         </div>
                                         <div class="col-6">
-                                            <div data-label="{{$PersentaseBelum}}%"" class=" radial-bar radial-bar-{{$PersentaseBelum}} radial-bar-lg radial-bar-danger"></div>
+                                            <div data-label="{{round($PersentaseBelum)}}%"" class=" radial-bar radial-bar-{{round($PersentaseBelum)}} radial-bar-lg radial-bar-danger"></div>
                                             <h6 class="text-muted">Proses</h6>
                                             <p class="text-muted">{{$BelumLunas}} Berkas</p>
                                             <button class="btn btn-danger btn-round btn-sm">Belum Lunas</button>

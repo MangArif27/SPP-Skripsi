@@ -83,7 +83,7 @@
                                             </div>
                                             <label class="col-sm-2 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
+                                                <input type="number" class="form-control" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
                                             </div>
                                         </div>
                                         <!--<hr style="border: 1px dashed;">
@@ -223,13 +223,14 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
 <!-- Alert Konfirmasi Hapus -->
+@foreach(DB::table('jenis_tagihan')->get() as $JT)
 <script type="text/javascript">
     'use strict';
     $(document).ready(function() {
-        document.querySelector('.alert-confirm-id').onclick = function() {
+        document.querySelector('.alert-confirm-id{{$JT->id}}').onclick = function() {
             swal({
                     title: "Apakah Kamu Yakin ?",
-                    text: "Akan Menghapus Data Atas Nama : ",
+                    text: "Akan Menghapus Data Tagihan : {{$JT->semester}}/{{$JT->tahun_ajaran}}",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonClass: "btn-danger",
@@ -239,14 +240,14 @@
                 function(isConfirm) {
                     if (isConfirm) {
                         $.ajax({
-                            url: '/Delete-Pembayaran/',
+                            url: '/Delete-Data-Tagihan/{{$JT->id}}',
                             success: function(response) {
 
                                 //show success message
                                 swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
                                     "success");
                                 //remove post on table
-                                $(`#index_`).remove();
+                                $(`#index_{{$JT->id}}`).remove();
                                 location.reload();
                             }
                         });
@@ -257,6 +258,7 @@
         };
     });
 </script>
+@endforeach
 <!-- Modal LihatPengguna -->
 @foreach(DB::table('jenis_tagihan')->get() as $JT)
 <div class="modal fade" id="LihatTagihanId{{$JT->id}}" tabindex="-1" role="dialog">

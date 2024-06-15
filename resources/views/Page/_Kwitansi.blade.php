@@ -158,7 +158,7 @@ header("Refresh:5; $url");
         </div>
         <hr style="border: 1px solid;">
         @foreach($Pembayaran as $PembayaranSPP)
-        @foreach(DB::table('siswa')->where('nis',$PembayaranSPP->nis)->where('tahun_ajaran',$PembayaranSPP->tahun_ajaran)->where('semester',$PembayaranSPP->semester)->get() as $Siswa)
+        @foreach(DB::table('siswa')->where('id',$PembayaranSPP->id)->get() as $Siswa)
         @foreach(DB::table('jenis_tagihan')->where('tahun_ajaran',$PembayaranSPP->tahun_ajaran)->where('semester',$PembayaranSPP->semester)->where('tingkat',$PembayaranSPP->tingkat)->get() as $JenisTagihan)
         <table id="perkaraKunjungan" style="font-style: Segoe UI;">
             <tr>
@@ -233,7 +233,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_a))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -246,7 +246,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_b))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -259,7 +259,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_c))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -272,7 +272,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_d))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -285,7 +285,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_e))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -298,7 +298,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_f))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -359,7 +359,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_a))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -372,7 +372,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_b))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -385,7 +385,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_c))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -398,7 +398,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_d))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -411,7 +411,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_e))}}</td>
                 <td> Lunas</td>
                 @endif
@@ -424,7 +424,7 @@ header("Refresh:5; $url");
                 <td> - </td>
                 <td> Belum Lunas</td>
                 @else
-                <td> Rp. 250.000</td>
+                <td>Rp. {{number_format($JenisTagihan->spp)}}</td>
                 <td> {{date('d F Y', strtotime($PembayaranSPP->spp_f))}}</td>
                 <td> Lunas</td>
                 @endif

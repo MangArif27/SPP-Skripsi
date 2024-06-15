@@ -248,14 +248,17 @@ class PageController extends Controller
                 ]);
                 return redirect('/');
             }
-            return redirect('/Login')->with('alert', 'Password atau No Identitas, Salah !');
+            Session::flash('gagal', 'Password atau No Induk Pegawai anda salah !');
+            return redirect('/Login');
         } else {
-            return redirect('/Login')->with('alert', 'Password atau No Identitas, Salah !');
+            Session::flash('gagal', 'Password atau No Induk Pegawai anda salah !');
+            return redirect('/Login');
         }
     }
     public function Logout()
     {
         Session::flush();
+        Session::flash('sukses', 'Anda Telah Berhasil Logout, Terima Kasih !');
         return redirect('Login')->with('alert', 'Kamu sudah logout');
     }
 }

@@ -13,4 +13,9 @@ class DeleteController extends Controller
         DB::table('users')->where('nip', $Nip)->delete();
         Session::flash('sukses', 'Selamat anda berhasil menghapus data');
     }
+    public function DeleteJenisTagihan($Id)
+    {
+        DB::table('jenis_tagihan')->where('id', $Id)->delete();
+        Session::flash('sukses', 'Selamat anda berhasil menghapus data');
+    }
 }
