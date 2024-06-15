@@ -45,11 +45,6 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="feather icon-user"></i> Profile
-                                </a>
-                            </li>
-                            <li>
                                 <a href="Logout">
                                     <i class="feather icon-log-out"></i> Logout
                                 </a>
