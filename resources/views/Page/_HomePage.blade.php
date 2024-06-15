@@ -90,11 +90,11 @@
                                             $PersentaseLunas = 80;
                                         } elseif ($Persentase <= 86) {
                                             $PersentaseLunas = 85;
-                                        } elseif ($Persentase <= 91) {
+                                        } elseif ($Persentase <= 94) {
                                             $PersentaseLunas = 90;
-                                        } elseif ($Persentase <= 96) {
+                                        } elseif ($Persentase < 100) {
                                             $PersentaseLunas = 95;
-                                        } elseif ($Persentase <= 100) {
+                                        } elseif ($Persentase = 100) {
                                             $PersentaseLunas = 100;
                                         } else {
                                             $PersentaseLunas = 0;
@@ -141,8 +141,10 @@
                                                 $PersentaseBelum = 85;
                                             } elseif ($PersentaseX <= 96) {
                                                 $PersentaseBelum = 90;
-                                            } elseif ($PersentaseX <= 100) {
+                                            } elseif ($PersentaseX < 100) {
                                                 $PersentaseBelum = 95;
+                                            } elseif ($PersentaseX == 100) {
+                                                $PersentaseBelum = 100;
                                             } else {
                                                 $PersentaseBelum = 0;
                                             }

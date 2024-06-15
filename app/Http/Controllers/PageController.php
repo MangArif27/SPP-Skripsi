@@ -198,10 +198,10 @@ class PageController extends Controller
         $Date = date('Y-m-d H:i:s');
         if ($request->JenisFile == "Excel") {
             $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
-            return view('page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas]);
+            return view('Page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas]);
         } else {
             $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
-            $pdf = PDF::loadview('page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
+            $pdf = PDF::loadview('Page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
             return $pdf->download('ExportLaporanPembayaran - ' . $Date . '.pdf');
         }
     }

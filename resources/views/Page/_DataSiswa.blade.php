@@ -288,7 +288,7 @@
                             <label class="col-sm-2 col-form-label">Nama Siswa </label>
                             <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}">
                             <label class="col-sm-2 col-form-label">NIS </label>
-                            <input type="number" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
+                            <input type="text" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
                             <input type="number" class="form-control col-sm-4" name="Id" value="{{$Siswa->id}}" hidden>
                         </div>
                         <div class="form-group row">
