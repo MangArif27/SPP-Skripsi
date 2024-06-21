@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('kelas', 5);
             $table->string('tahun_ajaran', 9)->index();
             $table->string('semester', 15);
+            $table->string('status', 6);
             $table->timestamps();
         });
     }

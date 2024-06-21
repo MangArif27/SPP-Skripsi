@@ -5,6 +5,21 @@
 <script src="/scripts/snippet-javascript-console.min.js?v=1"></script>
 <link rel="stylesheet" type="text/css" href="{{asset('/files/assets/css/component.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('/files/assets/css/sweetalert.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('/files/assets/pages/timeline/style.css')}}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $("#StatusSiswa").change(function() {
+            if ($(this).val() == "Aktif") {
+                $("#Aktif").show();
+                $("#Lulus").hide();
+            } else {
+                $("#Aktif").hide();
+                $("#Lulus").show();
+            }
+        });
+    });
+</script>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -146,18 +161,26 @@
                     <form action="{{ route('ExportLaporanPembayaran') }}" enctype="multipart/form-data" id="ExportLaporan" method="post" target="_blank">
                         {{ csrf_field() }}
                         <div class="form-group row">
-                            <label class="col-sm-3 col-form-label">Jenis File</label>
-                            <div class="col-sm-9">
+                            <label class="col-sm-2 col-form-label">Jenis File</label>
+                            <div class="col-sm-4">
                                 <select name="JenisFile" class="form-control" required>
                                     <option selected disabled>Pilih Jenis File</option>
                                     <option value="Pdf">PDF</option>
                                     <option value="Excel">Excel</option>
                                 </select>
                             </div>
+                            <label class="col-sm-2 col-form-label">Status Siswa</label>
+                            <div class="col-sm-4">
+                                <select name="StatusSiswa" id="StatusSiswa" class="form-control" required>
+                                    <option selected disabled>Pilih Status Siswa</option>
+                                    <option value="Aktif">Aktif</option>
+                                    <option value="Lulus">Lulus</option>
+                                </select>
+                            </div>
                         </div>
-                        <div id="Tahunan">
+                        <div id="Aktif" style="display: none;">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label">Kategori</label>
+                                <label class="col-sm-2 col-form-label">Kategori</label>
                                 <div class="col-sm-3">
                                     <select name="TahunAjaran" class="form-control" required>
                                         <option selected disabled>Tahun Ajaran</option>
@@ -166,7 +189,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-4">
                                     <select name="Tingkat" class="form-control" required>
                                         <option selected disabled>Tingkat</option>
                                         <option value="X">Tingkat X</option>
@@ -175,6 +198,36 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
+                                    <select name="Kelas" class="form-control" required>
+                                        <option selected disabled>Kelas</option>
+                                        <option value="TKR 1">TKR 1 </option>
+                                        <option value="TKR 2">TKR 2 </option>
+                                        <option value="TKR 3">TKR 3 </option>
+                                        <option value="TKJ 1">TKJ 1 </option>
+                                        <option value="TKJ 2">TKJ 2</option>
+                                        <option value="TKJ 3">TKJ 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Lulus" style="display: none;">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Kategori</label>
+                                <div class="col-sm-5">
+                                    <select name="TahunAjaran" class="form-control" required>
+                                        <option selected disabled>Tahun Ajaran</option>
+                                        @foreach(DB::table('tahun_ajaran')->get() as $TahunAjaran)
+                                        @foreach(DB::table('pengaturan')->get() as $Pengaturan)
+                                        @if($TahunAjaran->tahun_ajaran < $Pengaturan->tahun_ajaran)
+                                            <option value="{{$TahunAjaran->tahun_ajaran}}">{{$TahunAjaran->tahun_ajaran}}</option>
+                                            @else
+                                            <option value="{{$TahunAjaran->tahun_ajaran}}" hidden>{{$TahunAjaran->tahun_ajaran}}</option>
+                                            @endif
+                                            @endforeach
+                                            @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
                                     <select name="Kelas" class="form-control" required>
                                         <option selected disabled>Kelas</option>
                                         <option value="TKR 1">TKR 1 </option>

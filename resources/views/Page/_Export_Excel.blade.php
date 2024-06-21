@@ -93,11 +93,11 @@
             <td style="vertical-align: middle; text-align:center;">{{$No++}}</td>
             <td style="vertical-align: middle; text-align:center;">{{$Siswa->nis}}</td>
             <td style="vertical-align: middle">{{$Siswa->nama}}</td>
-            <td style="vertical-align: middle; text-align:center;">{{$Siswa->tingkat}} {{$Siswa->kelas}}</td>
-            <?php $SeacrhJenisTagihanGanjil = DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Ganjil")->first() ?>
+            <td style="vertical-align: middle; text-align:center;">{{$Siswa->tingkat}}-{{$Siswa->kelas}}</td>
+            <?php $SeacrhJenisTagihanGanjil = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Ganjil")->first() ?>
             @if($SeacrhJenisTagihanGanjil)
-            @foreach(DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Ganjil")->get() as $JenisTagihanGanjil)
-            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Ganjil")->get() as $PembayaranGanjil)
+            @foreach(DB::table('jenis_tagihan')->Where('id', $SeacrhJenisTagihanGanjil->id)->get() as $JenisTagihanGanjil)
+            @foreach(DB::table('pembayaran_spp')->where('id_siswa',$Siswa->id)->get() as $PembayaranGanjil)
             <?php
             if ($PembayaranGanjil->spp_a == NULL) {
                 $Bulan1 = $JenisTagihanGanjil->spp;
@@ -130,16 +130,20 @@
                 $Bulan6 = 0;
             }
             $JumlahTunggakan1 = $Bulan1 + $Bulan2 + $Bulan3 + $Bulan4 + $Bulan5 + $Bulan6; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. {{number_format($Bulan1)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan2)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan3)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan4)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan5)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan6)}}</td>
-            <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->first() ?>
+            @endif
+            <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Genap")->first() ?>
             @if($SeacrhJenisTagihanGenap)
-            @foreach(DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->get() as $JenisTagihanGenap)
-            @foreach (DB::table('pembayaran_spp')->where('nis', $Siswa->nis)->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->get() as $PembayaranGenap)
+            @foreach(DB::table('jenis_tagihan')->Where('id', $SeacrhJenisTagihanGenap->id)->get() as $JenisTagihanGenap)
+            @foreach(DB::table('pembayaran_spp')->where('id_siswa',$Siswa->id)->get() as $PembayaranGenap)
             <?php
             if ($PembayaranGenap->spp_a == NULL) {
                 $Bulan7 = $JenisTagihanGenap->spp;
@@ -173,24 +177,32 @@
             }
             $JumlahTunggakan2 = $Bulan7 + $Bulan8 + $Bulan9 + $Bulan10 + $Bulan11 + $Bulan12;
             $JumlahTunggakan = $JumlahTunggakan2 + $JumlahTunggakan1; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. {{number_format($Bulan7)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan8)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan9)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan10)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan11)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan12)}}</td>
+            @endif
             <td style="vertical-align: middle">Rp. {{number_format($JumlahTunggakan)}}--</td>
             @endforeach
             @endforeach
             @else
             <?php $JumlahTunggakan2 = 0;
             $JumlahTunggakan = $JumlahTunggakan2 + $JumlahTunggakan1; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
+            @endif
             <td style="vertical-align: middle">Rp. {{number_format($JumlahTunggakan)}}</td>
             @endif
             @endforeach
@@ -198,16 +210,20 @@
             @else
             <?php
             $JumlahTunggakan1 = 0; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
-            <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->first() ?>
+            @endif
+            <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Genap")->first() ?>
             @if($SeacrhJenisTagihanGenap)
-            @foreach(DB::table('jenis_tagihan')->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->get() as $JenisTagihanGenap)
-            @foreach (DB::table('pembayaran_spp')->where('nis', $Siswa->nis)->Where('tahun_ajaran', $DataTahunAjaran)->Where('tingkat', $DataTingkat)->Where('semester', "Semester Genap")->get() as $PembayaranGenap)
+            @foreach(DB::table('jenis_tagihan')->Where('id', $SeacrhJenisTagihanGenap->id)->get() as $JenisTagihanGenap)
+            @foreach(DB::table('pembayaran_spp')->where('id_siswa',$Siswa->id)->get() as $PembayaranGenap)
             <?php
             if ($PembayaranGenap->spp_a == NULL) {
                 $Bulan7 = $JenisTagihanGenap->spp;
@@ -241,24 +257,32 @@
             }
             $JumlahTunggakan2 = $Bulan7 + $Bulan8 + $Bulan9 + $Bulan10 + $Bulan11 + $Bulan12;
             $JumlahTunggakan = $JumlahTunggakan2 + $JumlahTunggakan1; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. {{number_format($Bulan7)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan8)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan9)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan10)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan11)}}</td>
             <td style="vertical-align: middle">Rp. {{number_format($Bulan12)}}</td>
+            @endif
             <td style="vertical-align: middle">Rp. {{number_format($JumlahTunggakan)}}</td>
             @endforeach
             @endforeach
             @else
             <?php $JumlahTunggakan2 = 0;
             $JumlahTunggakan = $JumlahTunggakan2 + $JumlahTunggakan1; ?>
+            @if($Siswa->status=="Keluar")
+            <td colspan="6" style="vertical-align: middle; text-align: center; font-weight: bold;"> Keluar </td>
+            @else
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
             <td style="vertical-align: middle">Rp. -</td>
+            @endif
             <td style="vertical-align: middle">Rp. {{number_format($JumlahTunggakan)}}</td>
             @endif
             @endif

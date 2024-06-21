@@ -80,6 +80,7 @@ class InsertController extends Controller
                         'kelas' => $v[7],
                         'tahun_ajaran' => $v[8],
                         'semester' => $v[9],
+                        'status' => "Aktif",
                         'created_at' => $date,
                     ]);
                 }

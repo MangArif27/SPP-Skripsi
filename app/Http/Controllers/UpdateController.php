@@ -29,7 +29,7 @@ class UpdateController extends Controller
             'password' => $Password,
             'updated_at' => $Updated_At
         ]);
-        Session::flash('sukses', 'Anda Berhasil Input Data!');
+        Session::flash('sukses', 'Anda Berhasil Update Data!');
         return redirect('/Data-Pengguna');
     }
     /* -------- Proses Update Siswa -------*/
@@ -39,7 +39,7 @@ class UpdateController extends Controller
         DB::table('siswa')->where('id', $request->Id)->update([
             'nama' => $request->Nama,
             'jenis_kelamin' => $request->Jenis_Kelamin,
-            'agama' => $request->Agama,
+            'status' => $request->Status,
             'alamat' => $request->Alamat,
             'tingkat' => $request->Tingkat,
             'kelas' => $request->Kelas,
@@ -47,7 +47,7 @@ class UpdateController extends Controller
             'semester' => $request->Semester,
             'updated_at' => $Updated_At
         ]);
-        Session::flash('sukses', 'Anda Berhasil Input Data!');
+        Session::flash('sukses', 'Anda Berhasil Update Data!');
         return redirect('/Data-Siswa');
     }
     /* -------- Proses Update Pembayaran -------*/
@@ -207,6 +207,7 @@ class UpdateController extends Controller
             $Keterangan = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
             foreach ($Keterangan as $Ket) {
                 if ($Ket->spp_a == NULL || $Ket->spp_b == NULL || $Ket->spp_c == NULL || $Ket->spp_d == NULL || $Ket->spp_e == NULL || $Ket->spp_f == NULL) {
+                    Session::flash('sukses', 'Selamat Anda Berhasil Melakukan Pembayaran !');
                     return redirect('/Data-Tunggakan');
                 } else {
                     $UpdatedDate = date('Y-m-d H:i:s');
@@ -214,10 +215,11 @@ class UpdateController extends Controller
                         'keterangan' => "Sudah Lunas",
                         'updated_at' => $UpdatedDate,
                     ]);
+                    Session::flash('sukses', 'Selamat Anda Berhasil Melakukan Pembayaran !');
+                    return redirect('/Data-Pembayaran');
                 }
             }
         }
-        return redirect('/Data-Tunggakan');
     }
     /* -------- Proses Update Tagihan -------*/
     public function UpdateTagihan(Request $request)
@@ -225,6 +227,29 @@ class UpdateController extends Controller
         DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->where('tingkat', $request->Tingkat)->update([
             'spp' => $request->SPP,
         ]);
+        $Tagihan = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+        foreach ($Tagihan as $JT) {
+            $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+            foreach ($Siswa as $Sw) {
+                $Pembayaran = DB::table('pembayaran_spp')->where('id_siswa', $Sw->id)->first();
+                if ($Pembayaran) {
+                } else {
+
+                    $CreateDate = date('Y-m-d H:i:s');
+                    DB::table('pembayaran_spp')->insert([
+                        'id_siswa' => $Sw->id,
+                        'id_tagihan' => $JT->id,
+                        'nis' => $Sw->nis,
+                        'tahun_ajaran' => $request->Tahun_Ajaran,
+                        'semester' => $request->Semester,
+                        'tingkat' => $request->Tingkat,
+                        'keterangan' => "Belum Lunas",
+                        'created_at' => $CreateDate,
+                    ]);
+                }
+            }
+        }
+        Session::flash('sukses', 'Anda Berhasil Update Data!');
         return redirect('/Data-Tagihan');
     }
 }

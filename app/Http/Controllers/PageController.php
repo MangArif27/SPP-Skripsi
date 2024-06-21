@@ -171,13 +171,24 @@ class PageController extends Controller
     public function ExportLaporanPembayaran(Request $request)
     {
         $Date = date('Y-m-d H:i:s');
-        if ($request->JenisFile == "Excel") {
-            $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
-            return view('Page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas]);
+        if ($request->StatusSiswa == "Aktif") {
+            if ($request->JenisFile == "Excel") {
+                $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
+                return view('Page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas]);
+            } else {
+                $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
+                $pdf = PDF::loadview('Page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
+                return $pdf->download('ExportLaporanPembayaran - ' . $Date . '.pdf');
+            }
         } else {
-            $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', $request->Tingkat)->where('kelas', $request->Kelas)->get();
-            $pdf = PDF::loadview('Page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => $request->Tingkat, 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
-            return $pdf->download('ExportLaporanPembayaran - ' . $Date . '.pdf');
+            if ($request->JenisFile == "Excel") {
+                $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', "XII")->where('kelas', $request->Kelas)->get();
+                return view('Page._Export_Excel', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => "XII", 'DataKelas' => $request->Kelas]);
+            } else {
+                $data = DB::table('siswa')->where('tahun_ajaran', $request->TahunAjaran)->where('tingkat', "XII")->where('kelas', $request->Kelas)->get();
+                $pdf = PDF::loadview('Page._Export_Pdf', ['DataTahunAjaran' => $request->TahunAjaran, 'DataTingkat' => "XII", 'DataKelas' => $request->Kelas])->setPaper('legal', 'landscape');
+                return $pdf->download('ExportLaporanPembayaran - ' . $Date . '.pdf');
+            }
         }
     }
     public function Pengaturan()

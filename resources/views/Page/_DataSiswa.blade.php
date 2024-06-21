@@ -137,16 +137,16 @@
                 <div class="card-block">
                     <form>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nama Siswa </label>
-                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}" readonly>
+                            <label class="col-sm-2 col-form-label">Status</label>
+                            <input type="text" class="form-control col-sm-4" name="Status" value="{{$Siswa->status}}" readonly>
                             <label class="col-sm-2 col-form-label">NIS </label>
                             <input type="text" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nama Siswa </label>
+                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}" readonly>
                             <label class="col-sm-2 col-form-label">Jenis Kelamin </label>
                             <input type="text" class="form-control col-sm-4" name="Jenis_Kelamin" value="{{$Siswa->jenis_kelamin}}" readonly>
-                            <label class="col-sm-2 col-form-label">Agama </label>
-                            <input type="text" class="form-control col-sm-4" name="Agama" value="{{$Siswa->agama}}" readonly>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Alamat </label>
@@ -190,13 +190,24 @@
                     <form action="{{ route('Update.Siswa') }}" enctype="multipart/form-data" id="EditData{{$Siswa->id}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nama Siswa </label>
-                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}">
+                            <label class="col-sm-2 col-form-label">Status </label>
+                            <select name="Status" id="Status" class="form-control col-sm-4" required>
+                                <option readonly> Status </option>
+                                @if($Siswa->status=="Aktif")
+                                <option value="Aktif" selected> Aktif </option>
+                                <option value="Keluar"> Keluar </option>
+                                @else
+                                <option value="Aktif"> Aktif </option>
+                                <option value="Keluar" selected> Keluar </option>
+                                @endif
+                            </select>
                             <label class="col-sm-2 col-form-label">NIS </label>
                             <input type="text" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
                             <input type="number" class="form-control col-sm-4" name="Id" value="{{$Siswa->id}}" hidden>
                         </div>
                         <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Nama Siswa </label>
+                            <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}">
                             <label class="col-sm-2 col-form-label">Jenis Kelamin </label>
                             <select name="Jenis_Kelamin" id="Jenis_Kelamin" class="form-control col-sm-4" required>
                                 <option readonly> Jenis Kelamin </option>
@@ -206,53 +217,6 @@
                                 @else
                                 <option value="Laki-Laki"> Laki-Laki </option>
                                 <option value="Perempuan" selected> Perempuan </option>
-                                @endif
-                            </select>
-                            <label class="col-sm-2 col-form-label">Agama </label>
-                            <select name="Agama" id="Agama" class="form-control col-sm-4" required>
-                                <option readonly> Jenis Kelamin </option>
-                                @if($Siswa->agama=="Islam")
-                                <option value="Islam" selected> Islam </option>
-                                <option value="Katholik"> Katholik </option>
-                                <option value="Protestan"> Protestan </option>
-                                <option value="Hindu"> Hindu </option>
-                                <option value="Budha"> Budha </option>
-                                <option value="Khonghucu"> Khonghucu </option>
-                                @elseif($Siswa->agama=="Katholik")
-                                <option value="Islam"> Islam </option>
-                                <option value="Katholik" selected> Katholik </option>
-                                <option value="Protestan"> Protestan </option>
-                                <option value="Hindu"> Hindu </option>
-                                <option value="Budha"> Budha </option>
-                                <option value="Khonghucu"> Khonghucu </option>
-                                @elseif($Siswa->agama=="Protestan")
-                                <option value="Islam"> Islam </option>
-                                <option value="Katholik"> Katholik </option>
-                                <option value="Protestan" selected> Protestan </option>
-                                <option value="Hindu"> Hindu </option>
-                                <option value="Budha"> Budha </option>
-                                <option value="Khonghucu"> Khonghucu </option>
-                                @elseif($Siswa->agama=="Hindu")
-                                <option value="Islam"> Islam </option>
-                                <option value="Katholik"> Katholik </option>
-                                <option value="Protestan"> Protestan </option>
-                                <option value="Hindu" selected> Hindu </option>
-                                <option value="Budha"> Budha </option>
-                                <option value="Khonghucu"> Khonghucu </option>
-                                @elseif($Siswa->agama=="Budha")
-                                <option value="Islam"> Islam </option>
-                                <option value="Katholik"> Katholik </option>
-                                <option value="Protestan"> Protestan </option>
-                                <option value="Hindu"> Hindu </option>
-                                <option value="Budha" selected> Budha </option>
-                                <option value="Khonghucu"> Khonghucu </option>
-                                @else
-                                <option value="Islam"> Islam </option>
-                                <option value="Katholik"> Katholik </option>
-                                <option value="Protestan"> Protestan </option>
-                                <option value="Hindu"> Hindu </option>
-                                <option value="Budha"> Budha </option>
-                                <option value="Khonghucu" selected> Khonghucu </option>
                                 @endif
                             </select>
                         </div>
