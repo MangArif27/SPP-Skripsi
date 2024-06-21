@@ -28,7 +28,7 @@
                     </li>
                 </ul>
             </li>
-            @if(Session::get('level_user')=="Operator")
+            @if(Session::get('level_user')=="Operator" || Session::get('level_user')=="Admin")
             <li class="pcoded-hasmenu">
                 <a href="javascript:void(0)">
                     <span class="pcoded-micon"><i class="feather icon-file-text"></i></span>
@@ -47,7 +47,7 @@
                     </li>
                     <li>
                         <a href="Kwitansi">
-                            <span class="pcoded-mtext">Cetak Kwitansi</span>
+                            <span class="pcoded-mtext">Cetak Kuitansi</span>
                         </a>
                     </li>
                     <li>

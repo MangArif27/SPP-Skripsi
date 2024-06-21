@@ -56,7 +56,9 @@
                                         } else {
                                             $Persentase =  $SudahLunas / $JumlahAll * 100;
                                         }
-                                        if ($Persentase <= 6) {
+                                        if ($Persentase == 0) {
+                                            $PersentaseLunas = 0;
+                                        } elseif ($Persentase <= 6) {
                                             $PersentaseLunas = 5;
                                         } elseif ($Persentase <= 11) {
                                             $PersentaseLunas = 10;
@@ -96,58 +98,56 @@
                                             $PersentaseLunas = 95;
                                         } elseif ($Persentase = 100) {
                                             $PersentaseLunas = 100;
-                                        } else {
-                                            $PersentaseLunas = 0;
                                         }
                                         if ($BelumLunas == 0) {
                                             $PersentaseX = $BelumLunas * 100;
                                         } else {
                                             $PersentaseX = $BelumLunas / $JumlahAll * 100;
-                                            if ($PersentaseX <= 6) {
-                                                $PersentaseBelum = 5;
-                                            } elseif ($PersentaseX <= 11) {
-                                                $PersentaseBelum = 10;
-                                            } elseif ($PersentaseX <= 16) {
-                                                $PersentaseBelum = 15;
-                                            } elseif ($PersentaseX <= 21) {
-                                                $PersentaseBelum = 20;
-                                            } elseif ($PersentaseX <= 26) {
-                                                $PersentaseBelum = 25;
-                                            } elseif ($PersentaseX <= 31) {
-                                                $PersentaseBelum = 30;
-                                            } elseif ($PersentaseX <= 36) {
-                                                $PersentaseBelum = 30;
-                                            } elseif ($PersentaseX <= 41) {
-                                                $PersentaseBelum = 35;
-                                            } elseif ($PersentaseX <= 46) {
-                                                $PersentaseBelum = 40;
-                                            } elseif ($PersentaseX <= 51) {
-                                                $PersentaseBelum = 45;
-                                            } elseif ($PersentaseX <= 56) {
-                                                $PersentaseBelum = 55;
-                                            } elseif ($PersentaseX <= 61) {
-                                                $PersentaseBelum = 55;
-                                            } elseif ($PersentaseX <= 66) {
-                                                $PersentaseBelum = 60;
-                                            } elseif ($PersentaseX <= 71) {
-                                                $PersentaseBelum = 65;
-                                            } elseif ($PersentaseX <= 76) {
-                                                $PersentaseBelum = 70;
-                                            } elseif ($PersentaseX <= 81) {
-                                                $PersentaseBelum = 75;
-                                            } elseif ($PersentaseX <= 86) {
-                                                $PersentaseBelum = 80;
-                                            } elseif ($PersentaseX <= 91) {
-                                                $PersentaseBelum = 85;
-                                            } elseif ($PersentaseX <= 96) {
-                                                $PersentaseBelum = 90;
-                                            } elseif ($PersentaseX < 100) {
-                                                $PersentaseBelum = 95;
-                                            } elseif ($PersentaseX == 100) {
-                                                $PersentaseBelum = 100;
-                                            } else {
-                                                $PersentaseBelum = 0;
-                                            }
+                                        }
+                                        if ($PersentaseX == 0) {
+                                            $PersentaseBelum = 0;
+                                        } elseif ($PersentaseX <= 6) {
+                                            $PersentaseBelum = 5;
+                                        } elseif ($PersentaseX <= 11) {
+                                            $PersentaseBelum = 10;
+                                        } elseif ($PersentaseX <= 16) {
+                                            $PersentaseBelum = 15;
+                                        } elseif ($PersentaseX <= 21) {
+                                            $PersentaseBelum = 20;
+                                        } elseif ($PersentaseX <= 26) {
+                                            $PersentaseBelum = 25;
+                                        } elseif ($PersentaseX <= 31) {
+                                            $PersentaseBelum = 30;
+                                        } elseif ($PersentaseX <= 36) {
+                                            $PersentaseBelum = 30;
+                                        } elseif ($PersentaseX <= 41) {
+                                            $PersentaseBelum = 35;
+                                        } elseif ($PersentaseX <= 46) {
+                                            $PersentaseBelum = 40;
+                                        } elseif ($PersentaseX <= 51) {
+                                            $PersentaseBelum = 45;
+                                        } elseif ($PersentaseX <= 56) {
+                                            $PersentaseBelum = 55;
+                                        } elseif ($PersentaseX <= 61) {
+                                            $PersentaseBelum = 55;
+                                        } elseif ($PersentaseX <= 66) {
+                                            $PersentaseBelum = 60;
+                                        } elseif ($PersentaseX <= 71) {
+                                            $PersentaseBelum = 65;
+                                        } elseif ($PersentaseX <= 76) {
+                                            $PersentaseBelum = 70;
+                                        } elseif ($PersentaseX <= 81) {
+                                            $PersentaseBelum = 75;
+                                        } elseif ($PersentaseX <= 86) {
+                                            $PersentaseBelum = 80;
+                                        } elseif ($PersentaseX <= 91) {
+                                            $PersentaseBelum = 85;
+                                        } elseif ($PersentaseX <= 96) {
+                                            $PersentaseBelum = 90;
+                                        } elseif ($PersentaseX < 100) {
+                                            $PersentaseBelum = 95;
+                                        } elseif ($PersentaseX == 100) {
+                                            $PersentaseBelum = 100;
                                         }
                                         ?>
                                         <div class="col-6">
@@ -185,7 +185,7 @@
         },
 
         subtitle: {
-            text: 'Sistem Informasi Pembayaran Sekolah SMK Madani Depok',
+            text: 'Sistem Informasi Pembayaran SPP SMK Madani Depok',
             align: 'left'
         },
 

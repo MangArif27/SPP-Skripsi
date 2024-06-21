@@ -45,8 +45,7 @@ Route::get('/Delete-Data-Pengguna/{Nip}', 'DeleteController@DeletePengguna');
 Route::get('/Delete-Data-Tagihan/{Id}', 'DeleteController@DeleteJenisTagihan');
 
 /* -------- Route Cetak Kwitansi -------- */
-Route::get('/Cetak-Kwitansi', 'PageController@CetakKwitansi');
-Route::post('/Cetak-Kwitansi', 'PageController@CetakKwitansi')->name('Cetak.Kwitansi');
+Route::get('/Cetak-Kwitansi/{id}', 'PageController@CetakKwitansi');
 
 /* -------- Route LogIn & LogOut -------*/
 Route::get('/Login', 'PageController@Login');

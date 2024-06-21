@@ -96,17 +96,12 @@ class PageController extends Controller
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            if (Session::get('level_user') == "Admin") {
-                Session::flash('gagal', 'Maaf Anda Tidak Berhak Mengakses Halaman Data Pembayaran');
-                return redirect('/');
-            } else {
-                $Search = DB::table('pengaturan')->get();
-                foreach ($Search as $SC) {
-                    $PembayaranSPP = DB::table('pembayaran_spp')->where('tahun_ajaran', $SC->tahun_ajaran)->where('semester', $SC->semester)->get();
-                }
-                //dd($PembayaranSPP);
-                return view('Page._DataPembayaran', ['PembayaranSPP' => $PembayaranSPP, 'GetPembayaran' => $PembayaranSPP]);
+            $Search = DB::table('pengaturan')->get();
+            foreach ($Search as $SC) {
+                $PembayaranSPP = DB::table('pembayaran_spp')->where('tahun_ajaran', $SC->tahun_ajaran)->where('semester', $SC->semester)->get();
             }
+            //dd($PembayaranSPP);
+            return view('Page._DataPembayaran', ['PembayaranSPP' => $PembayaranSPP, 'GetPembayaran' => $PembayaranSPP]);
         }
     }
     public function Tagihan()
@@ -114,13 +109,8 @@ class PageController extends Controller
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            if (Session::get('level_user') == "Admin") {
-                Session::flash('gagal', 'Maaf Anda Tidak Berhak Mengakses Halaman Data Tagihan');
-                return redirect('/');
-            } else {
-                $JenisTagihan = DB::table('jenis_tagihan')->get();
-                return view('Page._DataTagihan', ['JenisTagihan' => $JenisTagihan]);
-            }
+            $JenisTagihan = DB::table('jenis_tagihan')->get();
+            return view('Page._DataTagihan', ['JenisTagihan' => $JenisTagihan]);
         }
     }
     public function Kwitansi()
@@ -128,32 +118,22 @@ class PageController extends Controller
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            if (Session::get('level_user') == "Admin") {
-                Session::flash('gagal', 'Maaf Anda Tidak Berhak Mengakses Halaman Data Pembayaran');
-                return redirect('/');
-            } else {
-                $Search = DB::table('pengaturan')->get();
-                foreach ($Search as $SC) {
-                    $Tunggakan = DB::table('pembayaran_spp')->get()->groupBy('nis');
-                }
-                //dd($Tunggakan);
-                return view('Page._DataKwitansi', ['Tunggakan' => $Tunggakan]);
+            $Search = DB::table('pengaturan')->get();
+            foreach ($Search as $SC) {
+                $Tunggakan = DB::table('pembayaran_spp')->get()->groupBy('nis');
             }
+            //dd($Tunggakan);
+            return view('Page._DataKwitansi', ['Tunggakan' => $Tunggakan]);
         }
     }
-    public function CetakKwitansi(Request $request)
+    public function CetakKwitansi($id)
     {
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            if (Session::get('level_user') == "Admin") {
-                Session::flash('gagal', 'Maaf Anda Tidak Berhak Mengakses Halaman Cetak Kwitansi');
-                return redirect('/');
-            } else {
-                $Pembayaran = DB::table('pembayaran_spp')->where('tahun_ajaran', $request->TahunAjaran)->where('semester', $request->Semester)->where('nis', $request->Nis)->get();
-                //dd($PembayaranSPP);
-                return view('Page._Kwitansi', ['Pembayaran' => $Pembayaran]);
-            }
+            $Pembayaran = DB::table('pembayaran_spp')->where('id_siswa', $id)->get();
+            //dd($PembayaranSPP);
+            return view('Page._Kwitansi', ['Pembayaran' => $Pembayaran]);
         }
     }
     public function Tunggakan()
@@ -161,17 +141,12 @@ class PageController extends Controller
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            if (Session::get('level_user') == "Admin") {
-                Session::flash('gagal', 'Maaf Anda Tidak Berhak Mengakses Halaman Data Tunggakan');
-                return redirect('/');
-            } else {
-                $Search = DB::table('pengaturan')->get();
-                foreach ($Search as $SC) {
-                    $Tunggakan = DB::table('pembayaran_spp')->where('keterangan', 'Belum Lunas')->Where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
-                }
-                //dd($Tunggakan);
-                return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
+            $Search = DB::table('pengaturan')->get();
+            foreach ($Search as $SC) {
+                $Tunggakan = DB::table('pembayaran_spp')->where('keterangan', 'Belum Lunas')->Where('tahun_ajaran', '!=', $SC->tahun_ajaran)->orWhere('semester', '!=', $SC->semester)->get()->groupBy('nis');
             }
+            //dd($Tunggakan);
+            return view('Page._DataTunggakan', ['Tunggakan' => $Tunggakan]);
         }
     }
 
@@ -181,11 +156,11 @@ class PageController extends Controller
             return redirect('Login');
         } else {
             if (request()->ajax()) {
-                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.id', '=', 'siswa.id')->get();
+                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.id_siswa', '=', 'siswa.id')->get();
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
-                        $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
+                        $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id_siswa . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
                         return $button;
                     })
                     ->toJson();

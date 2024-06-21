@@ -14,7 +14,7 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Cetak Kwitansi </h4>
+                                    <h4>Cetak Kuitansi </h4>
                                     <span>Sistem Informasi Pembayaran Sekolah SMK Madani Depok</span>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                                                     <td style="background-color:#FF0000;">
                                                         <span style="color: white;">Rp. {{number_format($Jumlah)}}</span>
                                                     </td>
-                                                    <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId{{$Pembayaran->id}}"><i class="icofont icofont-print"></i> Cetak Struk</button>
+                                                    <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId{{$Pembayaran->id}}"><i class="icofont icofont-print"></i> Cetak Kuitansi</button>
                                                         <!--<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>-->
                                                 </tr>
                                                 @endforeach
@@ -282,7 +282,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Cetak Kwitansi</h4>
+                <h4 class="modal-title">Cetak Kuitansi</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

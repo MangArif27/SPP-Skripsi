@@ -15,20 +15,10 @@ return new class extends Migration
     {
         Schema::create('jenis_tagihan', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('tahun_ajaran');
-            $table->string('semester');
-            $table->string('tingkat');
-            $table->string('spp');
-            $table->string('ekstrakurikuler');
-            $table->string('sarpras');
-            $table->string('buku_lks');
-            $table->string('pas');
-            $table->string('study_tour');
-            $table->string('pentas_seni');
-            $table->string('map_rapor');
-            $table->string('prakerin');
-            $table->string('ldk');
-            $table->string('kartu_pelajar');
+            $table->string('tahun_ajaran', 9)->index();
+            $table->string('semester', 15);
+            $table->string('tingkat', 3);
+            $table->string('spp', 7);
             $table->timestamps();
         });
     }

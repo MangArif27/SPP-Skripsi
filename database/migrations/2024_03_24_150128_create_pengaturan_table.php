@@ -15,19 +15,19 @@ return new class extends Migration
     {
         Schema::create('pengaturan', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('sekolah');
+            $table->string('sekolah', 20);
             $table->text('alamat');
-            $table->string('telpon');
-            $table->string('faximile');
-            $table->string('email');
-            $table->string('website');
-            $table->string('nama_kepsek');
-            $table->string('nama_bendahara');
-            $table->string('jumlah_kejuruan');
-            $table->string('jumlah_gtk');
-            $table->string('jumlah_kelas');
-            $table->string('tahun_ajaran');
-            $table->string('semester');
+            $table->string('telpon', 13);
+            $table->string('faximile', 13);
+            $table->string('email', 55);
+            $table->string('website', 55);
+            $table->string('nama_kepsek', 55);
+            $table->string('nama_bendahara', 55);
+            $table->string('jumlah_kejuruan', 2);
+            $table->string('jumlah_gtk', 3);
+            $table->string('jumlah_kelas', 3);
+            $table->string('tahun_ajaran', 9)->index();
+            $table->string('semester', 15);
             $table->timestamps();
         });
     }

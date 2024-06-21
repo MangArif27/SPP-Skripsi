@@ -1,7 +1,3 @@
-<?php
-$url = url()->previous();
-header("Refresh:5; $url");
-?>
 <!DOCTYPE html>
 <html>
 
@@ -154,11 +150,11 @@ header("Refresh:5; $url");
         </table>
         <hr style="border: 1px solid;">
         <div style="font-size: medium; text-align: center;">
-            <b>BUKTI PEMBAYARAN SISWA</b>
+            <b>KUITANSI PEMBAYARAN SISWA</b>
         </div>
         <hr style="border: 1px solid;">
         @foreach($Pembayaran as $PembayaranSPP)
-        @foreach(DB::table('siswa')->where('id',$PembayaranSPP->id)->get() as $Siswa)
+        @foreach(DB::table('siswa')->where('id',$PembayaranSPP->id_siswa)->get() as $Siswa)
         @foreach(DB::table('jenis_tagihan')->where('tahun_ajaran',$PembayaranSPP->tahun_ajaran)->where('semester',$PembayaranSPP->semester)->where('tingkat',$PembayaranSPP->tingkat)->get() as $JenisTagihan)
         <table id="perkaraKunjungan" style="font-style: Segoe UI;">
             <tr>
@@ -180,7 +176,7 @@ header("Refresh:5; $url");
             <tr>
                 <td class="label" style="font-weight: bold;">Kelas</td>
                 <td width="5">:</td>
-                <td>{{$Siswa->kelas}}</td>
+                <td>{{$Siswa->tingkat}}-{{$Siswa->kelas}}</td>
             </tr>
         </table>
         @if($PembayaranSPP->semester=="Semester Genap")

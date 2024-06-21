@@ -35,7 +35,7 @@
                                                 <div class="col-lg-12">
                                                     <div>
                                                         <h2 class="text-white">SMK Madani Depok</h2>
-                                                        <span class="text-white">Sistem Informasi Pembayaran Sekolah</span>
+                                                        <span class="text-white">Sistem Informasi Pembayaran SPP</span>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -170,7 +170,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 @section('footer')
 @foreach(DB::table('pengaturan')->get() as $Sekolah_Read)

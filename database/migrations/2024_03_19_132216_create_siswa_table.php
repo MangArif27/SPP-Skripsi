@@ -15,15 +15,15 @@ return new class extends Migration
     {
         Schema::create('siswa', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('nis');
-            $table->string('nama');
-            $table->string('jenis_kelamin');
-            $table->string('alamat');
-            $table->string('agama');
-            $table->string('tingkat');
-            $table->string('kelas');
-            $table->string('tahun_ajaran');
-            $table->string('semester');
+            $table->string('nis', 11);
+            $table->string('nama', 55);
+            $table->string('jenis_kelamin', 9);
+            $table->text('alamat');
+            $table->string('agama', 9);
+            $table->string('tingkat', 3);
+            $table->string('kelas', 5);
+            $table->string('tahun_ajaran', 9)->index();
+            $table->string('semester', 15);
             $table->timestamps();
         });
     }

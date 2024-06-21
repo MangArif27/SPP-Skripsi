@@ -14,18 +14,19 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pembayaran_spp', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('nis');
-            $table->string('tahun_ajaran');
-            $table->string('semester');
-            $table->string('tingkat');
-            $table->string('spp_a')->NULL;
-            $table->string('spp_b')->NULL;
-            $table->string('spp_c')->NULL;
-            $table->string('spp_d')->NULL;
-            $table->string('spp_e')->NULL;
-            $table->string('spp_f')->NULL;
-            $table->string('keterangan');
+            $table->bigInteger('id_siswa', 20)->index();
+            $table->bigInteger('id_tagihan', 20)->index();
+            $table->string('nis', 11);
+            $table->string('tahun_ajaran', 9);
+            $table->string('semester', 15);
+            $table->string('tingkat', 3);
+            $table->date('spp_a')->NULL;
+            $table->date('spp_b')->NULL;
+            $table->date('spp_c')->NULL;
+            $table->date('spp_d')->NULL;
+            $table->date('spp_e')->NULL;
+            $table->date('spp_f')->NULL;
+            $table->string('keterangan', 11);
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
                             <div class="page-header-title">
                                 <div class="d-inline">
                                     <h4>Data Pengguna</h4>
-                                    <span>Sistem Informasi Pembayaran Sekolah SMK Madani Depok</span>
+                                    <span>Sistem Informasi Pembayaran SPP SMK Madani Depok</span>
                                 </div>
                             </div>
                         </div>
@@ -138,8 +138,7 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$Pengguna->updated_at}}</td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                    <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
                                                         <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Pengguna->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
                                                 @endforeach
@@ -211,79 +210,13 @@
     });
 </script>
 @endforeach
-<!-- Modal Lihat Pengguna -->
-@foreach($GetPengguna as $Pengguna)
-<div id="LihatPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Data Diri Pengguna</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="card-block">
-                    <form>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Nama Pengguna</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Nama" value="{{$Pengguna->name}}" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">No Induk Pegawai</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" name="NIP" value="{{$Pengguna->nip}}" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Jabatan</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Jabatan" value="{{$Pengguna->jabatan}}" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Pangkat</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Pangkat" value="{{$Pengguna->pangkat}}" readonly>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label">Level User</label>
-                            <div class="col-sm-8">
-                                <select name="LevelUser" class="form-control" readonly>
-                                    <option disabled>Pilih Level User</option>
-                                    @if($Pengguna->level_user=="Admin")
-                                    <option value="Admin" selected>Admin</option>
-                                    <option value="Operator">Operator</option>
-                                    @else
-                                    <option value="Admin">Admin</option>
-                                    <option value="Operator" selected>Operator</option>
-                                    @endif
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
 <!-- Modal Edit Pengguna -->
 @foreach($GetPengguna as $Pengguna)
 <div id="EditPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Data Diri Pengguna</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h4 class="modal-title">Data Pengguna</h4>
             </div>
             <div class="modal-body">
                 <div class="card-block">

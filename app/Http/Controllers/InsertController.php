@@ -53,9 +53,40 @@ class InsertController extends Controller
         $path = 'Backup_Restore';
         $file->move($path, $nama_file);
         // import data
-        Excel::import(new ImportSiswa(), public_path('Backup_Restore/' . $nama_file));
+        $array = Excel::toArray(new ImportSiswa(), public_path('Backup_Restore/' . $nama_file));
+        $no = 0;
+        foreach ($array as $key => &$value) {
+            foreach ($value as $v) {
+                $date = date('Y-m-d H:i:s');
+                $cek = DB::table('siswa')->where('nis', $v[1])->where('tahun_ajaran', $v[8])->where('semester', $v[9])->first();
+                if ($cek) {
+                    DB::table('siswa')->where('nis', $v[1])->where('tahun_ajaran', $v[8])->where('semester', $v[9])->update([
+                        'nama' => $v[2],
+                        'jenis_kelamin' => $v[3],
+                        'alamat' => $v[4],
+                        'agama' => $v[5],
+                        'tingkat' => $v[6],
+                        'kelas' => $v[7],
+                        'updated_at' => $date,
+                    ]);
+                } else {
+                    DB::table('siswa')->insert([
+                        'nis' => $v[1],
+                        'nama' => $v[2],
+                        'jenis_kelamin' => $v[3],
+                        'alamat' => $v[4],
+                        'agama' => $v[5],
+                        'tingkat' => $v[6],
+                        'kelas' => $v[7],
+                        'tahun_ajaran' => $v[8],
+                        'semester' => $v[9],
+                        'created_at' => $date,
+                    ]);
+                }
+            }
+        }
         // notifikasi dengan session
-        //Session::flash('sukses', 'Data Siswa Berhasil Diimport!');
+        Session::flash('sukses', 'Data Siswa Berhasil Diimport!');
         // alihkan halaman kembali
         return redirect('/Data-Siswa');
     }
@@ -98,36 +129,30 @@ class InsertController extends Controller
             return redirect('/Data-Tagihan');
         } else {
             $CekSiswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->first();
-            if ($CekSiswa > 0) {
+            if ($CekSiswa) {
                 DB::table('jenis_tagihan')->insert([
                     'tahun_ajaran' => $request->Tahun_Ajaran,
                     'semester' => $request->Semester,
                     'tingkat' => $request->Tingkat,
                     'spp' => $request->SPP,
-                    /*'ekstrakurikuler' => $request->Ekstrakurikuler,
-                'sarpras' => $request->Sarpras,
-                'buku_lks' => $request->Buku_LKS,
-                'pas' => $request->PAS,
-                'study_tour' => $request->Kunjungan,
-                'pentas_seni' => $request->Pentas_Seni,
-                'map_rapor' => $request->MAP_Rapor,
-                'prakerin' => $request->Prakerin,
-                'ldk' => $request->LDK,
-                'kartu_pelajar' => $request->Kartu_Pelajar,*/
                 ]);
                 /*Input Data Pembayaran SPP */
-                $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
-                foreach ($Siswa as $Sw) {
-                    $CreateDate = date('Y-m-d H:i:s');
-                    DB::table('pembayaran_spp')->insert([
-                        'id' => $Sw->id,
-                        'nis' => $Sw->nis,
-                        'tahun_ajaran' => $request->Tahun_Ajaran,
-                        'semester' => $request->Semester,
-                        'tingkat' => $request->Tingkat,
-                        'keterangan' => "Belum Lunas",
-                        'created_at' => $CreateDate,
-                    ]);
+                $Tagihan = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+                foreach ($Tagihan as $JT) {
+                    $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+                    foreach ($Siswa as $Sw) {
+                        $CreateDate = date('Y-m-d H:i:s');
+                        DB::table('pembayaran_spp')->insert([
+                            'id_siswa' => $Sw->id,
+                            'id_tagihan' => $JT->id,
+                            'nis' => $Sw->nis,
+                            'tahun_ajaran' => $request->Tahun_Ajaran,
+                            'semester' => $request->Semester,
+                            'tingkat' => $request->Tingkat,
+                            'keterangan' => "Belum Lunas",
+                            'created_at' => $CreateDate,
+                        ]);
+                    }
                 }
                 Session::flash('sukses', 'Anda Berhasil Input Data!');
                 return redirect('/Data-Tagihan');
