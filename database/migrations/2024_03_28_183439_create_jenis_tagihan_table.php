@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('jenis_tagihan', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('tahun_ajaran', 9)->index();
+            $table->string('id_tahun_ajaran', 9)->index();
             $table->string('semester', 15);
             $table->string('tingkat', 3);
             $table->string('spp', 7);

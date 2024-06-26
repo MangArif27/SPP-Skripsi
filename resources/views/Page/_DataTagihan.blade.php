@@ -103,13 +103,12 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($JenisTagihan as $JenisTagihan)
-                                                <tr id="index_{{$JenisTagihan->id}}">
+                                                <tr id="index_{{$JenisTagihan->id_tagihan}}">
                                                     <td>{{$JenisTagihan->tahun_ajaran}}</td>
                                                     <td>{{$JenisTagihan->semester}}</td>
                                                     <td>{{$JenisTagihan->tingkat}}</td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatTagihanId{{$JenisTagihan->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditTagihanId{{$JenisTagihan->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$JenisTagihan->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatTagihanId{{$JenisTagihan->id_tagihan}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditTagihanId{{$JenisTagihan->id_tagihan}}"><i class="icofont icofont-pencil"></i> Edit</button>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -144,46 +143,9 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modal.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
-<!-- Alert Konfirmasi Hapus -->
-@foreach(DB::table('jenis_tagihan')->get() as $JT)
-<script type="text/javascript">
-    'use strict';
-    $(document).ready(function() {
-        document.querySelector('.alert-confirm-id{{$JT->id}}').onclick = function() {
-            swal({
-                    title: "Apakah Kamu Yakin ?",
-                    text: "Akan Menghapus Data Tagihan : {{$JT->semester}}/{{$JT->tahun_ajaran}}",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Ya",
-                    closeOnConfirm: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: '/Delete-Data-Tagihan/{{$JT->id}}',
-                            success: function(response) {
-
-                                //show success message
-                                swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
-                                    "success");
-                                //remove post on table
-                                $(`#index_{{$JT->id}}`).remove();
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        swal("Cancel", "Kamu Tidak Jadi Hapus Data :)", "error");
-                    }
-                });
-        };
-    });
-</script>
-@endforeach
 <!-- Modal LihatPengguna -->
 @foreach(DB::table('jenis_tagihan')->get() as $JT)
-<div class="modal fade" id="LihatTagihanId{{$JT->id}}" tabindex="-1" role="dialog">
+<div class="modal fade" id="LihatTagihanId{{$JT->id_tagihan}}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -218,7 +180,7 @@
 @endforeach
 <!-- Modal EditPengguna -->
 @foreach(DB::table('jenis_tagihan')->get() as $JT)
-<div class="modal fade" id="EditTagihanId{{$JT->id}}" tabindex="-1" role="dialog">
+<div class="modal fade" id="EditTagihanId{{$JT->id_tagihan}}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -229,9 +191,9 @@
             </div>
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Data.Tagihan') }}" enctype="multipart/form-data" id="UpdateTagihanId{{$JT->id}}" method="post">
+                    <form action="{{ route('Update.Data.Tagihan') }}" enctype="multipart/form-data" id="UpdateTagihanId{{$JT->id_tagihan}}" method="post">
                         {{ csrf_field() }}
-                        <div class="form-group row">
+                        <div class=" form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
                             <input type="text" class="form-control col-sm-3" name="Tahun_Ajaran" value="{{$JT->tahun_ajaran}}" readonly>
                             <label class="col-sm-3 col-form-label">Semester</label>
@@ -247,7 +209,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light" form="UpdateTagihanId{{$JT->id}}"><i class=" icofont icofont-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" form="UpdateTagihanId{{$JT->id_tagihan}}"><i class=" icofont icofont-save"></i> Save</button>
                 </div>
             </div>
         </div>

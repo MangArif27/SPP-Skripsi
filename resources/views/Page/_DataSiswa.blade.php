@@ -79,14 +79,13 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($Siswa as $Siswa)
-                                                <tr id="index_{{$Siswa->id}}">
+                                                <tr id="index_{{$Siswa->nis}}">
                                                     <td>{{$Siswa->nama}}</td>
                                                     <td>{{$Siswa->nis}}</td>
                                                     <td>{{$Siswa->tingkat}}-{{$Siswa->kelas}}</label>
                                                     </td>
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId{{$Siswa->id}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
-                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId{{$Siswa->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <!---<button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Siswa->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>--->
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#LihatId{{$Siswa->nis}}"><i class="icofont icofont-eye-alt"></i> Lihat</button>
+                                                        <button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditId{{$Siswa->nis}}"><i class="icofont icofont-pencil"></i> Edit</button>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -124,7 +123,7 @@
 
 <!-- Modal Lihat Data -->
 @foreach($LihatSiswa as $Siswa)
-<div id="LihatId{{$Siswa->id}}" class="modal fade" role="dialog">
+<div id="LihatId{{$Siswa->nis}}" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -153,16 +152,10 @@
                             <textarea class="form-control col-sm-10" name="Alamat" readonly>{{$Siswa->alamat}}</textarea>
                         </div>
                         <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Tingkat</label>
-                            <input type="text" class="form-control col-sm-4" name="Tingkat" value="{{$Siswa->tingkat}}" readonly>
-                            <label class="col-sm-2 col-form-label">Kelas</label>
-                            <input type="text" class="form-control col-sm-4" name="Kelas" value="{{$Siswa->kelas}}" readonly>
-                        </div>
-                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Tingkat/Kelas</label>
+                            <input type="text" class="form-control col-sm-4" name="Tingkat" value="{{$Siswa->tingkat}}-{{$Siswa->kelas}}" readonly>
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
                             <input type="text" class="form-control col-sm-4" name="TahunAjaran" value="{{$Siswa->tahun_ajaran}}" readonly>
-                            <label class="col-sm-2 col-form-label">Semester</label>
-                            <input type="text" class="form-control col-sm-4" name="Semester" value="{{$Siswa->semester}}" readonly>
                         </div>
                     </form>
                 </div>
@@ -176,7 +169,7 @@
 @endforeach
 <!-- Modal Edit Data -->
 @foreach($LihatSiswa as $Siswa)
-<div id="EditId{{$Siswa->id}}" class="modal fade" role="dialog">
+<div id="EditId{{$Siswa->nis}}" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -187,7 +180,7 @@
             </div>
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Siswa') }}" enctype="multipart/form-data" id="EditData{{$Siswa->id}}" method="post">
+                    <form action="{{ route('Update.Siswa') }}" enctype="multipart/form-data" id="EditData{{$Siswa->nis}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Status </label>
@@ -203,7 +196,6 @@
                             </select>
                             <label class="col-sm-2 col-form-label">NIS </label>
                             <input type="text" class="form-control col-sm-4" name="NIS" value="{{$Siswa->nis}}" readonly>
-                            <input type="number" class="form-control col-sm-4" name="Id" value="{{$Siswa->id}}" hidden>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Siswa </label>
@@ -226,7 +218,7 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tingkat</label>
-                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-4" required>
+                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-2" required>
                                 <option readonly> Tingkat </option>
                                 @if($Siswa->tingkat=="X")
                                 <option value="X" selected> X </option>
@@ -242,8 +234,7 @@
                                 <option value="XII" selected> XII </option>
                                 @endif
                             </select>
-                            <label class="col-sm-2 col-form-label">Kelas</label>
-                            <select name="Kelas" id="Kelas" class="form-control col-sm-4" required>
+                            <select name="Kelas" id="Kelas" class="form-control col-sm-2" required>
                                 <option readonly> Kelas </option>
                                 @if($Siswa->kelas=="TKR 1")
                                 <option value="TKR 1" selected>TKR 1 </option>
@@ -296,8 +287,6 @@
                                 <option value="TKJ 3">TKJ 3</option>
                                 @endif
                             </select>
-                        </div>
-                        <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
                             <select name="Tahun_Ajaran" id="Tahun_Ajaran" class="form-control col-sm-4" required>
                                 <option readonly> Tahun Ajaran </option>
@@ -312,23 +301,12 @@
                                 @endif
                                 @endforeach
                             </select>
-                            <label class="col-sm-2 col-form-label">Semester</label>
-                            <select name="Semester" id="Semester" class="form-control col-sm-4" required>
-                                <option readonly> Semester </option>
-                                @if($Siswa->semester=="Semester Ganjil")
-                                <option value="Semester Ganjil" selected> Semester Ganjil </option>
-                                <option value="Semester Genap"> Semester Genap </option>
-                                @else
-                                <option value="Semester Ganjil"> Semester Ganjil </option>
-                                <option value="Semester Genap" selected> Semester Genap </option>
-                                @endif
-                            </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" form="EditData{{$Siswa->id}}" class="btn btn-primary waves-effect "><i class="icofont icofont-ui-save"></i> Save</button>
+                    <button type="submit" form="EditData{{$Siswa->nis}}" class="btn btn-primary waves-effect "><i class="icofont icofont-ui-save"></i> Save</button>
                 </div>
             </div>
         </div>

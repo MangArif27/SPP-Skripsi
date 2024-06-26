@@ -154,8 +154,8 @@
         </div>
         <hr style="border: 1px solid;">
         @foreach($Pembayaran as $PembayaranSPP)
-        @foreach(DB::table('siswa')->where('id',$PembayaranSPP->id_siswa)->get() as $Siswa)
-        @foreach(DB::table('jenis_tagihan')->where('tahun_ajaran',$PembayaranSPP->tahun_ajaran)->where('semester',$PembayaranSPP->semester)->where('tingkat',$PembayaranSPP->tingkat)->get() as $JenisTagihan)
+        @foreach(DB::table('siswa')->where('nis',$PembayaranSPP->nis)->get() as $Siswa)
+        @foreach(DB::table('jenis_tagihan')->where('id_tagihan',$PembayaranSPP->id_tagihan)->get() as $JenisTagihan)
         <table id="perkaraKunjungan" style="font-style: Segoe UI;">
             <tr>
                 <td class="label" style="font-weight: bold;">No Induk Siswa</td>

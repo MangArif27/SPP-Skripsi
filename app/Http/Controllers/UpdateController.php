@@ -36,7 +36,7 @@ class UpdateController extends Controller
     public function UpdateSiswa(Request $request)
     {
         $Updated_At = date('Y-m-d H:m:s');
-        DB::table('siswa')->where('id', $request->Id)->update([
+        DB::table('siswa')->where('nis', $request->NIS)->update([
             'nama' => $request->Nama,
             'jenis_kelamin' => $request->Jenis_Kelamin,
             'status' => $request->Status,
@@ -44,7 +44,6 @@ class UpdateController extends Controller
             'tingkat' => $request->Tingkat,
             'kelas' => $request->Kelas,
             'tahun_ajaran' => $request->Tahun_Ajaran,
-            'semester' => $request->Semester,
             'updated_at' => $Updated_At
         ]);
         Session::flash('sukses', 'Anda Berhasil Update Data!');
@@ -229,16 +228,14 @@ class UpdateController extends Controller
         ]);
         $Tagihan = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
         foreach ($Tagihan as $JT) {
-            $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+            $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->get();
             foreach ($Siswa as $Sw) {
-                $Pembayaran = DB::table('pembayaran_spp')->where('id_siswa', $Sw->id)->first();
+                $Pembayaran = DB::table('pembayaran_spp')->where('nis', $Sw->nis)->where('tahun_ajaran', $request->Tahun_Ajaran)->where('semester', $request->Semester)->first();
                 if ($Pembayaran) {
                 } else {
-
                     $CreateDate = date('Y-m-d H:i:s');
                     DB::table('pembayaran_spp')->insert([
-                        'id_siswa' => $Sw->id,
-                        'id_tagihan' => $JT->id,
+                        'id_tagihan' => $JT->id_tagihan,
                         'nis' => $Sw->nis,
                         'tahun_ajaran' => $request->Tahun_Ajaran,
                         'semester' => $request->Semester,

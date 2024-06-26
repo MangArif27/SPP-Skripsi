@@ -22,8 +22,6 @@ class ImportSiswa implements ToModel
             'agama' => $row[5],
             'tingkat' => $row[6],
             'kelas' => $row[7],
-            'tahun_ajaran' => $row[8],
-            'semester' => $row[9],
         ]);
     }
 }

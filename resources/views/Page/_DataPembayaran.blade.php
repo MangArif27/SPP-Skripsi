@@ -58,8 +58,8 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($PembayaranSPP as $Pembayaran)
-                                                @foreach(DB::table('siswa')->where('id',$Pembayaran->id_siswa)->get() as $Siswa)
-                                                <tr id="index_{{$Pembayaran->id_siswa}}">
+                                                @foreach(DB::table('siswa')->where('nis',$Pembayaran->nis)->get() as $Siswa)
+                                                <tr id="index_{{$Pembayaran->id_pembayaran}}">
                                                     <td>{{$Siswa->nama}}</td>
                                                     <td>{{$Pembayaran->nis}}</td>
                                                     <td>{{$Siswa->tingkat}}-{{$Siswa->kelas}}</td>
@@ -68,8 +68,8 @@
                                                     @else
                                                     <td><label class="btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Sudah Lunas</label></td>
                                                     @endif
-                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId{{$Pembayaran->id_siswa}}"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
-                                                        <a href="/Cetak-Kwitansi/{{$Pembayaran->id_siswa}}" target="_blank" class="btn btn-warning btn-mini waves-effect waves-light"><i class="icofont icofont-print"></i> Cetak Kuitansi</button>
+                                                    <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId{{$Pembayaran->id_pembayaran}}"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
+                                                        <a href="/Cetak-Kwitansi/{{$Pembayaran->id_pembayaran}}" target="_blank" class="btn btn-warning btn-mini waves-effect waves-light"><i class="icofont icofont-print"></i> Cetak Kuitansi</button>
                                                     </td>
                                                 </tr>
                                                 @endforeach
@@ -106,47 +106,10 @@
 <script type="text/javascript" src="{{asset('/files/assets/js/modal.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/modalEffects.js')}}"></script>
 <script type="text/javascript" src="{{asset('/files/assets/js/classie.js')}}"></script>
-<!-- Alert Konfirmasi Hapus -->
-<script type="text/javascript">
-    'use strict';
-    $(document).ready(function() {
-        document.querySelector('.alert-confirm-id').onclick = function() {
-            swal({
-                    title: "Apakah Kamu Yakin ?",
-                    text: "Akan Menghapus Data Atas Nama : ",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonClass: "btn-danger",
-                    confirmButtonText: "Ya",
-                    closeOnConfirm: false
-                },
-                function(isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            url: '/Delete-Pembayaran/',
-                            success: function(response) {
-
-                                //show success message
-                                swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
-                                    "success");
-                                //remove post on table
-                                $(`#index_`).remove();
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        swal("Cancel", "Kamu Tidak Jadi Hapus Data :)", "error");
-                    }
-                });
-        };
-    });
-</script>
-<!-- Modal LihatPengguna -->
-
 @foreach($GetPembayaran as $Pembayaran)
-@foreach(DB::table('siswa')->where('nis',$Pembayaran->nis)->where('tahun_ajaran',$Pembayaran->tahun_ajaran)->where('semester',$Pembayaran->semester)->get() as $Siswa)
-@foreach(DB::table('jenis_tagihan')->where('tahun_ajaran',$Pembayaran->tahun_ajaran)->where('semester',$Pembayaran->semester)->where('tingkat',$Pembayaran->tingkat)->get() as $JenisTagihan)
-<div id="PembayaranId{{$Pembayaran->id_siswa}}" class="modal fade" role="dialog">
+@foreach(DB::table('siswa')->where('nis',$Pembayaran->nis)->where('tahun_ajaran',$Pembayaran->tahun_ajaran)->get() as $Siswa)
+@foreach(DB::table('jenis_tagihan')->where('id_tagihan',$Pembayaran->id_tagihan)->get() as $JenisTagihan)
+<div id="PembayaranId{{$Pembayaran->id_pembayaran}}" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -158,7 +121,7 @@
             @if($Pembayaran->semester=="Semester Ganjil")
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$Pembayaran->id_siswa}}" method="post">
+                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$Pembayaran->id_pembayaran}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
@@ -205,12 +168,12 @@
                             </div>
                             @if($Pembayaran->spp_a==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar1{{$Pembayaran->id_siswa}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar1{{$Pembayaran->id_pembayaran}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar1{{$Pembayaran->id_siswa}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar1{{$Pembayaran->id_pembayaran}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -222,12 +185,12 @@
                             </div>
                             @if($Pembayaran->spp_b==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar2{{$Pembayaran->id_siswa}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar2{{$Pembayaran->id_pembayaran}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar2{{$Pembayaran->id_siswa}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar2{{$Pembayaran->id_pembayaran}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -239,12 +202,12 @@
                             </div>
                             @if($Pembayaran->spp_c==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar3{{$Pembayaran->id_siswa}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar3{{$Pembayaran->id_pembayaran}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar3{{$Pembayaran->id_siswa}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar3{{$Pembayaran->id_pembayaran}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -256,12 +219,12 @@
                             </div>
                             @if($Pembayaran->spp_d==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar4{{$Pembayaran->id_siswa}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar4{{$Pembayaran->id_pembayaran}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar4{{$Pembayaran->id_siswa}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar4{{$Pembayaran->id_pembayaran}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -273,12 +236,12 @@
                             </div>
                             @if($Pembayaran->spp_e==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar5{{$Pembayaran->id_siswa}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar5{{$Pembayaran->id_pembayaran}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar5{{$Pembayaran->id_siswa}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar5{{$Pembayaran->id_pembayaran}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -290,12 +253,12 @@
                             </div>
                             @if($Pembayaran->spp_f==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar6{{$Pembayaran->id_siswa}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar6{{$Pembayaran->id_pembayaran}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar6{{$Pembayaran->id_siswa}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar6{{$Pembayaran->id_pembayaran}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -304,13 +267,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" form="FormPembayaran-Id{{$Pembayaran->id_siswa}}" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
+                    <button type="submit" form="FormPembayaran-Id{{$Pembayaran->id_pembayaran}}" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
                 </div>
             </div>
             @else
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$Pembayaran->id_siswa}}" method="post">
+                    <form action="{{ route('Update.Data.Pembayaran') }}" enctype="multipart/form-data" id="FormPembayaran-Id{{$Pembayaran->id_pembayaran}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
@@ -357,12 +320,12 @@
                             </div>
                             @if($Pembayaran->spp_a==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar1{{$Pembayaran->id_siswa}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar1{{$Pembayaran->id_pembayaran}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar1{{$Pembayaran->id_siswa}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar1{{$Pembayaran->id_pembayaran}}" name="SPPBayar1" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -374,12 +337,12 @@
                             </div>
                             @if($Pembayaran->spp_b==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar2{{$Pembayaran->id_siswa}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar2{{$Pembayaran->id_pembayaran}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar2{{$Pembayaran->id_siswa}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar2{{$Pembayaran->id_pembayaran}}" name="SPPBayar2" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -391,12 +354,12 @@
                             </div>
                             @if($Pembayaran->spp_c==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar3{{$Pembayaran->id_siswa}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar3{{$Pembayaran->id_pembayaran}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar3{{$Pembayaran->id_siswa}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar3{{$Pembayaran->id_pembayaran}}" name="SPPBayar3" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -408,12 +371,12 @@
                             </div>
                             @if($Pembayaran->spp_d==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar4{{$Pembayaran->id_siswa}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar4{{$Pembayaran->id_pembayaran}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar4{{$Pembayaran->id_siswa}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar4{{$Pembayaran->id_pembayaran}}" name="SPPBayar4" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -425,12 +388,12 @@
                             </div>
                             @if($Pembayaran->spp_e==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar5{{$Pembayaran->id_siswa}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar5{{$Pembayaran->id_pembayaran}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar5{{$Pembayaran->id_siswa}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar5{{$Pembayaran->id_pembayaran}}" name="SPPBayar5" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -442,12 +405,12 @@
                             </div>
                             @if($Pembayaran->spp_f==NULL)
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="SPPBayar6{{$Pembayaran->id_siswa}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
+                                <input type="number" class="form-control" id="SPPBayar6{{$Pembayaran->id_pembayaran}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}">
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-danger btn-sm"><i class="icofont icofont-ui-close"></i> Belum Lunas</label>
                             @else
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" id="SPPBayar6{{$Pembayaran->id_siswa}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
+                                <input type="text" class="form-control" id="SPPBayar6{{$Pembayaran->id_pembayaran}}" name="SPPBayar6" min="{{$JenisTagihan->spp}}" max="{{$JenisTagihan->spp}}" value="Rp. {{number_format($JenisTagihan->spp)}}" readonly>
                             </div>
                             <label class="col-sm-2 btn btn-out-dashed btn-success btn-sm"><i class="icofont icofont-ui-check"></i> Lunas</label>
                             @endif
@@ -456,7 +419,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" form="FormPembayaran-Id{{$Pembayaran->id_siswa}}" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
+                    <button type="submit" form="FormPembayaran-Id{{$Pembayaran->id_pembayaran}}" class="btn btn-primary waves-effect waves-light"><i class="icofont icofont-save"></i> Save</button>
                 </div>
             </div>
             @endif
@@ -464,44 +427,44 @@
     </div>
 </div>
 <script type="text/javascript">
-    const <?php echo "InputNumber1" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar1{{$Pembayaran->id_siswa}}");
-    const <?php echo "InputNumber2" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar2{{$Pembayaran->id_siswa}}");
-    const <?php echo "InputNumber3" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar3{{$Pembayaran->id_siswa}}");
-    const <?php echo "InputNumber4" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar4{{$Pembayaran->id_siswa}}");
-    const <?php echo "InputNumber5" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar5{{$Pembayaran->id_siswa}}");
-    const <?php echo "InputNumber6" . $Pembayaran->id_siswa ?> = document.getElementById("SPPBayar6{{$Pembayaran->id_siswa}}");
-    <?php echo "InputNumber1" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber1" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber1" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    const <?php echo "InputNumber1" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar1{{$Pembayaran->id_pembayaran}}");
+    const <?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar2{{$Pembayaran->id_pembayaran}}");
+    const <?php echo "InputNumber3" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar3{{$Pembayaran->id_pembayaran}}");
+    const <?php echo "InputNumber4" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar4{{$Pembayaran->id_pembayaran}}");
+    const <?php echo "InputNumber5" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar5{{$Pembayaran->id_pembayaran}}");
+    const <?php echo "InputNumber6" . $Pembayaran->id_pembayaran ?> = document.getElementById("SPPBayar6{{$Pembayaran->id_pembayaran}}");
+    <?php echo "InputNumber1" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber1" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber1" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber3" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber3" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber3" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber3" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber3" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber3" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber4" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber4" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber4" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber4" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber4" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber4" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber5" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber5" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber5" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber5" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber5" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber5" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber6" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber6" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber6" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber6" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber6" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber6" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });
-    <?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.addEventListener("change", function() {
-        if (<?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber2" . $Pembayaran->id_siswa ?>.value < '{{$JenisTagihan->spp}}') {
+    <?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.addEventListener("change", function() {
+        if (<?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.value > '{{$JenisTagihan->spp}}' || <?php echo "InputNumber2" . $Pembayaran->id_pembayaran ?>.value < '{{$JenisTagihan->spp}}') {
             alert("Input Jumlah Bayar SPP Sejumlah : Rp. {{$JenisTagihan->spp}}!")
         }
     });

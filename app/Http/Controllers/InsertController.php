@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\ModelSiswa;
 use App\Imports\ImportSiswa;
 use Maatwebsite\Excel\Facades\Excel;
@@ -55,12 +56,14 @@ class InsertController extends Controller
         // import data
         $array = Excel::toArray(new ImportSiswa(), public_path('Backup_Restore/' . $nama_file));
         $no = 0;
+
         foreach ($array as $key => &$value) {
             foreach ($value as $v) {
                 $date = date('Y-m-d H:i:s');
-                $cek = DB::table('siswa')->where('nis', $v[1])->where('tahun_ajaran', $v[8])->where('semester', $v[9])->first();
+                $TahunAjaran = DB::table('pengaturan')->where('id', '20258060')->first();
+                $cek = DB::table('siswa')->where('nis', $v[1])->first();
                 if ($cek) {
-                    DB::table('siswa')->where('nis', $v[1])->where('tahun_ajaran', $v[8])->where('semester', $v[9])->update([
+                    DB::table('siswa')->where('nis', $v[1])->update([
                         'nama' => $v[2],
                         'jenis_kelamin' => $v[3],
                         'alamat' => $v[4],
@@ -78,14 +81,14 @@ class InsertController extends Controller
                         'agama' => $v[5],
                         'tingkat' => $v[6],
                         'kelas' => $v[7],
-                        'tahun_ajaran' => $v[8],
-                        'semester' => $v[9],
+                        'tahun_ajaran' => $TahunAjaran->tahun_ajaran,
                         'status' => "Aktif",
                         'created_at' => $date,
                     ]);
                 }
             }
         }
+        // File::delete('Backup_Restore/' . $nama_file);
         // notifikasi dengan session
         Session::flash('sukses', 'Data Siswa Berhasil Diimport!');
         // alihkan halaman kembali
@@ -129,7 +132,7 @@ class InsertController extends Controller
             Session::flash('gagal', 'Data Tagihan Sudah Ada!');
             return redirect('/Data-Tagihan');
         } else {
-            $CekSiswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->first();
+            $CekSiswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->first();
             if ($CekSiswa) {
                 DB::table('jenis_tagihan')->insert([
                     'tahun_ajaran' => $request->Tahun_Ajaran,
@@ -140,12 +143,11 @@ class InsertController extends Controller
                 /*Input Data Pembayaran SPP */
                 $Tagihan = DB::table('jenis_tagihan')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
                 foreach ($Tagihan as $JT) {
-                    $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->where('semester', $request->Semester)->get();
+                    $Siswa = DB::table('siswa')->where('tahun_ajaran', $request->Tahun_Ajaran)->where('tingkat', $request->Tingkat)->get();
                     foreach ($Siswa as $Sw) {
                         $CreateDate = date('Y-m-d H:i:s');
                         DB::table('pembayaran_spp')->insert([
-                            'id_siswa' => $Sw->id,
-                            'id_tagihan' => $JT->id,
+                            'id_tagihan' => $JT->id_tagihan,
                             'nis' => $Sw->nis,
                             'tahun_ajaran' => $request->Tahun_Ajaran,
                             'semester' => $request->Semester,

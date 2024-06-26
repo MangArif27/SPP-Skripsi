@@ -126,7 +126,7 @@
                                             </thead>
                                             <tbody>
                                                 @foreach($Pengguna as $Pengguna)
-                                                <tr id="index_{{$Pengguna->id}}">
+                                                <tr id="index_{{$Pengguna->nip}}">
                                                     <td>{{$Pengguna->name}}</td>
                                                     <td>{{$Pengguna->nip}}</td>
                                                     <td>{{$Pengguna->jabatan}}</td>
@@ -138,8 +138,8 @@
                                                         @endif
                                                     </td>
                                                     <td>{{$Pengguna->updated_at}}</td>
-                                                    <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId{{$Pengguna->id}}"><i class="icofont icofont-pencil"></i> Edit</button>
-                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Pengguna->id}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
+                                                    <td><button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#EditPenggunaId{{$Pengguna->nip}}"><i class="icofont icofont-pencil"></i> Edit</button>
+                                                        <button type="button" class="btn btn-danger btn-mini waves-effect waves-light alert-confirm-id{{$Pengguna->nip}}" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'alert-confirm-id']);"><i class="icofont icofont-trash"></i> Hapus</button>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -179,7 +179,7 @@
 <script type="text/javascript">
     'use strict';
     $(document).ready(function() {
-        document.querySelector('.alert-confirm-id{{$Pengguna->id}}').onclick = function() {
+        document.querySelector('.alert-confirm-id{{$Pengguna->nip}}').onclick = function() {
             swal({
                     title: "Apakah Kamu Yakin ?",
                     text: "Akan Menghapus Data Atas Nama : {{$Pengguna->name}}",
@@ -198,7 +198,7 @@
                                 swal("Suksess!", "Kamu Telah Berhasil Hapus Data",
                                     "success");
                                 //remove post on table
-                                $(`#index_{{$Pengguna->id}}`).remove();
+                                $(`#index_{{$Pengguna->nip}}`).remove();
                                 location.reload();
                             }
                         });
@@ -212,7 +212,7 @@
 @endforeach
 <!-- Modal Edit Pengguna -->
 @foreach($GetPengguna as $Pengguna)
-<div id="EditPenggunaId{{$Pengguna->id}}" class="modal fade" role="dialog">
+<div id="EditPenggunaId{{$Pengguna->nip}}" class="modal fade" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -220,7 +220,7 @@
             </div>
             <div class="modal-body">
                 <div class="card-block">
-                    <form action="{{ route('Update.Pengguna') }}" enctype="multipart/form-data" id="EditPengguna{{$Pengguna->id}}" method="post">
+                    <form action="{{ route('Update.Pengguna') }}" enctype="multipart/form-data" id="EditPengguna{{$Pengguna->nip}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pengguna</label>
@@ -265,7 +265,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger waves-effect " data-dismiss="modal"><i class="icofont icofont-ui-close"></i> Close</button>
-                    <button type="submit" class="btn btn-primary waves-effect " form="EditPengguna{{$Pengguna->id}}"><i class="icofont icofont-ui-save"></i> Save</button>
+                    <button type="submit" class="btn btn-primary waves-effect " form="EditPengguna{{$Pengguna->nip}}"><i class="icofont icofont-ui-save"></i> Save</button>
                 </div>
             </div>
         </div>

@@ -86,7 +86,7 @@ class PageController extends Controller
         } else {
             $Search = DB::table('pengaturan')->get();
             foreach ($Search as $SC) {
-                $Siswa = DB::table('siswa')->where('semester', $SC->semester)->where('tahun_ajaran', $SC->tahun_ajaran)->get();
+                $Siswa = DB::table('siswa')->where('tahun_ajaran', $SC->tahun_ajaran)->get();
             }
             return view('Page._DataSiswa', ['Siswa' => $Siswa, 'LihatSiswa' => $Siswa]);
         }
@@ -131,7 +131,7 @@ class PageController extends Controller
         if (!Session::get('login')) {
             return redirect('Login');
         } else {
-            $Pembayaran = DB::table('pembayaran_spp')->where('id_siswa', $id)->get();
+            $Pembayaran = DB::table('pembayaran_spp')->where('id_pembayaran', $id)->get();
             //dd($PembayaranSPP);
             return view('Page._Kwitansi', ['Pembayaran' => $Pembayaran]);
         }
@@ -156,11 +156,11 @@ class PageController extends Controller
             return redirect('Login');
         } else {
             if (request()->ajax()) {
-                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.id_siswa', '=', 'siswa.id')->get();
+                $data = DB::table('pembayaran_spp')->join('siswa', 'pembayaran_spp.nis', '=', 'siswa.nis')->get();
                 return DataTables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function ($data) {
-                        $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id_siswa . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
+                        $button =   '<button type="button" class="btn btn-warning btn-mini waves-effect waves-light" data-toggle="modal" data-target="#CetakBuktiId' . $data->id_pembayaran . '"><i class="icofont icofont-eye"></i> Lihat Data </button>';
                         return $button;
                     })
                     ->toJson();
