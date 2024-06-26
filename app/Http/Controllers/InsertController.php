@@ -56,35 +56,36 @@ class InsertController extends Controller
         // import data
         $array = Excel::toArray(new ImportSiswa(), public_path('Backup_Restore/' . $nama_file));
         $no = 0;
-
-        foreach ($array as $key => &$value) {
-            foreach ($value as $v) {
-                $date = date('Y-m-d H:i:s');
-                $TahunAjaran = DB::table('pengaturan')->where('id', '20258060')->first();
-                $cek = DB::table('siswa')->where('nis', $v[1])->first();
-                if ($cek) {
-                    DB::table('siswa')->where('nis', $v[1])->update([
-                        'nama' => $v[2],
-                        'jenis_kelamin' => $v[3],
-                        'alamat' => $v[4],
-                        'agama' => $v[5],
-                        'tingkat' => $v[6],
-                        'kelas' => $v[7],
-                        'updated_at' => $date,
-                    ]);
-                } else {
-                    DB::table('siswa')->insert([
-                        'nis' => $v[1],
-                        'nama' => $v[2],
-                        'jenis_kelamin' => $v[3],
-                        'alamat' => $v[4],
-                        'agama' => $v[5],
-                        'tingkat' => $v[6],
-                        'kelas' => $v[7],
-                        'tahun_ajaran' => $TahunAjaran->tahun_ajaran,
-                        'status' => "Aktif",
-                        'created_at' => $date,
-                    ]);
+        $TahunAjaran = DB::table('pengaturan')->where('id_sekolah', '20258060')->get();
+        foreach ($TahunAjaran as $Pengaturan) {
+            foreach ($array as $key => &$value) {
+                foreach ($value as $v) {
+                    $date = date('Y-m-d H:i:s');
+                    $cek = DB::table('siswa')->where('nis', $v[1])->first();
+                    if ($cek) {
+                        DB::table('siswa')->where('nis', $v[1])->update([
+                            'nama' => $v[2],
+                            'jenis_kelamin' => $v[3],
+                            'alamat' => $v[4],
+                            'agama' => $v[5],
+                            'tingkat' => $v[6],
+                            'kelas' => $v[7],
+                            'updated_at' => $date,
+                        ]);
+                    } else {
+                        DB::table('siswa')->insert([
+                            'nis' => $v[1],
+                            'nama' => $v[2],
+                            'jenis_kelamin' => $v[3],
+                            'alamat' => $v[4],
+                            'agama' => $v[5],
+                            'tingkat' => $v[6],
+                            'kelas' => $v[7],
+                            'tahun_ajaran' => $Pengaturan->tahun_ajaran,
+                            'status' => "Aktif",
+                            'created_at' => $date,
+                        ]);
+                    }
                 }
             }
         }
@@ -102,11 +103,41 @@ class InsertController extends Controller
             DB::table('tahun_ajaran')->insert([
                 'tahun_ajaran' => $TahunAjaran,
             ]);
+            /* -------- Proses Generate Naik Kelas -------*/
+            $Search = DB::table('pengaturan')->where('id_sekolah', $request->NPSN)->get();
+            foreach ($Search as $SC) {
+                if ($SC->tahun_ajaran < $TahunAjaran) {
+                    $SearchSiswa = DB::table('siswa')->get();
+                    foreach ($SearchSiswa as $Siswa) {
+                        if ($Siswa->status == "Keluar") {
+                            DB::table('siswa')->where('nis', $Siswa->nis)->where('tingkat', "XII")->update([
+                                'status' => "Lulus",
+                            ]);
+                        } else {
+                            if ($Siswa->tingkat == "XII") {
+                                DB::table('siswa')->where('nis', $Siswa->nis)->update([
+                                    'status' => "Lulus",
+                                ]);
+                            } elseif ($Siswa->tingkat == "XI") {
+                                DB::table('siswa')->where('nis', $Siswa->nis)->where('tingkat', "XI")->update([
+                                    'tingkat' => "XII",
+                                    'tahun_ajaran' => $TahunAjaran,
+                                ]);
+                            } else {
+                                DB::table('siswa')->where('nis', $Siswa->nis)->where('tingkat', "X")->update([
+                                    'tingkat' => "XI",
+                                    'tahun_ajaran' => $TahunAjaran,
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
         } else {
             $TahunAjaran = $request->Tahun_Ajaran;
         }
         //dd($request->NPSN);
-        DB::table('pengaturan')->where('id', $request->NPSN)->update([
+        DB::table('pengaturan')->where('id_sekolah', $request->NPSN)->update([
             'sekolah' => $request->Nama_Sekolah,
             'alamat' => $request->Alamat,
             'telpon' => $request->Telp,

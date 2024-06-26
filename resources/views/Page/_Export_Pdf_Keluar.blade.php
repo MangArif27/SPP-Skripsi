@@ -16,12 +16,9 @@
             background: white;
         }
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="{{ asset('files/assets/js/jquery.table2excel.js')}}"></script>
 </head>
 
 <body>
-    <button>Export Excel</button>
     <table>
         <tr>
             <td>
@@ -50,21 +47,12 @@
             <td width="200">{{$DataTahunAjaran}}</td>
         </tr>
         <tr>
-            <td class="label" style="font-weight: bold;">Jurusan</td>
-            <td width="5">:</td>
-            @if($DataKelas=="TKJ 1" || $DataKelas=="TKJ 2" || $DataKelas=="TKJ 3")
-            <td width="200">Teknik Komputer dan Jaringan</td>
-            @else
-            <td width="200">Teknik Kendaraan Ringan</td>
-            @endif
-        </tr>
-        <tr>
             <td class="label" style="font-weight: bold;">Kelas</td>
             <td width="5">:</td>
             <td>{{$DataTingkat}}-{{$DataKelas}}</td>
         </tr>
     </table>
-    <table id="myTable" class="table2excel" rules="all" border="1">
+    <table rules="all">
         <tr style="text-align: center; font-weight: bold;">
             <td rowspan="2" style="vertical-align: middle;">No</td>
             <td rowspan="2" style="vertical-align: middle;">No Induk Siswa</td>
@@ -88,7 +76,7 @@
             <td width="70px">Juni</td>
         </tr>
         <?php $No = 1; ?>
-        @foreach(DB::table('siswa')->where('tingkat',$DataTingkat)->where('kelas', $DataKelas)->where('tahun_ajaran', $DataTahunAjaran)->get() as $Siswa)
+        @foreach($Data as $Siswa)
         <tr>
             <td style="vertical-align: middle; text-align:center;">{{$No++}}</td>
             <td style="vertical-align: middle; text-align:center;">{{$Siswa->nis}}</td>
@@ -313,11 +301,6 @@
             @endforeach
         </tr>
     </table>
-    <script>
-        $("button").click(function() {
-            $("#myTable").table2excel();
-        });
-    </script>
 </body>
 
 </html>

@@ -13,9 +13,15 @@
             if ($(this).val() == "Aktif") {
                 $("#Aktif").show();
                 $("#Lulus").hide();
-            } else {
+                $("#Keluar").hide();
+            } else if ($(this).val() == "Lulus") {
                 $("#Aktif").hide();
                 $("#Lulus").show();
+                $("#Keluar").hide();
+            } else {
+                $("#Aktif").hide();
+                $("#Lulus").hide();
+                $("#Keluar").show();
             }
         });
     });
@@ -175,6 +181,7 @@
                                     <option selected disabled>Pilih Status Siswa</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Lulus">Lulus</option>
+                                    <option value="Keluar">Keluar</option>
                                 </select>
                             </div>
                         </div>
@@ -230,6 +237,39 @@
                                 <div class="col-sm-5">
                                     <select name="Kelas" class="form-control" required>
                                         <option selected disabled>Kelas</option>
+                                        <option value="TKR 1">TKR 1 </option>
+                                        <option value="TKR 2">TKR 2 </option>
+                                        <option value="TKR 3">TKR 3 </option>
+                                        <option value="TKJ 1">TKJ 1 </option>
+                                        <option value="TKJ 2">TKJ 2</option>
+                                        <option value="TKJ 3">TKJ 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="Keluar" style="display: none;">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Kategori</label>
+                                <div class="col-sm-3">
+                                    <select name="TahunAjaran" class="form-control" required>
+                                        <option selected disabled>Tahun Ajaran</option>
+                                        @foreach(DB::table('tahun_ajaran')->get() as $TahunAjaran)
+                                        <option value="{{$TahunAjaran->tahun_ajaran}}">{{$TahunAjaran->tahun_ajaran}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <select name="Tingkat" class="form-control" required>
+                                        <option selected disabled>Tingkat</option>
+                                        <option value="X">Tingkat X</option>
+                                        <option value="XI">Tingkat XI</option>
+                                        <option value="XII">Tingkat XII</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <select name="Kelas" class="form-control" required>
+                                        <option selected disabled>Kelas</option>
+                                        <option value="Semua">Semua Kelas </option>
                                         <option value="TKR 1">TKR 1 </option>
                                         <option value="TKR 2">TKR 2 </option>
                                         <option value="TKR 3">TKR 3 </option>

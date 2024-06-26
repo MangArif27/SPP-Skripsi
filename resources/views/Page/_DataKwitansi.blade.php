@@ -15,7 +15,7 @@
                             <div class="page-header-title">
                                 <div class="d-inline">
                                     <h4>Cetak Kuitansi </h4>
-                                    <span>Sistem Informasi Pembayaran Sekolah SMK Madani Depok</span>
+                                    <span>Sistem Informasi Pembayaran SPP SMK Madani Depok</span>
                                 </div>
                             </div>
                         </div>

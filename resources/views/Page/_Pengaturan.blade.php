@@ -188,12 +188,11 @@
                         {{ csrf_field() }}
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Sekolah</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-10">
                                 <input type="text" class="form-control" name="Nama_Sekolah" value="{{$Sekolah_Read->sekolah}}" required>
                             </div>
-                            <label class="col-sm-2 col-form-label">NPSN</label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="NPSN" value="{{$Sekolah_Read->id}}" readonly>
+                                <input type="text" class="form-control" name="NPSN" value="{{$Sekolah_Read->id_sekolah}}" hidden>
                             </div>
                         </div>
                         <div class="form-group row">
