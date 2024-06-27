@@ -170,7 +170,7 @@
                             <label class="col-sm-2 col-form-label">Jenis File</label>
                             <div class="col-sm-4">
                                 <select name="JenisFile" class="form-control" required>
-                                    <option selected disabled>Pilih Jenis File</option>
+                                    <option disabled>Pilih Jenis File</option>
                                     <option value="Pdf">PDF</option>
                                     <option value="Excel">Excel</option>
                                 </select>
@@ -178,7 +178,7 @@
                             <label class="col-sm-2 col-form-label">Status Siswa</label>
                             <div class="col-sm-4">
                                 <select name="StatusSiswa" id="StatusSiswa" class="form-control" required>
-                                    <option selected disabled>Pilih Status Siswa</option>
+                                    <option disabled>Pilih Status Siswa</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Lulus">Lulus</option>
                                     <option value="Keluar">Keluar</option>
@@ -190,7 +190,7 @@
                                 <label class="col-sm-2 col-form-label">Kategori</label>
                                 <div class="col-sm-3">
                                     <select name="TahunAjaran" class="form-control" required>
-                                        <option selected disabled>Tahun Ajaran</option>
+                                        <option disabled>Tahun Ajaran</option>
                                         @foreach(DB::table('tahun_ajaran')->get() as $TahunAjaran)
                                         <option value="{{$TahunAjaran->tahun_ajaran}}">{{$TahunAjaran->tahun_ajaran}}</option>
                                         @endforeach
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <select name="Tingkat" class="form-control" required>
-                                        <option selected disabled>Tingkat</option>
+                                        <option disabled>Tingkat</option>
                                         <option value="X">Tingkat X</option>
                                         <option value="XI">Tingkat XI</option>
                                         <option value="XII">Tingkat XII</option>
@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                     <select name="Kelas" class="form-control" required>
-                                        <option selected disabled>Kelas</option>
+                                        <option disabled>Kelas</option>
                                         <option value="TKR 1">TKR 1 </option>
                                         <option value="TKR 2">TKR 2 </option>
                                         <option value="TKR 3">TKR 3 </option>
@@ -222,7 +222,7 @@
                                 <label class="col-sm-2 col-form-label">Kategori</label>
                                 <div class="col-sm-5">
                                     <select name="TahunAjaran" class="form-control" required>
-                                        <option selected disabled>Tahun Ajaran</option>
+                                        <option disabled>Tahun Ajaran</option>
                                         @foreach(DB::table('tahun_ajaran')->get() as $TahunAjaran)
                                         @foreach(DB::table('pengaturan')->get() as $Pengaturan)
                                         @if($TahunAjaran->tahun_ajaran < $Pengaturan->tahun_ajaran)
@@ -236,7 +236,7 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <select name="Kelas" class="form-control" required>
-                                        <option selected disabled>Kelas</option>
+                                        <option disabled>Kelas</option>
                                         <option value="TKR 1">TKR 1 </option>
                                         <option value="TKR 2">TKR 2 </option>
                                         <option value="TKR 3">TKR 3 </option>

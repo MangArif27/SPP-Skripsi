@@ -94,7 +94,7 @@
             <?php $SeacrhJenisTagihanGanjil = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Ganjil")->first() ?>
             @if($SeacrhJenisTagihanGanjil)
             @foreach(DB::table('jenis_tagihan')->Where('id_tagihan', $SeacrhJenisTagihanGanjil->id_tagihan)->get() as $JenisTagihanGanjil)
-            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->get() as $PembayaranGanjil)
+            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->where('id_tagihan', $SeacrhJenisTagihanGanjil->id_tagihan)->get() as $PembayaranGanjil)
             <?php
             if ($PembayaranGanjil->spp_a == NULL) {
                 $Bulan1 = $JenisTagihanGanjil->spp;
@@ -140,7 +140,7 @@
             <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Genap")->first() ?>
             @if($SeacrhJenisTagihanGenap)
             @foreach(DB::table('jenis_tagihan')->Where('id_tagihan', $SeacrhJenisTagihanGenap->id_tagihan)->get() as $JenisTagihanGenap)
-            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->get() as $PembayaranGenap)
+            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->where('id_tagihan', $SeacrhJenisTagihanGenap->id_tagihan)->get() as $PembayaranGenap)
             <?php
             if ($PembayaranGenap->spp_a == NULL) {
                 $Bulan7 = $JenisTagihanGenap->spp;
@@ -220,7 +220,7 @@
             <?php $SeacrhJenisTagihanGenap = DB::table('jenis_tagihan')->where('tahun_ajaran', $DataTahunAjaran)->where('tingkat', $DataTingkat)->where('semester', "Semester Genap")->first() ?>
             @if($SeacrhJenisTagihanGenap)
             @foreach(DB::table('jenis_tagihan')->Where('id_tagihan', $SeacrhJenisTagihanGenap->id_tagihan)->get() as $JenisTagihanGenap)
-            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->get() as $PembayaranGenap)
+            @foreach(DB::table('pembayaran_spp')->where('nis',$Siswa->nis)->where('id_tagihan', $SeacrhJenisTagihanGenap->id_tagihan)->get() as $PembayaranGenap)
             <?php
             if ($PembayaranGenap->spp_a == NULL) {
                 $Bulan7 = $JenisTagihanGenap->spp;

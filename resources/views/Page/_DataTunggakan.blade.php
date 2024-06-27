@@ -61,7 +61,7 @@
                                                 @foreach($value as $Pembayaran)
                                                 @foreach(DB::table('siswa')->where('nis',$key)->select('nama')->groupBy('nama')->get() as $Siswa)
                                                 @if($Pembayaran->keterangan=="Sudah Lunas")
-                                                <tr hidden>
+                                                <!--<tr style="display: none;">
                                                     <td>{{$Siswa->nama}}</td>
                                                     <td>{{$key}}</td>
                                                     <td>{{$Pembayaran->tahun_ajaran}} / {{$Pembayaran->semester}}</td>
@@ -105,7 +105,7 @@
                                                     <td><button type="button" class="btn btn-primary btn-mini waves-effect waves-light" data-toggle="modal" data-target="#PembayaranId{{$Pembayaran->id_pembayaran}}"><i class="icofont icofont-bill-alt"></i> Pembayaran</button>
                                                         <a href="/Cetak-Kwitansi/{{$Pembayaran->id_pembayaran}}" target="_blank" class="btn btn-warning btn-mini waves-effect waves-light"><i class="icofont icofont-print"></i> Cetak Kuitansi</button>
                                                     </td>
-                                                </tr>
+                                                </tr>-->
                                                 @else
                                                 <tr>
                                                     <td>{{$Siswa->nama}}</td>

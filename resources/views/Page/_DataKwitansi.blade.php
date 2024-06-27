@@ -90,9 +90,15 @@
                                                     }
                                                     $Jumlah = $Bulan1 + $Bulan2 + $Bulan3 + $Bulan4 + $Bulan5 + $Bulan6; ?>
                                                     @endforeach
+                                                    @if($Pembayaran->keterangan=="Belum Lunas")
                                                     <td style="background-color:#FF0000;">
                                                         <span style="color: white;">Rp. {{number_format($Jumlah)}}</span>
                                                     </td>
+                                                    @else
+                                                    <td style="background-color:#00FF00;">
+                                                        <span style="color: white;">Rp. {{number_format($Jumlah)}}</span>
+                                                    </td>
+                                                    @endif
                                                     <td><a href="/Cetak-Kwitansi/{{$Pembayaran->id_pembayaran}}" target="_blank" class="btn btn-warning btn-mini waves-effect waves-light"><i class="icofont icofont-print"></i> Cetak Kuitansi</a></td>
                                                 </tr>
                                                 @endforeach
