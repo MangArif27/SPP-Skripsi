@@ -192,7 +192,7 @@
                                 <input type="text" class="form-control" name="Nama_Sekolah" value="{{$Sekolah_Read->sekolah}}" required>
                             </div>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="NPSN" value="{{$Sekolah_Read->id_sekolah}}" hidden>
+                                <input type="text" class="form-control" name="NPSN" value="{{$Sekolah_Read->id_pengaturan}}" hidden>
                             </div>
                         </div>
                         <div class="form-group row">

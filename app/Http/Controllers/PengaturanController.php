@@ -35,7 +35,7 @@ class PengaturanController extends Controller
                 'tahun_ajaran' => $TahunAjaran,
             ]);
             /* -------- Proses Generate Naik Kelas -------*/
-            $Search = Pengaturan::where('id_sekolah', $request->NPSN)->get();
+            $Search = Pengaturan::where('id_pengaturan', $request->NPSN)->get();
             foreach ($Search as $SC) {
                 if ($SC->tahun_ajaran < $TahunAjaran) {
                     $SearchSiswa = ModelSiswa::get();
@@ -68,7 +68,7 @@ class PengaturanController extends Controller
             $TahunAjaran = $request->Tahun_Ajaran;
         }
         //dd($request->NPSN);
-        Pengaturan::where('id_sekolah', $request->NPSN)->update([
+        Pengaturan::where('id_pengaturan', $request->NPSN)->update([
             'sekolah' => $request->Nama_Sekolah,
             'alamat' => $request->Alamat,
             'telpon' => $request->Telp,
