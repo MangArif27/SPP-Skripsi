@@ -93,10 +93,10 @@ class UserController extends Controller
                 ]);
                 return redirect('/');
             }
-            Session::flash('gagal', 'Password atau No Induk Pegawai anda salah !');
+            Session::flash('gagal', 'Password anda salah !');
             return redirect('/Login');
         } else {
-            Session::flash('gagal', 'Password atau No Induk Pegawai anda salah !');
+            Session::flash('gagal', 'No Induk Pegawai anda salah !');
             return redirect('/Login');
         }
     }

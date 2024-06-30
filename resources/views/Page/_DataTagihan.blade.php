@@ -48,14 +48,14 @@
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">Tingkat</label>
-                                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-3" required>
-                                                <option readonly> Tingkat </option>
+                                            <select name="Tingkat" id="Tingkat" class="form-control col-sm-3" required="" oninvalid="this.setCustomValidity('Tingkat Wajib Diisi')" oninput="setCustomValidity('')">
+                                                <option value=""> Tingkat </option>
                                                 <option value="X"> X </option>
                                                 <option value="XI"> XI </option>
                                                 <option value="XII"> XII </option>
                                             </select>
                                             <label class="col-sm-3 col-form-label">SPP Semester <sup>(PerBulan)</sup></label>
-                                            <input type="number" class="form-control col-sm-4" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required>
+                                            <input type="number" class="form-control col-sm-4" name="SPP" placeholder="SPP Semester (Hitungan Perbulan)" required="" oninvalid="this.setCustomValidity('Jumlah Tagihan Wajib Diisi')" oninput="setCustomValidity('')">
                                         </div>
                                     </form>
                                 </div>

@@ -43,40 +43,40 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <form action="{{route('Login.Post')}}" class="md-float-material form-material" enctype="multipart/form-data" method="post">
-                        <div class="text-center">
-                            <img src="{{ asset('/files/assets/images/logo.png')}}" alt="logo.png">
-                        </div>
-                        <div class="auth-box card">
-                            <div class="card-block">
-                                {{-- notifikasi sukses --}}
-                                @if ($sukses = Session::get('sukses'))
-                                <div class="alert alert-success background-success">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <i class="icofont icofont-close-line-circled text-white"></i>
-                                    </button>
-                                    <strong>{{$sukses}}</strong>
+                    <div class="text-center">
+                        <img src="{{ asset('/files/assets/images/logo.png')}}" alt="logo.png">
+                    </div>
+                    {{-- notifikasi sukses --}}
+                    @if ($sukses = Session::get('sukses'))
+                    <div class="alert alert-success background-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="icofont icofont-close-line-circled text-white"></i>
+                        </button>
+                        <strong>{{$sukses}}</strong>
+                    </div>
+                    @elseif($gagal = Session::get('gagal'))
+                    <div class="alert alert-danger background-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="icofont icofont-close-line-circled text-white"></i>
+                        </button>
+                        <strong>{{$gagal}}</strong>
+                    </div>
+                    @endif
+                    <div class="auth-box card">
+                        <div class="card-block">
+                            <div class="row m-b-20">
+                                <div class="col-md-12">
+                                    <h3 class="text-center">Sign In</h3>
                                 </div>
-                                @elseif($gagal = Session::get('gagal'))
-                                <div class="alert alert-danger background-danger">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <i class="icofont icofont-close-line-circled text-white"></i>
-                                    </button>
-                                    <strong>{{$gagal}}</strong>
-                                </div>
-                                @endif
-                                <div class="row m-b-20">
-                                    <div class="col-md-12">
-                                        <h3 class="text-center">Sign In</h3>
-                                    </div>
-                                </div>
+                            </div>
+                            <form action="{{route('Login.Post')}}" class="md-float-material form-material" enctype="multipart/form-data" method="post">
                                 {{ csrf_field() }}
                                 <div class="form-group">
-                                    <input type="number" name="nip" class="form-control" required placeholder="No Induk Pegawai">
+                                    <input type="number" name="nip" class="form-control" required="" oninvalid="this.setCustomValidity('Input No Induk Pegawai')" oninput="setCustomValidity('')" placeholder="No Induk Pegawai">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="password" class="form-control" required placeholder="Password">
+                                    <input type="password" name="password" class="form-control" required="" oninvalid="this.setCustomValidity('Input Password')" oninput="setCustomValidity('')" placeholder="Password">
                                     <span class="form-bar"></span>
                                 </div>
                                 <div class="row m-t-30">
@@ -91,67 +91,32 @@
                                         <p class="text-inverse text-left m-b-0">SMK Madani Depok</p>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--[if lt IE 10]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade <br/>to any of the following web browsers to access this website.</p>
-    <div class="iew-container">
-        <ul class="iew-download">
-            <li>
-                <a href="http://www.google.com/chrome/">
-                    <img src="{{ asset('/files/assets/images/browser/chrome.png')}}" alt="Chrome">
-                    <div>Chrome</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.mozilla.org/en-US/firefox/new/">
-                    <img src="{{ asset('/files/assets/images/browser/firefox.png')}}" alt="Firefox">
-                    <div>Firefox</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://www.opera.com">
-                    <img src="{{ asset('/files/assets/images/browser/opera.png')}}" alt="Opera">
-                    <div>Opera</div>
-                </a>
-            </li>
-            <li>
-                <a href="https://www.apple.com/safari/">
-                    <img src="{{ asset('/files/assets/images/browser/safari.png')}}" alt="Safari">
-                    <div>Safari</div>
-                </a>
-            </li>
-            <li>
-                <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-                    <img src="{{ asset('/files/assets/images/browser/ie.png')}}" alt="">
-                    <div>IE (9 & above)</div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
-<![endif]-->
-
-    <script type="text/javascript" src="{{ asset('/files/bower_components/jquery/dist/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/jquery-ui/jquery-ui.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/popper.js/dist/umd/popper.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/jquery-slimscroll/jquery.slimscroll.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/modernizr/modernizr.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/modernizr/feature-detects/css-scrollbars.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/i18next/i18next.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/i18next-xhr-backend/i18nextXHRBackend.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/bower_components/jquery-i18next/jquery-i18next.min.js')}}"></script>
-    <script type="text/javascript" src="{{ asset('/files/assets/js/common-pages.js')}}"></script>
+    <script data-cfasync="false" src="../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script type="text/javascript" src="{{asset('/files/bower_components/jquery/js/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/files/bower_components/jquery-ui/js/jquery-ui.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/files/bower_components/popper.js/js/popper.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/files/bower_components/bootstrap/js/bootstrap.min.js')}}"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="{{asset('/files/bower_components/jquery-slimscroll/js/jquery.slimscroll.js')}}"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="{{asset('/files/bower_components/modernizr/js/modernizr.js')}}"></script>
+    <!-- Chart js -->
+    <!-- amchart js -->
+    <script src="{{asset('/files/assets/js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/files/assets/js/SmoothScroll.js')}}"></script>
+    <script src="{{asset('/files/assets/js/pcoded.min.js')}}"></script>
+    <!-- custom js -->
+    <script src="{{asset('/files/assets/js/vartical-layout.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('/files/assets/js/script.min.js')}}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -165,7 +130,7 @@
             // show the alert
             setTimeout(function() {
                 $(".alert").alert('close');
-            }, 2000);
+            }, 5000);
         });
     </script>
 </body>

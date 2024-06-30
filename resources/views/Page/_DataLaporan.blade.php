@@ -169,16 +169,16 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jenis File</label>
                             <div class="col-sm-4">
-                                <select name="JenisFile" class="form-control" required>
-                                    <option disabled>Pilih Jenis File</option>
+                                <select name="JenisFile" class="form-control" required="" oninvalid="this.setCustomValidity('Jenis File Laporan Wajib Dipilih')" oninput="setCustomValidity('')">
+                                    <option value="">Pilih Jenis File</option>
                                     <option value="Pdf">PDF</option>
                                     <option value="Excel">Excel</option>
                                 </select>
                             </div>
                             <label class="col-sm-2 col-form-label">Status Siswa</label>
                             <div class="col-sm-4">
-                                <select name="StatusSiswa" id="StatusSiswa" class="form-control" required>
-                                    <option disabled>Pilih Status Siswa</option>
+                                <select name="StatusSiswa" id="StatusSiswa" class="form-control" required="" oninvalid="this.setCustomValidity('Status Siswa Wajib Dipilih')" oninput="setCustomValidity('')">
+                                    <option value="">Pilih Status Siswa</option>
                                     <option value="Aktif">Aktif</option>
                                     <option value="Lulus">Lulus</option>
                                     <option value="Keluar">Keluar</option>
@@ -190,7 +190,7 @@
                                 <label class="col-sm-2 col-form-label">Kategori</label>
                                 <div class="col-sm-3">
                                     <select name="TahunAjaran" class="form-control" required>
-                                        <option disabled>Tahun Ajaran</option>
+                                        <option value="">Tahun Ajaran</option>
                                         @foreach(DB::table('tahun_ajaran')->get() as $TahunAjaran)
                                         <option value="{{$TahunAjaran->tahun_ajaran}}">{{$TahunAjaran->tahun_ajaran}}</option>
                                         @endforeach

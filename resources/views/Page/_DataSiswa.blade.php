@@ -38,7 +38,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">File Excel</label>
                                             <div class="col-sm-8">
-                                                <input type="file" class="form-control" name="File" placeholder="File Excel Siswa" required>
+                                                <input type="file" class="form-control" name="File" placeholder="File Excel Siswa" required="" oninvalid="this.setCustomValidity('File Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
                                 </div>
@@ -185,7 +185,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Status </label>
                             <select name="Status" id="Status" class="form-control col-sm-4" required>
-                                <option readonly> Status </option>
+                                <option disabled> Status </option>
                                 @if($Siswa->status=="Aktif")
                                 <option value="Aktif" selected> Aktif </option>
                                 <option value="Keluar"> Keluar </option>
@@ -202,7 +202,7 @@
                             <input type="text" class="form-control col-sm-4" name="Nama" value="{{$Siswa->nama}}">
                             <label class="col-sm-2 col-form-label">Jenis Kelamin </label>
                             <select name="Jenis_Kelamin" id="Jenis_Kelamin" class="form-control col-sm-4" required>
-                                <option readonly> Jenis Kelamin </option>
+                                <option disabled> Jenis Kelamin </option>
                                 @if($Siswa->jenis_kelamin=="Laki-Laki")
                                 <option value="Laki-Laki" selected> Laki-Laki </option>
                                 <option value="Perempuan"> Perempuan </option>
@@ -214,12 +214,12 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Alamat </label>
-                            <textarea class="form-control col-sm-10" name="Alamat">{{$Siswa->alamat}}</textarea>
+                            <textarea class="form-control col-sm-10" name="Alamat" required="" oninvalid="this.setCustomValidity('Alamat Wajib Diisi')" oninput="setCustomValidity('')">{{$Siswa->alamat}}</textarea>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tingkat</label>
                             <select name="Tingkat" id="Tingkat" class="form-control col-sm-2" required>
-                                <option readonly> Tingkat </option>
+                                <option disabled> Tingkat </option>
                                 @if($Siswa->tingkat=="X")
                                 <option value="X" selected> X </option>
                                 <option value="XI"> XI </option>
@@ -235,7 +235,7 @@
                                 @endif
                             </select>
                             <select name="Kelas" id="Kelas" class="form-control col-sm-2" required>
-                                <option readonly> Kelas </option>
+                                <option disabled> Kelas </option>
                                 @if($Siswa->kelas=="TKR 1")
                                 <option value="TKR 1" selected>TKR 1 </option>
                                 <option value="TKR 2">TKR 2 </option>

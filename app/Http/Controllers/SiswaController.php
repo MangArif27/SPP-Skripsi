@@ -26,7 +26,7 @@ class SiswaController extends Controller
     public function ImportSiswa(Request $request)
     {
         // validasi
-        $this->validate($request, [
+        $Validasi = $this->validate($request, [
             'File' => 'required|mimes:csv,xls,xlsx'
         ]);
         // menangkap file excel
@@ -39,7 +39,7 @@ class SiswaController extends Controller
         // import data
         $array = Excel::toArray(new ImportSiswa(), $file);
         $no = 0;
-        $TahunAjaran = Pengaturan::where('id_sekolah', '20258060')->get();
+        $TahunAjaran = Pengaturan::where('id_pengaturan', '20258060')->get();
         foreach ($TahunAjaran as $Pengaturan) {
             foreach ($array as $key => &$value) {
                 foreach ($value as $v) {

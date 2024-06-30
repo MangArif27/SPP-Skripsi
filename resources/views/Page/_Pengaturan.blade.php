@@ -189,7 +189,7 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Nama Sekolah</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Nama_Sekolah" value="{{$Sekolah_Read->sekolah}}" required>
+                                <input type="text" class="form-control" name="Nama_Sekolah" value="{{$Sekolah_Read->sekolah}}" required="" oninvalid="this.setCustomValidity('Nama Sekolah Wajib Diisi')" oninput="setCustomValidity('')">
                             </div>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="NPSN" value="{{$Sekolah_Read->id_pengaturan}}" hidden>
@@ -198,33 +198,33 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Telepon</label>
                             <div class="col-sm-4">
-                                <input type="tel" class="form-control" name="Telp" value="{{$Sekolah_Read->telpon}}" required>
+                                <input type="tel" class="form-control" name="Telp" value="{{$Sekolah_Read->telpon}}" required="" oninvalid="this.setCustomValidity('Nomor telephone wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                             <label class="col-sm-2 col-form-label">Faximile.</label>
                             <div class="col-sm-4">
-                                <input type="tel" class="form-control" name="Fax" value="{{$Sekolah_Read->faximile}}" required>
+                                <input type="tel" class="form-control" name="Fax" value="{{$Sekolah_Read->faximile}}" required="" oninvalid="this.setCustomValidity('Faximile wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Website</label>
                             <div class="col-sm-4">
-                                <input type="url" class="form-control" name="Website" value="{{$Sekolah_Read->website}}" required>
+                                <input type="url" class="form-control" name="Website" value="{{$Sekolah_Read->website}}" required="" oninvalid="this.setCustomValidity('Website wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                             <label class="col-sm-2 col-form-label">Email</label>
                             <div class="col-sm-4">
-                                <input type="email" class="form-control" name="Email" value="{{$Sekolah_Read->email}}" required>
+                                <input type="email" class="form-control" name="Email" value="{{$Sekolah_Read->email}}" required="" oninvalid="this.setCustomValidity('Email wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Alamat</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" name="Alamat" placeholder="Alamat" required>{{$Sekolah_Read->alamat}}</textarea>
+                                <textarea class="form-control" name="Alamat" placeholder="Alamat" required="" oninvalid="this.setCustomValidity('Alamat sekolah wajib diisi')" oninput="setCustomValidity('')">{{$Sekolah_Read->alamat}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Tahun Ajaran</label>
                             <div class="col-sm-4">
-                                <select id="Tahun_Ajaran" name="Tahun_Ajaran" class="form-control form-control-primary">
+                                <select id="Tahun_Ajaran" name="Tahun_Ajaran" class="form-control form-control-primary" required="" oninvalid="this.setCustomValidity('Tahun ajaran wajib dipilih')" oninput="setCustomValidity('')">
                                     <option> Pilih Tahun Ajaran</option>
                                     <option value="InputBaru">Input Baru</option>
                                     @foreach($Tahun as $Tahun)
@@ -238,7 +238,7 @@
                             </div>
                             <label class="col-sm-2 col-form-label">Semester</label>
                             <div class="col-sm-4">
-                                <select name="Semester" class="form-control form-control-primary">
+                                <select name="Semester" class="form-control form-control-primary" required="" oninvalid="this.setCustomValidity('Semester wajib dipilih')" oninput="setCustomValidity('')">
                                     @if($Sekolah->semester == "Semester Ganjil")
                                     <option value="Semester Ganjil" selected> Semester Ganjil</option>
                                     <option value="Semester Genap"> Semester Genap</option>
@@ -258,29 +258,29 @@
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Kepala Sekolah</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Nama_Kepsek" value="{{$Sekolah_Read->nama_kepsek}}" required>
+                                <input type="text" class="form-control" name="Nama_Kepsek" value="{{$Sekolah_Read->nama_kepsek}}" required="" oninvalid="this.setCustomValidity('Nama kepala sekolah wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Bendahara</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="Nama_Bendahara" value="{{$Sekolah_Read->nama_bendahara}}" required>
+                                <input type="text" class="form-control" name="Nama_Bendahara" value="{{$Sekolah_Read->nama_bendahara}}" required="" oninvalid="this.setCustomValidity('Nama bendahara wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jumlah Kejuruan</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" name="Jumlah_Kejuruan" value="{{$Sekolah_Read->jumlah_kejuruan}}" required>
+                                <input type="number" class="form-control" name="Jumlah_Kejuruan" value="{{$Sekolah_Read->jumlah_kejuruan}}" required="" oninvalid="this.setCustomValidity('Jumlah kejuruan wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                             <label class="col-sm-2 col-form-label">Jumlah Kelas</label>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" name="Jumlah_Kelas" value="{{$Sekolah_Read->jumlah_kelas}}" required>
+                                <input type="number" class="form-control" name="Jumlah_Kelas" value="{{$Sekolah_Read->jumlah_kelas}}" required="" oninvalid="this.setCustomValidity('Jumlah kelas wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Jumlah GTK</label>
                             <div class="col-sm-10">
-                                <input type="number" class="form-control" name="Jumlah_GTK" value="{{$Sekolah_Read->jumlah_gtk}}" required>
+                                <input type="number" class="form-control" name="Jumlah_GTK" value="{{$Sekolah_Read->jumlah_gtk}}" required="" oninvalid="this.setCustomValidity('Jumlah Guru dan Tenaga Kependidikan wajib diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                 </div>

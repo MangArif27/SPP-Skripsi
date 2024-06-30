@@ -41,32 +41,32 @@
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Nama Pengguna</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="Nama" placeholder="Nama Pengguna" required>
+                                                <input type="text" class="form-control" name="Nama" placeholder="Nama Pengguna" required="" oninvalid="this.setCustomValidity('Nama Pengguna Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">No Induk Pegawai</label>
                                             <div class="col-sm-8">
-                                                <input type="number" class="form-control" name="NIP" placeholder="No Induk Pegawai" required>
+                                                <input type="number" class="form-control" name="NIP" placeholder="No Induk Pegawai" required="" oninvalid="this.setCustomValidity('No Induk Pegawai Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Jabatan</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="Jabatan" placeholder="Jabatan" required>
+                                                <input type="text" class="form-control" name="Jabatan" placeholder="Jabatan" required="" oninvalid="this.setCustomValidity('Jabatan Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Pangkat</label>
                                             <div class="col-sm-8">
-                                                <input type="text" class="form-control" name="Pangkat" placeholder="Pangkat" required>
+                                                <input type="text" class="form-control" name="Pangkat" placeholder="Pangkat" required="" oninvalid="this.setCustomValidity('Pangkat Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Level User</label>
                                             <div class="col-sm-8">
-                                                <select name="LevelUser" class="form-control" required>
-                                                    <option disabled>Pilih Level User</option>
+                                                <select name="LevelUser" class="form-control" required="" oninvalid="this.setCustomValidity('Level User Wajib Dipilih')" oninput="setCustomValidity('')">
+                                                    <option value="">Pilih Level User</option>
                                                     <option value="Admin">Admin</option>
                                                     <option value="Operator">Operator</option>
                                                 </select>
@@ -75,7 +75,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-4 col-form-label">Password</label>
                                             <div class="col-sm-8">
-                                                <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                                                <input type="password" class="form-control" name="Password" placeholder="Password" required="" oninvalid="this.setCustomValidity('Password Wajib Diisi')" oninput="setCustomValidity('')">
                                             </div>
                                         </div>
 
@@ -225,7 +225,7 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Nama Pengguna</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Nama" value="{{$Pengguna->name}}">
+                                <input type="text" class="form-control" name="Nama" value="{{$Pengguna->name}}" required="" oninvalid="this.setCustomValidity('Nama Pengguna Wajib Diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -237,13 +237,13 @@
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Jabatan</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Jabatan" value="{{$Pengguna->jabatan}}">
+                                <input type="text" class="form-control" name="Jabatan" value="{{$Pengguna->jabatan}}" required="" oninvalid="this.setCustomValidity('Jabatan Wajib Diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-4 col-form-label">Pangkat</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" name="Pangkat" value="{{$Pengguna->pangkat}}">
+                                <input type="text" class="form-control" name="Pangkat" value="{{$Pengguna->pangkat}}" required="" oninvalid="this.setCustomValidity('Pangkat Wajib Diisi')" oninput="setCustomValidity('')">
                             </div>
                         </div>
                         <div class="form-group row">
