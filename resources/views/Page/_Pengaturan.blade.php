@@ -51,6 +51,24 @@
                         </div>
                     </div>
                     <!--profile cover end-->
+                    {{-- notifikasi sukses --}}
+                    @if ($sukses = Session::get('sukses'))
+                    <div class="alert alert-success background-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="icofont icofont-close-line-circled text-white"></i>
+                        </button>
+                        <strong>{{$sukses}}</strong>
+                    </div>
+                    @endif
+                    {{-- notifikasi sukses --}}
+                    @if ($sukses = Session::get('gagal'))
+                    <div class="alert alert-danger background-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <i class="icofont icofont-close-line-circled text-white"></i>
+                        </button>
+                        <strong>{{$sukses}}</strong>
+                    </div>
+                    @endif
                     <div class="row">
                         <div class="col-lg-12">
                             <!-- tab header start -->

@@ -30,10 +30,16 @@ class PengaturanController extends Controller
     public function InsertSekolah(Request $request)
     {
         if ($request->Tahun_Ajaran == "InputBaru") {
-            $TahunAjaran = $request->TahunAjaranBaru;
-            Tahun_Ajaran::insert([
-                'tahun_ajaran' => $TahunAjaran,
-            ]);
+            if (empty($request->TahunAjaranBaru)) {
+                Session::flash('gagal', 'Data Gagal Di Update, Tahun Ajaran Wajib Diisi!');
+                return redirect('/Pengaturan');
+            } else {
+                $TahunAjaran = $request->TahunAjaranBaru;
+                Tahun_Ajaran::insert([
+                    'tahun_ajaran' => $TahunAjaran,
+                ]);
+            }
+
             /* -------- Proses Generate Naik Kelas -------*/
             $Search = Pengaturan::where('id_pengaturan', $request->NPSN)->get();
             foreach ($Search as $SC) {
@@ -83,6 +89,7 @@ class PengaturanController extends Controller
             'tahun_ajaran' => $TahunAjaran,
             'semester' => $request->Semester,
         ]);
+        Session::flash('suskes', 'Selamat Data Profile Sekolah Telah Berhasil di Update');
         return redirect('/Pengaturan');
     }
 }

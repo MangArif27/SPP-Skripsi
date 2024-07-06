@@ -104,6 +104,6 @@ class UserController extends Controller
     {
         Session::flush();
         Session::flash('sukses', 'Anda Telah Berhasil Logout, Terima Kasih !');
-        return redirect('Login')->with('alert', 'Kamu sudah logout');
+        return redirect('Login');
     }
 }
