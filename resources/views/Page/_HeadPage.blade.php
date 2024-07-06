@@ -23,7 +23,7 @@
         </div>
     </div>
 </div>
-<?php $CountSiswa = DB::table('siswa')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->count() ?>
+<?php $CountSiswa = DB::table('siswa')->where('tahun_ajaran', $Pengaturan->tahun_ajaran)->where('status', "Aktif")->count() ?>
 <div class="col-xl-4 col-md-6">
     <div class="card">
         <div class="card-block">
