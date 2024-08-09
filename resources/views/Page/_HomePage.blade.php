@@ -153,13 +153,13 @@
                                         <div class="col-6">
                                             <div data-label="{{round($Persentase)}}%" class="radial-bar radial-bar-{{$PersentaseLunas}} radial-bar-lg radial-bar-success"></div>
                                             <h6 class="text-muted">Selesai</h6>
-                                            <p class="text-muted">{{$SudahLunas}} Berkas</p>
+                                            <p class="text-muted">{{$SudahLunas}} Siswa</p>
                                             <button class="btn btn-success btn-round btn-sm">Sudah Lunas</button>
                                         </div>
                                         <div class="col-6">
                                             <div data-label="{{round($PersentaseX)}}%"" class=" radial-bar radial-bar-{{round($PersentaseBelum)}} radial-bar-lg radial-bar-danger"></div>
                                             <h6 class="text-muted">Proses</h6>
-                                            <p class="text-muted">{{$BelumLunas}} Berkas</p>
+                                            <p class="text-muted">{{$BelumLunas}} Siswa</p>
                                             <button class="btn btn-danger btn-round btn-sm">Belum Lunas</button>
                                         </div>
                                     </div>
